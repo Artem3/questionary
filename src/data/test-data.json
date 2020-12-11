@@ -1,27 +1,32 @@
 [
     {
         "id": 1,
-        "qText": "text 1, bla-bla_1",
-        "qAnswer": "answ-1"
+        "qText": "text 1 bla-bla_1",
+        "expectedAnswer": "answ-1",
+        "givenAnswer":""
     },
     {
         "id": 2,
-        "qText": "text 2, bla-bla_2",
-        "qAnswer": "answ-2"
+        "qText": "text 2 bla-bla_2",
+        "expectedAnswer": "answ-2",
+        "givenAnswer":""
     },
     {
         "id": 3,
-        "qText": "text 3, bla-bla_3",
-        "qAnswer": "answ-3"
+        "qText": "text 3 bla-bla_3",
+        "expectedAnswer": "answ-3",
+        "givenAnswer":""
     },
     {
         "id": 4,
-        "qText": "text 4, bla-bla_4",
-        "qAnswer": "answ-4"
+        "qText": "text 4 bla-bla_4",
+        "expectedAnswer": "answ-4",
+        "givenAnswer":""
     },
     {
         "id": 5,
-        "qText": "text 5, bla-bla_5",
-        "qAnswer": "answ-5"
+        "qText": "text 5 bla-bla_5",
+        "expectedAnswer": "answ-5",
+        "givenAnswer":""
     }
 ]

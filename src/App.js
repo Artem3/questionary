@@ -1,16 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
-import DataComponent from './components/DataComponent'
+import DataProvider from './components/DataProvider'
 
 function App() {
   return (
     <div className="App">
-      <h1>la-la</h1>
-      <DataComponent />
+      <DataProvider />
       <header className="App-header">
-        <h2>tu-tu</h2>
         <img src={logo} className="App-logo" alt="logo" />
-
       </header>
     </div>
   );
