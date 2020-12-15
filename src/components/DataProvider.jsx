@@ -1,24 +1,41 @@
-import React, { useState } from 'react';
-import testDataJsonArray from '../data/test-data.json';
-import CurrentQuestionForm from './CurrentQuestionForm';
+import React, { useState } from "react";
+import testDataJsonArray from "../data/test-data.json";
+import CurrentQuestionForm from "./CurrentQuestionForm";
+import constructor from "./Constructor";
 
 export default function DataProvider() {
+  const [qList, setQList] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const isListCompleted = currentIndex >= qList.length - 1 ? true : false;
 
-    const [qList, setQList] = useState(testDataJsonArray);
-    const [currentQuestionId, setCurrentQuestionId] = useState(1);
+  // shuffl array once at the begining
+  constructor(() => {
+    const shuffle = (list) => list.sort(() => 0.5 - Math.random());
+    setQList(shuffle(testDataJsonArray));
+  });
 
-    const setNextQuestion = (givenAnswer) => {
-        setQList(qList.map(q => q.id === currentQuestionId ? { ...q, givenAnswer: givenAnswer } : q))
-        setCurrentQuestionId(currentQuestionId + 1)
-    };
+  const setNextQuestion = (givenAnswer) => {
+    // validate if this is a last question
+    if (isListCompleted) {
+      alert("The end!");
+      return;
+    }
 
-    return (
-        <div>
-            <CurrentQuestionForm
-                onClick={setNextQuestion}
-                currentQuestion={qList.find(q => q.id === currentQuestionId)}
-            />
-        </div>
-    )
+    // update current question with an answer
+    qList[currentIndex].givenAnswer = givenAnswer;
+    const unsweredQuestion = qList[currentIndex];
+    qList.splice(currentIndex, 1, unsweredQuestion);
 
+    setQList(qList);
+    setCurrentIndex(currentIndex + 1);
+  };
+
+  return (
+    <div>
+      <CurrentQuestionForm
+        onClick={setNextQuestion}
+        currentQuestion={qList[currentIndex]}
+      />
+    </div>
+  );
 }
