@@ -6,7 +6,7 @@ import constructor from "./Constructor";
 export default function DataProvider() {
   const [qList, setQList] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const isListCompleted = currentIndex >= qList.length - 1 ? true : false;
+  const isListCompleted = currentIndex <= qList.length - 1 ? false : true;
 
   // shuffl array once at the begining
   constructor(() => {
@@ -15,12 +15,6 @@ export default function DataProvider() {
   });
 
   const setNextQuestion = (givenAnswer) => {
-    // validate if this is a last question
-    if (isListCompleted) {
-      alert("The end!");
-      return;
-    }
-
     // update current question with an answer
     qList[currentIndex].givenAnswer = givenAnswer;
     const unsweredQuestion = qList[currentIndex];
@@ -28,14 +22,19 @@ export default function DataProvider() {
 
     setQList(qList);
     setCurrentIndex(currentIndex + 1);
+    // isListCompleted || setCurrentIndex(currentIndex + 1);
   };
 
   return (
     <div>
-      <CurrentQuestionForm
-        onClick={setNextQuestion}
-        currentQuestion={qList[currentIndex]}
-      />
+      {isListCompleted ? (
+        <h1>Test completed!</h1>
+      ) : (
+        <CurrentQuestionForm
+          onClick={setNextQuestion}
+          currentQuestion={qList[currentIndex]}
+        />
+      )}
     </div>
   );
 }
