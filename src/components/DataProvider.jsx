@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import testDataJsonArray from "../data/test-data.json";
 import CurrentQuestionForm from "./CurrentQuestionForm";
+import AnswerTable from "./AnswerTable";
 import constructor from "./Constructor";
 
 export default function DataProvider() {
@@ -22,13 +23,25 @@ export default function DataProvider() {
 
     setQList(qList);
     setCurrentIndex(currentIndex + 1);
-    // isListCompleted || setCurrentIndex(currentIndex + 1);
   };
+
+  function calculateResult() {
+    //test array to check its dispalying
+    return [
+      { id:1, aaa: "111", bbb: 10 },
+      { id:2, aaa: "222", bbb: 11 },
+      { id:3, aaa: "33", bbb: 12 },
+    ];
+  }
 
   return (
     <div>
       {isListCompleted ? (
-        <h1>Test completed!</h1>
+        <div>
+          <h2>Test completed!</h2>
+          <p>Your result is:</p>
+          <AnswerTable results={calculateResult()} />
+        </div>
       ) : (
         <CurrentQuestionForm
           onClick={setNextQuestion}
