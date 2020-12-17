@@ -16,8 +16,8 @@ export default function DataProvider() {
   const isListCompleted = currentIndex <= qList.length - 1 ? false : true;
   const [test, setTest] = useState("");
 
+  // update current question with an answer
   const setNextQuestion = (givenAnswer) => {
-    // update current question with an answer
     qList[currentIndex].givenAnswer = givenAnswer;
     const unsweredQuestion = qList[currentIndex];
     qList.splice(currentIndex, 1, unsweredQuestion);
@@ -26,12 +26,20 @@ export default function DataProvider() {
   };
 
   function calculateCompactResult() {
-    //test array to check its dispalying
-    return [
-      { id: 1, aaa: "111", bbb: 10 },
-      { id: 2, aaa: "222", bbb: 11 },
-      { id: 3, aaa: "33", bbb: 12 },
-    ];
+    const totalCount = qList.length;
+    const list = Object.values(qList);
+    const incorrectAnswers = list.filter((i) => i.givenAnswer !== i.expectedAnswer).length;
+    const totalCorrectAnswered = list.filter((i) => i.expectedAnswer == i.givenAnswer).length;
+
+    if (incorrectAnswers + totalCorrectAnswered !== totalCount) {
+      console.log("Incorrect result calculation!");
+    }
+
+    return {
+      totalCount: totalCount,
+      incorrectAnswers: incorrectAnswers,
+      totalCorrectAnswered: totalCorrectAnswered,
+    };
   }
 
   const calculateDatailedResult = () => {
@@ -44,7 +52,6 @@ export default function DataProvider() {
       {isListCompleted ? (
         <div>
           <h2>Test completed!</h2>
-          <p>Your result is:</p>
           <AnswerTable
             results={calculateCompactResult()}
             onClick={calculateDatailedResult}

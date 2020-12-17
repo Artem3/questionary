@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function AnswerTable(props) {
   const handleDetailResult = () => {
@@ -7,10 +7,14 @@ export default function AnswerTable(props) {
 
   return (
     <div>
+      <p>
+        Out of <big>{props.results.totalCount}</big> questions, your result is
+      </p>
       <ul style={{ listStyleType: "none" }}>
-        {props.results.map((item) => (
-          <li key={item.id}>{item.aaa + "--" + item.bbb}</li>
-        ))}
+        <li>
+          Correct answers: <b>{props.results.totalCorrectAnswered}</b>
+        </li>
+        <li>Wrong answers: <b>{props.results.incorrectAnswers}</b></li>
       </ul>
       <br />
       <button onClick={handleDetailResult}>See detailed results</button>
