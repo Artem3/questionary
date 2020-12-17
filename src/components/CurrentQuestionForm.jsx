@@ -7,6 +7,12 @@ export default function CurrentQuestionForm(props) {
     setGivenAnswer("");
   };
 
+  function handleEnterKey(e) {
+    if (e.key === "Enter") {
+      handleClick()
+    }
+  }
+
   return (
     <div>
       <input
@@ -20,6 +26,7 @@ export default function CurrentQuestionForm(props) {
             e.currentTarget.value.length
           )
         }
+        onKeyDown={(e) => handleEnterKey(e)}
       />
       {props.currentQuestion.qText}
       <button onClick={handleClick}>Next question</button>
