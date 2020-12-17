@@ -16,6 +16,7 @@ export default function CurrentQuestionForm(props) {
       />
       {props.currentQuestion.qText}
       <button onClick={handleClick}>Next question</button>
+      <br/>
     </div>
   );
 }
