@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 
 export default function CurrentQuestionForm(props) {
   const [givenAnswer, setGivenAnswer] = useState("");
@@ -15,7 +16,10 @@ export default function CurrentQuestionForm(props) {
   }
 
   return (
-    <div>
+    <Card style={{ color: "black"}}>
+      <Card.Title style={{ width: "30rem" }}>
+        {props.currentQuestion.qText}
+      </Card.Title>
       <input
         type="text"
         value={givenAnswer}
@@ -29,11 +33,9 @@ export default function CurrentQuestionForm(props) {
         }
         onKeyDown={(e) => handleEnterKey(e)}
       />
-      {props.currentQuestion.qText}
-      <Button variant="info" onClick={handleClick}>
+      <Button variant="info" style={{ width: "10rem"}} onClick={handleClick}>
         Next &gt;&gt;
       </Button>
-      <br />
-    </div>
+    </Card>
   );
 }
