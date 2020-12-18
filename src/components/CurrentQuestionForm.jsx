@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
 
 export default function CurrentQuestionForm(props) {
   const [givenAnswer, setGivenAnswer] = useState("");
@@ -9,7 +10,7 @@ export default function CurrentQuestionForm(props) {
 
   function handleEnterKey(e) {
     if (e.key === "Enter") {
-      handleClick()
+      handleClick();
     }
   }
 
@@ -29,7 +30,9 @@ export default function CurrentQuestionForm(props) {
         onKeyDown={(e) => handleEnterKey(e)}
       />
       {props.currentQuestion.qText}
-      <button onClick={handleClick}>Next question</button>
+      <Button variant="info" onClick={handleClick}>
+        Next &gt;&gt;
+      </Button>
       <br />
     </div>
   );
