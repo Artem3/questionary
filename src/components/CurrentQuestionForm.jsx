@@ -16,13 +16,14 @@ export default function CurrentQuestionForm(props) {
   }
 
   return (
-    <Card style={{ color: "black"}}>
+    <Card bg="light" text="dark" style={{ alignItems: "center" }}>
       <Card.Title style={{ width: "30rem" }}>
         {props.currentQuestion.qText}
       </Card.Title>
       <input
         type="text"
         value={givenAnswer}
+        style={{ textAlign: "center", borderRadius: "5px", borderWidth: "1px" }}
         onChange={(e) => setGivenAnswer(e.target.value)}
         ref={(ref) => ref && ref.focus()}
         onFocus={(e) =>
@@ -33,7 +34,12 @@ export default function CurrentQuestionForm(props) {
         }
         onKeyDown={(e) => handleEnterKey(e)}
       />
-      <Button variant="info" style={{ width: "10rem"}} onClick={handleClick}>
+      <Button
+        variant="info"
+        style={{ width: "8rem" }}
+        className="mt-2 mb-2"
+        onClick={handleClick}
+      >
         Next &gt;&gt;
       </Button>
     </Card>
