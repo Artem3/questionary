@@ -14,7 +14,8 @@ export default function DataProvider() {
   });
   const [currentIndex, setCurrentIndex] = useState(0);
   const isListCompleted = currentIndex <= qList.length - 1 ? false : true;
-  const [test, setTest] = useState("");
+  // const [test, setTest] = useState("");
+  const [displayTable, setDisplayTable] = useState(false);
 
   // update current question with an answer
   const setNextQuestion = (givenAnswer) => {
@@ -44,7 +45,7 @@ export default function DataProvider() {
 
   const calculateDatailedResult = () => {
     console.log(88);
-    setTest("abcd");
+    setDisplayTable(true);
   };
 
   return (
@@ -55,15 +56,16 @@ export default function DataProvider() {
           <AnswerTable
             results={calculateCompactResult()}
             onClick={calculateDatailedResult}
-            detailedResults={test}
+            detailedResults={qList}
+          //displayTable={true}
           />
         </div>
       ) : (
-        <CurrentQuestionForm
-          onClick={setNextQuestion}
-          currentQuestion={qList[currentIndex]}
-        />
-      )}
+          <CurrentQuestionForm
+            onClick={setNextQuestion}
+            currentQuestion={qList[currentIndex]}
+          />
+        )}
     </div>
   );
 }
