@@ -57,7 +57,7 @@ export default function DataProvider() {
             results={calculateCompactResult()}
             onClick={calculateDatailedResult}
             detailedResults={qList}
-          //displayTable={true}
+            displayTable={displayTable}
           />
         </div>
       ) : (

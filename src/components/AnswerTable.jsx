@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 
 export default function AnswerTable(props) {
-  const handleDetailResult = () => {
-    props.onClick();
-  };
-  const [displayTable, setDisplayTable] = useState(false);
-
-  const renderTable = (qList) => {
-    < Table striped bordered hover size="sm" variand="warning" >
+  const renderTable = (qList) => (
+    <Table striped bordered hover size="sm" variant="light">
       <thead>
         <tr>
           <th>#</th>
@@ -32,8 +27,8 @@ export default function AnswerTable(props) {
           <td>@fat</td>
         </tr>
       </tbody>
-    </Table >
-  };
+    </Table>
+  );
 
   return (
     <div>
@@ -44,20 +39,19 @@ export default function AnswerTable(props) {
         <li>
           Correct answers: <b>{props.results.totalCorrectAnswered}</b>
         </li>
-        <li>Wrong answers: <b>{props.results.incorrectAnswers}</b></li>
+        <li>
+          Wrong answers: <b>{props.results.incorrectAnswers}</b>
+        </li>
       </ul>
       <br />
-      <Button
-        variant="info"
-        className='mb-3'
-        onClick={handleDetailResult}>See detailed results
+      <Button variant="info" className="mb-3" onClick={props.onClick}>
+        See detailed results
       </Button>
-      {/* test */}
-      {displayTable ?
-        <div> {renderTable(this.props.detailedResults)}</div>
-        : <div>---no details here--</div>
-      }
-
-    </div >
+      {props.displayTable ? (
+        renderTable(props.detailedResults)
+      ) : (
+        <div>---no details here--</div>
+      )}
+    </div>
   );
 }
