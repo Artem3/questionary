@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
+import ListGroup from "react-bootstrap/ListGroup";
 
 export default function AnswerTable(props) {
   const renderTable = (qList) => (
@@ -35,23 +36,19 @@ export default function AnswerTable(props) {
       <p>
         Out of <big>{props.results.totalCount}</big> questions, your result is
       </p>
-      <ul style={{ listStyleType: "none" }}>
-        <li>
+      <ListGroup variant="flush">
+        <ListGroup.Item variant="success">
           Correct answers: <b>{props.results.totalCorrectAnswered}</b>
-        </li>
-        <li>
+        </ListGroup.Item>
+        <ListGroup.Item variant="danger">
           Wrong answers: <b>{props.results.incorrectAnswers}</b>
-        </li>
-      </ul>
+        </ListGroup.Item>
+      </ListGroup>
       <br />
       <Button variant="info" className="mb-3" onClick={props.onClick}>
         See detailed results
       </Button>
-      {props.displayTable ? (
-        renderTable(props.detailedResults)
-      ) : (
-        <div>---no details here--</div>
-      )}
+      {props.displayTable && renderTable(props.detailedResults)}
     </div>
   );
 }
