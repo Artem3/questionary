@@ -55,7 +55,7 @@ export default function AnswerTable(props) {
       {/* test */}
       {displayTable ?
         <div> {renderTable(this.props.detailedResults)}</div>
-        : <div>---no details--</div>
+        : <div>---no details here--</div>
       }
 
     </div >
