@@ -2,6 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import ListGroup from "react-bootstrap/ListGroup";
+import ProgressBar from "react-bootstrap/ProgressBar";
 
 export default function AnswerTable(props) {
   const renderTable = (qList) => (
@@ -17,7 +18,7 @@ export default function AnswerTable(props) {
       </thead>
       <tbody>
         {qList.map((q, index) => {
-          const variant = q.isCorrect ? "success": "danger";
+          const variant = q.isCorrect ? "success" : "danger";
           // const mark = q.isCorrect ? '&#10004;' : "";
           return (
             <tr key={q.id}>
@@ -26,9 +27,9 @@ export default function AnswerTable(props) {
               <td>{q.expectedAnswer}</td>
               <td>{q.givenAnswer}</td>
               <td>
-              <ListGroup.Item variant={variant}>
-                {/* {mark}  */}
-              </ListGroup.Item>
+                <ListGroup.Item variant={variant}>
+                  {/* {mark}  */}
+                </ListGroup.Item>
               </td>
             </tr>
           );
@@ -36,6 +37,13 @@ export default function AnswerTable(props) {
       </tbody>
     </Table>
   );
+
+  function countRight() {
+    return (props.results.totalCorrectAnswered * 100) / props.results.totalCount
+  };
+  function countWrong() {
+    return (props.results.incorrectAnswers * 100) / props.results.totalCount
+  }
 
   return (
     <div>
@@ -64,6 +72,12 @@ export default function AnswerTable(props) {
           }
         })()}
       </ListGroup>
+
+      <br />
+      <ProgressBar>
+        <ProgressBar variant="success" now={countRight()} label={countRight() + '%'} key={1} />
+        <ProgressBar variant="danger" now={countWrong()} label={countWrong() + '%'} key={2} />
+      </ProgressBar>
 
       <br />
       <Button variant="info" className="mb-3" onClick={props.onClick}>
