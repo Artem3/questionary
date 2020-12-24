@@ -36,14 +36,29 @@ export default function AnswerTable(props) {
       <p>
         Out of <big>{props.results.totalCount}</big> questions, your result is
       </p>
+
       <ListGroup variant="flush">
-        <ListGroup.Item variant="success">
-          Correct answers: <b>{props.results.totalCorrectAnswered}</b>
-        </ListGroup.Item>
-        <ListGroup.Item variant="danger">
-          Wrong answers: <b>{props.results.incorrectAnswers}</b>
-        </ListGroup.Item>
+        {(() => {
+          if (props.results.totalCorrectAnswered > 0) {
+            return (
+              <ListGroup.Item variant="success">
+                Correct answers: <b>{props.results.totalCorrectAnswered}</b>
+              </ListGroup.Item>
+            );
+          }
+        })()}
+
+        {(() => {
+          if (props.results.incorrectAnswers > 0) {
+            return (
+              <ListGroup.Item variant="danger">
+                Wrong answers: <b>{props.results.incorrectAnswers}</b>
+              </ListGroup.Item>
+            );
+          }
+        })()}
       </ListGroup>
+
       <br />
       <Button variant="info" className="mb-3" onClick={props.onClick}>
         See detailed results
