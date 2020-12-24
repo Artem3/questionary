@@ -3,30 +3,35 @@
         "id": 1,
         "qText": "text 1 bla-bla_1",
         "expectedAnswer": "1",
-        "givenAnswer":""
+        "givenAnswer": "",
+        "isCorrect": false
     },
     {
         "id": 2,
         "qText": "text 2 bla-bla_2",
         "expectedAnswer": "2",
-        "givenAnswer":""
+        "givenAnswer": "",
+        "isCorrect": false
     },
     {
         "id": 3,
         "qText": "text 3 bla-bla_3",
         "expectedAnswer": "3",
-        "givenAnswer":""
+        "givenAnswer": "",
+        "isCorrect": false
     },
     {
         "id": 4,
         "qText": "text 4 bla-bla_4",
         "expectedAnswer": "4",
-        "givenAnswer":""
+        "givenAnswer": "",
+        "isCorrect": false
     },
     {
         "id": 5,
         "qText": "text 5 bla-bla_5",
         "expectedAnswer": "5",
-        "givenAnswer":""
+        "givenAnswer": "",
+        "isCorrect": false
     }
 ]

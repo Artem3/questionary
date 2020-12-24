@@ -20,6 +20,10 @@ export default function DataProvider() {
   // update current question with an answer
   const setNextQuestion = (givenAnswer) => {
     qList[currentIndex].givenAnswer = givenAnswer;
+
+    if (qList[currentIndex].expectedAnswer == givenAnswer) {
+      qList[currentIndex].isCorrect = true;
+    }
     const unsweredQuestion = qList[currentIndex];
     qList.splice(currentIndex, 1, unsweredQuestion);
     setQList(qList);
@@ -29,8 +33,9 @@ export default function DataProvider() {
   function calculateCompactResult() {
     const totalCount = qList.length;
     const list = Object.values(qList);
-    const incorrectAnswers = list.filter((i) => i.givenAnswer !== i.expectedAnswer).length;
-    const totalCorrectAnswered = list.filter((i) => i.expectedAnswer == i.givenAnswer).length;
+    const incorrectAnswers = list.filter((i) => i.isCorrect === false).length;
+    const totalCorrectAnswered = list.filter((i) => i.isCorrect === true)
+      .length;
 
     if (incorrectAnswers + totalCorrectAnswered !== totalCount) {
       console.log("Incorrect result calculation!");
@@ -61,11 +66,11 @@ export default function DataProvider() {
           />
         </div>
       ) : (
-          <CurrentQuestionForm
-            onClick={setNextQuestion}
-            currentQuestion={qList[currentIndex]}
-          />
-        )}
+        <CurrentQuestionForm
+          onClick={setNextQuestion}
+          currentQuestion={qList[currentIndex]}
+        />
+      )}
     </div>
   );
 }

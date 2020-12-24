@@ -9,24 +9,30 @@ export default function AnswerTable(props) {
       <thead>
         <tr>
           <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
+          <th>Question</th>
+          <th>Expected answer</th>
+          <th>Your answer</th>
+          <th>Correctness</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
+        {qList.map((q, index) => {
+          const variant = q.isCorrect ? "success": "danger";
+          // const mark = q.isCorrect ? '&#10004;' : "";
+          return (
+            <tr key={q.id}>
+              <td>{index + 1}</td>
+              <td>{q.qText}</td>
+              <td>{q.expectedAnswer}</td>
+              <td>{q.givenAnswer}</td>
+              <td>
+              <ListGroup.Item variant={variant}>
+                {/* {mark}  */}
+              </ListGroup.Item>
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </Table>
   );
