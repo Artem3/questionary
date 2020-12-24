@@ -1,41 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import ListGroup from "react-bootstrap/ListGroup";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import Fade from "react-bootstrap/Fade";
 
 export default function AnswerTable(props) {
+  const [open, setOpen] = useState(false);
+  const handResultlClick = () => {
+    setOpen(!open);
+    props.onClick();
+  };
+
   const renderTable = (qList) => (
-    <Table striped bordered hover size="sm" variant="light">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Question</th>
-          <th>Expected answer</th>
-          <th>Your answer</th>
-          <th>Correctness</th>
-        </tr>
-      </thead>
-      <tbody>
-        {qList.map((q, index) => {
-          const variant = q.isCorrect ? "success" : "danger";
-          // const mark = q.isCorrect ? '&#10004;' : "";
-          return (
-            <tr key={q.id}>
-              <td>{index + 1}</td>
-              <td>{q.qText}</td>
-              <td>{q.expectedAnswer}</td>
-              <td>{q.givenAnswer}</td>
-              <td>
-                <ListGroup.Item variant={variant}>
-                  {/* {mark}  */}
-                </ListGroup.Item>
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </Table>
+    <Fade in={open} appear timeout={600} mountOnEnter>
+      <Table id="fade-tbl" striped bordered hover size="sm" variant="light">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Question</th>
+            <th>Expected answer</th>
+            <th>Your answer</th>
+            <th>Correctness</th>
+          </tr>
+        </thead>
+        <tbody>
+          {qList.map((q, index) => {
+            const variant = q.isCorrect ? "success" : "danger";
+            // const mark = q.isCorrect ? '&#10004;' : "";
+            return (
+              <tr key={q.id}>
+                <td>{index + 1}</td>
+                <td>{q.qText}</td>
+                <td>{q.expectedAnswer}</td>
+                <td>{q.givenAnswer}</td>
+                <td>
+                  <ListGroup.Item variant={variant}>
+                    {/* {mark}  */}
+                  </ListGroup.Item>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    </Fade>
   );
 
   function countRight() {
@@ -80,7 +89,12 @@ export default function AnswerTable(props) {
       </ProgressBar>
 
       <br />
-      <Button variant="info" className="mb-3" onClick={props.onClick}>
+      <Button
+        variant="info"
+        className="mb-3"
+        onClick={handResultlClick}
+        aria-controls="fade-tbl"
+        aria-expanded={open}>
         See detailed results
       </Button>
       {props.displayTable && renderTable(props.detailedResults)}
