@@ -14,7 +14,6 @@ export default function DataProvider() {
   });
   const [currentIndex, setCurrentIndex] = useState(0);
   const isListCompleted = currentIndex <= qList.length - 1 ? false : true;
-  // const [test, setTest] = useState("");
   const [displayTable, setDisplayTable] = useState(false);
 
   // update current question with an answer

@@ -27,7 +27,7 @@ export default function AnswerTable(props) {
         <tbody>
           {qList.map((q, index) => {
             const variant = q.isCorrect ? "success" : "danger";
-            // const mark = q.isCorrect ? '&#10004;' : "";
+            const tickMark = q.isCorrect ? <span>&#10003;</span> : "";
             return (
               <tr key={q.id}>
                 <td>{index + 1}</td>
@@ -35,9 +35,7 @@ export default function AnswerTable(props) {
                 <td>{q.expectedAnswer}</td>
                 <td>{q.givenAnswer}</td>
                 <td>
-                  <ListGroup.Item variant={variant}>
-                    {/* {mark}  */}
-                  </ListGroup.Item>
+                  <ListGroup.Item variant={variant}>{tickMark}</ListGroup.Item>
                 </td>
               </tr>
             );
@@ -48,10 +46,12 @@ export default function AnswerTable(props) {
   );
 
   function countRight() {
-    return (props.results.totalCorrectAnswered * 100) / props.results.totalCount
-  };
+    return (
+      (props.results.totalCorrectAnswered * 100) / props.results.totalCount
+    );
+  }
   function countWrong() {
-    return (props.results.incorrectAnswers * 100) / props.results.totalCount
+    return (props.results.incorrectAnswers * 100) / props.results.totalCount;
   }
 
   return (
@@ -84,8 +84,18 @@ export default function AnswerTable(props) {
 
       <br />
       <ProgressBar>
-        <ProgressBar variant="success" now={countRight()} label={countRight() + '%'} key={1} />
-        <ProgressBar variant="danger" now={countWrong()} label={countWrong() + '%'} key={2} />
+        <ProgressBar
+          variant="success"
+          now={countRight()}
+          label={countRight() + "%"}
+          key={1}
+        />
+        <ProgressBar
+          variant="danger"
+          now={countWrong()}
+          label={countWrong() + "%"}
+          key={2}
+        />
       </ProgressBar>
 
       <br />
@@ -94,8 +104,9 @@ export default function AnswerTable(props) {
         className="mb-3"
         onClick={handResultlClick}
         aria-controls="fade-tbl"
-        aria-expanded={open}>
-        See detailed results
+        aria-expanded={open}
+      >
+        {open ? "Close" : "Open"} detailed results
       </Button>
       {props.displayTable && renderTable(props.detailedResults)}
     </div>
