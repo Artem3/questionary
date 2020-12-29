@@ -14,7 +14,14 @@ export default function AnswerTable(props) {
 
   const renderTable = (qList) => (
     <Fade in={open} appear timeout={600} mountOnEnter>
-      <Table id="fade-tbl" striped bordered hover size="sm" variant="light">
+      <Table
+        id="fade-tbl"
+        striped
+        hover
+        size="sm"
+        variant="light"
+        className="mt-3"
+      >
         <thead>
           <tr>
             <th>#</th>
@@ -60,48 +67,64 @@ export default function AnswerTable(props) {
         Out of <big>{props.results.totalCount}</big> questions, your result is
       </p>
 
-      <ListGroup variant="flush">
-        {(() => {
-          if (props.results.totalCorrectAnswered > 0) {
-            return (
-              <ListGroup.Item variant="success">
-                Correct answers: <b>{props.results.totalCorrectAnswered}</b>
-              </ListGroup.Item>
-            );
-          }
-        })()}
+      <div
+        style={{
+          width: 300,
+          margin: "auto",
+        }}
+      >
+        <ListGroup variant="flush">
+          {(() => {
+            if (props.results.totalCorrectAnswered > 0) {
+              return (
+                <ListGroup.Item variant="success">
+                  Correct answers: <b>{props.results.totalCorrectAnswered}</b>
+                </ListGroup.Item>
+              );
+            }
+          })()}
 
-        {(() => {
-          if (props.results.incorrectAnswers > 0) {
-            return (
-              <ListGroup.Item variant="danger">
-                Wrong answers: <b>{props.results.incorrectAnswers}</b>
-              </ListGroup.Item>
-            );
-          }
-        })()}
-      </ListGroup>
+          {(() => {
+            if (props.results.incorrectAnswers > 0) {
+              return (
+                <ListGroup.Item variant="danger">
+                  Wrong answers: <b>{props.results.incorrectAnswers}</b>
+                </ListGroup.Item>
+              );
+            }
+          })()}
+        </ListGroup>
+      </div>
 
-      <br />
-      <ProgressBar>
+      <div
+        style={{
+          width: 600,
+          marginTop: "1.2rem",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
         <ProgressBar
-          variant="success"
-          now={countRight()}
-          label={countRight() + "%"}
-          key={1}
-        />
-        <ProgressBar
-          variant="danger"
-          now={countWrong()}
-          label={countWrong() + "%"}
-          key={2}
-        />
-      </ProgressBar>
+          style={{ borderRadius: "2rem", height: "1.5rem", fontSize: "1.1rem" }}
+        >
+          <ProgressBar
+            variant="success"
+            now={countRight()}
+            label={countRight() + "%"}
+            key={1}
+          />
+          <ProgressBar
+            variant="danger"
+            now={countWrong()}
+            label={countWrong() + "%"}
+            key={2}
+          />
+        </ProgressBar>
+      </div>
 
-      <br />
       <Button
         variant="info"
-        className="mb-3"
+        className="mt-5"
         onClick={handResultlClick}
         aria-controls="fade-tbl"
         aria-expanded={open}
