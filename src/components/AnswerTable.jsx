@@ -4,6 +4,8 @@ import Table from "react-bootstrap/Table";
 import ListGroup from "react-bootstrap/ListGroup";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Fade from "react-bootstrap/Fade";
+import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 export default function AnswerTable(props) {
   const [open, setOpen] = useState(false);
@@ -14,7 +16,7 @@ export default function AnswerTable(props) {
 
   const renderTable = (qList) => (
     <Fade in={open} appear timeout={600} mountOnEnter>
-      <Table
+      <Table disabled
         id="fade-tbl"
         striped
         hover
@@ -105,7 +107,7 @@ export default function AnswerTable(props) {
         }}
       >
         <ProgressBar
-          style={{ borderRadius: "2rem", height: "1.5rem", fontSize: "1.1rem" }}
+          style={{ borderRadius: "2rem", height: "1.3rem", fontSize: "1.1rem" }}
         >
           <ProgressBar
             variant="success"
@@ -122,15 +124,21 @@ export default function AnswerTable(props) {
         </ProgressBar>
       </div>
 
-      <Button
-        variant="info"
-        className="mt-5"
-        onClick={handResultlClick}
-        aria-controls="fade-tbl"
-        aria-expanded={open}
-      >
-        {open ? "Close" : "Open"} detailed results
-      </Button>
+      <ButtonToolbar className="justify-content-between">
+        <Button variant="secondary" disabled className="mt-5">
+          Run test again
+        </Button>
+        <Button
+          variant="info"
+          className="mt-5"
+          onClick={handResultlClick}
+          aria-controls="fade-tbl"
+          aria-expanded={open}
+        >
+          {open ? "Close" : "Open"} detailed results
+        </Button>
+      </ButtonToolbar>
+
       {props.displayTable && renderTable(props.detailedResults)}
     </div>
   );
