@@ -5,7 +5,6 @@ import ListGroup from "react-bootstrap/ListGroup";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Fade from "react-bootstrap/Fade";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 export default function AnswerTable(props) {
   const [open, setOpen] = useState(false);
