@@ -1,25 +1,35 @@
 import React from "react";
+import logo from "../logo.svg";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-
+import { LinkContainer } from "react-router-bootstrap";
 
 const Header = () => {
   return (
-    <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#home">
-      <img
-        src="../logo.svg"
-        width="30"
-        height="30"
-        className="d-inline-block align-top"
-        alt="questionnaire logo"
-      />
-          The Qestionnaire</Navbar.Brand>
+    <Navbar bg="info" expand="lg">
+      <LinkContainer to="/">
+        <Navbar.Brand>
+          <img
+            src={logo}
+            width="60"
+            height="60"
+            className="d-inline-block"
+            alt="questionnaire logo"
+          />
+          The Qestionnaire
+        </Navbar.Brand>
+      </LinkContainer>
+
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#link">Link</Nav.Link>
+          <LinkContainer to="/new">
+            <Nav.Link>Create New</Nav.Link>
+          </LinkContainer>
+
+          <LinkContainer to="/about">
+            <Nav.Link>About</Nav.Link>
+          </LinkContainer>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

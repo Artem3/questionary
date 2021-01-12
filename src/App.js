@@ -3,10 +3,12 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from "react-bootstrap/Container";
 import DataProvider from './components/DataProvider'
+import Header from './components/Header';
 
 function App() {
   return (
     <Container>
+      <Header />
       <div className="App">
         <header className="App-header">
           <DataProvider />
