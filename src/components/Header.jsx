@@ -7,7 +7,7 @@ import { LinkContainer } from "react-router-bootstrap";
 const Header = () => {
   return (
     <Navbar bg="info" expand="lg">
-      <LinkContainer to="/">
+      <LinkContainer to="/questionnaire">
         <Navbar.Brand>
           <img
             src={logo}

@@ -6,12 +6,14 @@ import NewQestionnaire from './components/NewQestionnaire';
 import About from './components/About';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from './components/Header';
-import DataProvider from './components/DataProvider';
+
+
 
 ReactDOM.render(
   <Router>
+    <Header />
     <Switch>
-      <Route exact path="/" component={App} />
+      <Route exact path="/questionnaire" component={App} />
       <Route path="/new" component={NewQestionnaire} />
       <Route path="/about" component={About} />
     </Switch>
