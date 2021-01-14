@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <Navbar bg="info" expand="lg" className="py-0">
       <LinkContainer to="/questionnaire">
-        <Navbar.Brand>
+        <Navbar.Brand className="text-white">
           <img
             src={logo}
             width="60"
