@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
 
 export default function NewQestionnaire() {
   const [inputFields, setInputFields] = useState([
     { firstName: "", lastName: "" },
   ]);
 
-  const handleAddFields = () => {
+  const handleAddFields = (index) => {
+    inputFields.splice(index + 1, 0, { firstName: "", lastName: "" });
     const values = [...inputFields];
-    values.push({ firstName: "", lastName: "" });
     setInputFields(values);
   };
 
@@ -36,13 +37,16 @@ export default function NewQestionnaire() {
 
   return (
     <Container style={{ minHeight: "100vh", color: "white" }}>
-      <h3>Create a qestionnaire here</h3>
+      <h4 class="text-center py-2">Create a qestionnaire here</h4>
       <form onSubmit={handleSubmit}>
-        <div className="form-row">
-          {inputFields.map((inputField, index) => (
-            <React.Fragment key={`${inputField}~${index}`}>
+        {inputFields.map((inputField, index) => (
+          <React.Fragment key={index}>
+            <div className="form-row">
+              {/* Line  number */}
+              <div className="fc">{index + 1}</div>
+
               {/* Questionn input */}
-              <div className="form-group col-sm-6">
+              <div className="form-group col-sm-7">
                 <input
                   type="text"
                   className="form-control"
@@ -65,33 +69,25 @@ export default function NewQestionnaire() {
                   onChange={(event) => handleInputChange(index, event)}
                 />
               </div>
+              {/* Add / Remove buttons */}
               <div className="form-group col-sm-2">
-                <button
-                  className="btn btn-link"
-                  type="button"
+                <Button
+                  variant="link"
                   onClick={() => handleRemoveFields(index)}
                 >
                   Remove
-                </button>
-                <button
-                  className="btn btn-link"
-                  type="button"
-                  onClick={() => handleAddFields()}
-                >
+                </Button>
+                <Button variant="link" onClick={() => handleAddFields(index)}>
                   Add
-                </button>
+                </Button>
               </div>
-            </React.Fragment>
-          ))}
-        </div>
-        <div className="submit-button">
-          <button
-            className="btn btn-primary mr-2"
-            type="submit"
-            onSubmit={handleSubmit}
-          >
+            </div>
+          </React.Fragment>
+        ))}
+        <div>
+          <Button variant="info" type="submit" onSubmit={handleSubmit}>
             Save list
-          </button>
+          </Button>
         </div>
         <pre>{JSON.stringify(inputFields, null, 2)}</pre>
       </form>
