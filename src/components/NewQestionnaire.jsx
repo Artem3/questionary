@@ -3,33 +3,44 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 
 export default function NewQestionnaire() {
+  //enable/disable Remove button at single input field
+  const [singleField, setSingleField] = useState(true);
+  //array with all entred questions
   const [inputFields, setInputFields] = useState([
-    { firstName: "", lastName: "" },
+    { question: "", expectedAnswer: "" },
   ]);
 
   const handleAddFields = (index) => {
-    inputFields.splice(index + 1, 0, { firstName: "", lastName: "" });
+    inputFields.splice(index + 1, 0, { question: "", expectedAnswer: "" });
     const values = [...inputFields];
     setInputFields(values);
+    inputFields.length > 1 && setSingleField(false);
   };
 
   const handleRemoveFields = (index) => {
     const values = [...inputFields];
     values.splice(index, 1);
     setInputFields(values);
+    if (inputFields.length === 2) {
+      setSingleField(true);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("inputFields", inputFields);
+    //filter out all empty inputs
+    let cleanQuestions = inputFields.filter(
+      (i) => !(!(i.question !== "") && !(i.expectedAnswer !== ""))
+    );
+    setInputFields(cleanQuestions);
   };
 
   const handleInputChange = (index, event) => {
     const values = [...inputFields];
     if (event.target.name === "firstName") {
-      values[index].firstName = event.target.value;
+      values[index].question = event.target.value;
     } else {
-      values[index].lastName = event.target.value;
+      values[index].expectedAnswer = event.target.value;
     }
 
     setInputFields(values);
@@ -45,7 +56,7 @@ export default function NewQestionnaire() {
               {/* Line  number */}
               <div className="fc">{index + 1}</div>
 
-              {/* Questionn input */}
+              {/* Questionn */}
               <div className="form-group col-sm-7">
                 <input
                   type="text"
@@ -53,11 +64,11 @@ export default function NewQestionnaire() {
                   placeholder="Question"
                   id="firstName"
                   name="firstName"
-                  value={inputField.firstName}
+                  value={inputField.question}
                   onChange={(event) => handleInputChange(index, event)}
                 />
               </div>
-              {/* Answer input */}
+              {/* Answer */}
               <div className="form-group col-sm-2">
                 <input
                   type="text"
@@ -65,7 +76,7 @@ export default function NewQestionnaire() {
                   placeholder="Answer"
                   id="lastName"
                   name="lastName"
-                  value={inputField.lastName}
+                  value={inputField.expectedAnswer}
                   onChange={(event) => handleInputChange(index, event)}
                 />
               </div>
@@ -73,6 +84,7 @@ export default function NewQestionnaire() {
               <div className="form-group col-sm-2">
                 <Button
                   variant="link"
+                  disabled={singleField}
                   onClick={() => handleRemoveFields(index)}
                 >
                   Remove

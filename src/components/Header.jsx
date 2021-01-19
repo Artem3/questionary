@@ -6,7 +6,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 const Header = () => {
   return (
-    <Navbar bg="info" expand="lg" className="py-0">
+    <Navbar bg="info" expand="lg" className="py-0" sticky="top">
       <LinkContainer to="/questionnaire">
         <Navbar.Brand className="text-white">
           <img

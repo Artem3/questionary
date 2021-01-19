@@ -33,6 +33,7 @@ export default function AnswerTable(props) {
           </tr>
         </thead>
         <tbody>
+          
           {qList.map((q, index) => {
             const variant = q.isCorrect ? "success" : "danger";
             const tickMark = q.isCorrect ? <span>&#10003;</span> : "";
