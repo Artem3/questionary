@@ -2,6 +2,7 @@ import React from "react";
 import logo from "../logo.svg";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import Badge from "react-bootstrap/Badge";
 import { LinkContainer } from "react-router-bootstrap";
 
 const Header = () => {
@@ -28,7 +29,11 @@ const Header = () => {
               <Nav.Link>Create New</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/about">
-              <Nav.Link>About</Nav.Link>
+              <Nav.Link>
+                About
+                <span />
+                <Badge variant="warning">7</Badge>
+              </Nav.Link>
             </LinkContainer>
           </Nav>
         </Navbar.Text>
