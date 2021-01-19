@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
 
 export default function NewQestionnaire() {
   //enable/disable Remove button at single input field
@@ -9,6 +10,10 @@ export default function NewQestionnaire() {
   const [inputFields, setInputFields] = useState([
     { question: "", expectedAnswer: "" },
   ]);
+  
+  const handleInputNameChange = (event) => {
+    console.log(event);
+  };
 
   const handleAddFields = (index) => {
     inputFields.splice(index + 1, 0, { question: "", expectedAnswer: "" });
@@ -48,7 +53,23 @@ export default function NewQestionnaire() {
 
   return (
     <Container style={{ minHeight: "100vh", color: "white" }}>
-      <h4 class="text-center py-2">Create a qestionnaire here</h4>
+      <h4 class="text-center py-3">Create a qestionnaire here</h4>
+      {/* List name */}
+      <Col className="text-center">
+        <input
+          style={{
+            backgroundColor: "lightGrey",
+            borderRadius: ".3rem",
+            width: "50%",
+            margin: "30px",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
+          id="listName"
+          defaultValue  = "List name"
+          onChange={(event) => handleInputNameChange(event)}
+        />
+      </Col>
       <form onSubmit={handleSubmit}>
         {inputFields.map((inputField, index) => (
           <React.Fragment key={index}>
