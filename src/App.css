@@ -36,3 +36,17 @@
 .fc {
  width: 1.2rem;
 }
+
+#badge-tooltip .tooltip-inner {
+  background-color: #ffc107;
+  border: 1px solid #ffc107;
+  color: #000;
+}
+
+#badge-tooltip .tooltip-arrow {
+  border-top: 5px solid #ffc107;
+}
+
+.counter-badge{
+  margin-left: 5px;
+}
