@@ -37,6 +37,10 @@
  width: 1.2rem;
 }
 
+.full-width{
+  width: 100%;
+}
+
 #badge-tooltip .tooltip-inner {
   background-color: #ffc107;
   border: 1px solid #ffc107;

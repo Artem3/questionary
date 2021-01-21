@@ -1,15 +1,17 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import logo from './logo.svg';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import DataProvider from './components/DataProvider'
+
+import Exam from './pages/Exam'
 
 
 function App() {
   return (
-        <body className="App-body">
-          <DataProvider />
+        <>
+          <Exam />
           <img src={logo} className="App-logo" alt="logo" />
-        </body>
+        </>
   );
 }
 
