@@ -10,10 +10,10 @@ export default function NewQestionnaire() {
   const [inputFields, setInputFields] = useState([
     { question: "", expectedAnswer: "" },
   ]);
-  const [name, setName] = useState("default");
+  const [listName, setListName] = useState("default");
 
   const handleInputNameChange = (event) => {
-    setName(event.target.value);
+    setListName(event.target.value);
   };
 
   const handleAddFields = (index) => {
@@ -39,9 +39,17 @@ export default function NewQestionnaire() {
       (i) => !(!(i.question !== "") && !(i.expectedAnswer !== ""))
     );
     setInputFields(cleanQuestions);
-    //prepare and save to the local starage
+    //prepare and save to the local storage
     const questions = new Map();
-    questions.set(name, inputFields);
+    !listName
+      ? questions.set("default", inputFields)
+      : questions.set(listName, inputFields);
+
+    //null or string
+    const storage = localStorage.getItem("qestionnaire");
+    //if null then add a key
+    //if string then parse back to array object, push new key-value and stringify back.
+    //then localStorage.setItem
     const listAsString = JSON.stringify(Array.from(questions.entries()));
     localStorage.setItem("qestionnaire", listAsString);
   };
