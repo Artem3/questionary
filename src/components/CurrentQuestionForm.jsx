@@ -8,6 +8,13 @@ export default function CurrentQuestionForm(props) {
     props.onClick(givenAnswer);
     setGivenAnswer("");
   };
+  
+  const cardStyle = {
+    justifyContent: 'space-between',
+    height: '14rem',
+    alignItems: "center",
+    padding: "2rem"
+  }
 
   function handleEnterKey(e) {
     if (e.key === "Enter") {
@@ -16,7 +23,7 @@ export default function CurrentQuestionForm(props) {
   }
 
   return (
-    <Card bg="light" text="dark" style={{ alignItems: "center" }}>
+    <Card bg="light" text="dark" style={cardStyle}>
       <Card.Title style={{ width: "30rem" }}>
         {props.currentQuestion.qText}
       </Card.Title>
