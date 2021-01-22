@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import ConfirmDialog from "../components/ConfirmDialog";
 
 export default function NewQestionnaire() {
   const defaultListName = "List Name";
@@ -42,12 +43,15 @@ export default function NewQestionnaire() {
     setInputFields(cleanQuestions);
 
     //prepare and save to the local storage
-    const nameToSave = !listName ? defaultListName : listName
+    const nameToSave = !listName ? defaultListName : listName;
     const listExist = localStorage.getItem(nameToSave);
-    var replace = false;
+    var replace = true;
+    <ConfirmDialog />;
+
     if (listExist !== null) {
-      replace = window.confirm(`Name '${nameToSave}' already exists. Do you want to replace existing ?`);
+      // `Name '${nameToSave}' already exists. Do you want to replace existing ?`
     }
+
     if (replace) {
       const listAsString = JSON.stringify(inputFields);
       localStorage.setItem(nameToSave, listAsString);
@@ -60,7 +64,7 @@ export default function NewQestionnaire() {
 
   const handleInputChange = (index, event) => {
     const values = [...inputFields];
-    if (event.target.name === "firstName") {
+    if (event.target.name === "question") {
       values[index].question = event.target.value;
     } else {
       values[index].expectedAnswer = event.target.value;
@@ -89,48 +93,48 @@ export default function NewQestionnaire() {
       </Col>
       <form onSubmit={handleSubmit}>
         {inputFields.map((inputField, index) => (
-            <div className="form-row" key={index}>
-              {/* Line  number */}
-              <div className="fc">{index + 1}</div>
+          <div className="form-row" key={index}>
+            {/* Line  number */}
+            <div className="fc">{index + 1}</div>
 
-              {/* Questionn */}
-              <div className="form-group col-sm-7">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Question"
-                  id="firstName"
-                  name="firstName"
-                  value={inputField.question}
-                  onChange={(event) => handleInputChange(index, event)}
-                />
-              </div>
-              {/* Answer */}
-              <div className="form-group col-sm-2">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Answer"
-                  id="lastName"
-                  name="lastName"
-                  value={inputField.expectedAnswer}
-                  onChange={(event) => handleInputChange(index, event)}
-                />
-              </div>
-              {/* Add / Remove buttons */}
-              <div className="form-group col-sm-2">
-                <Button
-                  variant="link"
-                  disabled={singleField}
-                  onClick={() => handleRemoveFields(index)}
-                >
-                  Remove
-                </Button>
-                <Button variant="link" onClick={() => handleAddFields(index)}>
-                  Add
-                </Button>
-              </div>
+            {/* Questionn */}
+            <div className="form-group col-sm-7">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Question"
+                id="question"
+                name="question"
+                value={inputField.question}
+                onChange={(event) => handleInputChange(index, event)}
+              />
             </div>
+            {/* Answer */}
+            <div className="form-group col-sm-2">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Answer"
+                id="answer"
+                name="answer"
+                value={inputField.expectedAnswer}
+                onChange={(event) => handleInputChange(index, event)}
+              />
+            </div>
+            {/* Add / Remove buttons */}
+            <div className="form-group col-sm-2">
+              <Button
+                variant="link"
+                disabled={singleField}
+                onClick={() => handleRemoveFields(index)}
+              >
+                Remove
+              </Button>
+              <Button variant="link" onClick={() => handleAddFields(index)}>
+                Add
+              </Button>
+            </div>
+          </div>
         ))}
         <div>
           <Button variant="info" type="submit" onSubmit={handleSubmit}>
