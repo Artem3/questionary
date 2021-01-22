@@ -48,7 +48,7 @@ const Header = () => {
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip}
                 >
-                  <Badge className="counter-badge" variant="warning">7</Badge>
+                  <Badge className="counter-badge" variant="warning">{localStorage.length}</Badge>
                 </OverlayTrigger>
               </Nav.Link>
             </LinkContainer>

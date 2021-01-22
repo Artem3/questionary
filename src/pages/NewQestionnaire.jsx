@@ -4,13 +4,14 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 
 export default function NewQestionnaire() {
+  const defaultListName = "List Name";
   //enable/disable Remove button at single input field
   const [singleField, setSingleField] = useState(true);
   //array with all entred questions
   const [inputFields, setInputFields] = useState([
     { question: "", expectedAnswer: "" },
   ]);
-  const [listName, setListName] = useState("default");
+  const [listName, setListName] = useState(defaultListName);
 
   const handleInputNameChange = (event) => {
     setListName(event.target.value);
@@ -39,19 +40,22 @@ export default function NewQestionnaire() {
       (i) => !(!(i.question !== "") && !(i.expectedAnswer !== ""))
     );
     setInputFields(cleanQuestions);
-    //prepare and save to the local storage
-    const questions = new Map();
-    !listName
-      ? questions.set("default", inputFields)
-      : questions.set(listName, inputFields);
 
-    //null or string
-    const storage = localStorage.getItem("qestionnaire");
+    //prepare and save to the local storage
+    const nameToSave = !listName ? defaultListName : listName
+    const listExist = localStorage.getItem(nameToSave);
+    var replace = false;
+    if (listExist !== null) {
+      replace = window.confirm(`Name '${nameToSave}' already exists. Do you want to replace existing ?`);
+    }
+    if (replace) {
+      const listAsString = JSON.stringify(inputFields);
+      localStorage.setItem(nameToSave, listAsString);
+    }
+
     //if null then add a key
     //if string then parse back to array object, push new key-value and stringify back.
     //then localStorage.setItem
-    const listAsString = JSON.stringify(Array.from(questions.entries()));
-    localStorage.setItem("qestionnaire", listAsString);
   };
 
   const handleInputChange = (index, event) => {
@@ -79,7 +83,7 @@ export default function NewQestionnaire() {
             fontWeight: "bold",
           }}
           id="listName"
-          defaultValue="List name"
+          defaultValue={defaultListName}
           onChange={(event) => handleInputNameChange(event)}
         />
       </Col>
@@ -133,7 +137,6 @@ export default function NewQestionnaire() {
             Save list
           </Button>
         </div>
-        <pre>{JSON.stringify(inputFields, null, 2)}</pre>
       </form>
     </Container>
   );
