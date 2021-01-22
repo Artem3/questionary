@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import testDataJsonArray from "../data/test-data.json";
-import CurrentQuestionForm from "./CurrentQuestionForm";
-import AnswerTable from "./AnswerTable";
-import constructor from "./Constructor";
+import CurrentQuestionForm from "../components/CurrentQuestionForm";
+import AnswerTable from "../components/AnswerTable";
+import constructor from "../components/Constructor";
 
-export default function DataProvider() {
+export default function Exam() {
   const [qList, setQList] = useState("");
 
   // shuffl array once at the begining

@@ -89,8 +89,7 @@ export default function NewQestionnaire() {
       </Col>
       <form onSubmit={handleSubmit}>
         {inputFields.map((inputField, index) => (
-          <React.Fragment key={index}>
-            <div className="form-row">
+            <div className="form-row" key={index}>
               {/* Line  number */}
               <div className="fc">{index + 1}</div>
 
@@ -132,7 +131,6 @@ export default function NewQestionnaire() {
                 </Button>
               </div>
             </div>
-          </React.Fragment>
         ))}
         <div>
           <Button variant="info" type="submit" onSubmit={handleSubmit}>

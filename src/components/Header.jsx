@@ -17,7 +17,7 @@ const renderTooltip = (props) => (
 
 const Header = () => {
   return (
-    <Navbar bg="info" expand="lg" className="py-0" sticky="top">
+    <Navbar bg="info" expand="lg" className="py-0 full-width" sticky="top">
       <LinkContainer to="/questionnaire">
         <Navbar.Brand className="text-white">
           <img

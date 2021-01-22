@@ -1,15 +1,28 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import logo from './logo.svg';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import DataProvider from './components/DataProvider'
+
+import Exam from './pages/Exam'
+import NewQestionnaire from './pages/NewQestionnaire';
+import About from './pages/About';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Header from './components/Header';
 
 
 function App() {
   return (
-        <body className="App-body">
-          <DataProvider />
-          <img src={logo} className="App-logo" alt="logo" />
-        </body>
+    <body className="App-body">
+      <Router>
+        <Header />
+        <Switch>
+          <Route exact path="/questionnaire" component={Exam} />
+          <Route path="/new" component={NewQestionnaire} />
+          <Route path="/about" component={About} />
+        </Switch>
+      </Router>
+      <img src={logo} className="App-logo" alt="logo" />
+    </body>
   );
 }
 
