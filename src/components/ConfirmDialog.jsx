@@ -1,30 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-function  ConfirmDialog() {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+function  ConfirmDialog(props) {
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={props.show} onHide={props.onCancel}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>{props.prompt}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={props.onCancel}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Override existin list
+          <Button variant="primary" onClick={props.onOk}>
+            Override
           </Button>
         </Modal.Footer>
       </Modal>
