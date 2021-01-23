@@ -12,7 +12,7 @@ import Header from './components/Header';
 
 function App() {
   return (
-    <body className="App-body">
+    <div className="main-wrapper">
       <Router>
         <Header />
         <Switch>
@@ -22,7 +22,7 @@ function App() {
         </Switch>
       </Router>
       <img src={logo} className="App-logo" alt="logo" />
-    </body>
+    </div>
   );
 }
 
