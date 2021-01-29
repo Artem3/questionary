@@ -5,7 +5,7 @@ import './App.css';
 
 import Exam from './pages/Exam'
 import NewQestionnaire from './pages/NewQestionnaire';
-import About from './pages/About';
+import List from './pages/List';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from './components/Header';
 
@@ -18,7 +18,7 @@ function App() {
         <Switch>
           <Route exact path="/questionnaire" component={Exam} />
           <Route path="/new" component={NewQestionnaire} />
-          <Route path="/about" component={About} />
+          <Route path="/lists" component={List} />
         </Switch>
       </Router>
       <img src={logo} className="App-logo" alt="logo" />

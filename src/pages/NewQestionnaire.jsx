@@ -3,18 +3,18 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import ConfirmDialog from "../components/ConfirmDialog";
+import MyToast from "../components/MyToast";
 
 export default function NewQestionnaire() {
-  const defaultInputFields = [
-    { question: "", expectedAnswer: "" },
-  ];
+  const defaultInputFields = [{ question: "", expectedAnswer: "" }];
   //enable/disable Remove button at single input field
   const [singleField, setSingleField] = useState(true);
   //array with all entred questions
   const [inputFields, setInputFields] = useState(defaultInputFields);
   const [listName, setListName] = useState(`List Name #${localStorage.length}`);
   const [replacementNeedsConfirm, setReplacementNeedsConfirm] = useState(false);
-  const [confirmDialogPrompt, setConfirmDialogPrompt] = useState('');
+  const [confirmDialogPrompt, setConfirmDialogPrompt] = useState("");
+  const [displayToast, setDisplayToast] = useState(false);
   const handleInputNameChange = (event) => {
     setListName(event.target.value);
   };
@@ -37,22 +37,25 @@ export default function NewQestionnaire() {
 
   const addNewOrReplace = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
-  }
+  };
 
   const handleReplacementConfirm = () => {
     addNewOrReplace(listName, inputFields);
     setListName(`List Name #${localStorage.length}`);
     setInputFields(defaultInputFields);
     setReplacementNeedsConfirm(false);
-  }
+  };
 
   const handleReplacementCancel = () => {
     setReplacementNeedsConfirm(false);
-  }
+  };
 
-  const isQuestionAndAnswerFilled = (row) => row.question !== "" && row.expectedAnswer !== "";
+  const isQuestionAndAnswerFilled = (row) =>
+    row.question !== "" && row.expectedAnswer !== "";
   //TODO: regarding the row below - needs to add red borders around invalid inputs
-  const isInvalidForm = () => !listName || (inputFields.length === 1 && !isQuestionAndAnswerFilled(inputFields[0]));
+  const isInvalidForm = () =>
+    !listName ||
+    (inputFields.length === 1 && !isQuestionAndAnswerFilled(inputFields[0]));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -62,9 +65,10 @@ export default function NewQestionnaire() {
 
     //prepare and save to the local storage
     const listExist = localStorage.getItem(listName);
-
     if (listExist) {
-      setConfirmDialogPrompt(`Name '${listName}' already exists. Do you want to replace existing ?`);
+      setConfirmDialogPrompt(
+        `Name '${listName}' already exists. Do you want to replace existing ?`
+      );
       setReplacementNeedsConfirm(true);
       return;
     }
@@ -72,9 +76,7 @@ export default function NewQestionnaire() {
     addNewOrReplace(listName, inputFields);
     setListName(`List Name #${localStorage.length}`);
     setInputFields(defaultInputFields);
-    //if null then add a key
-    //if string then parse back to array object, push new key-value and stringify back.
-    //then localStorage.setItem
+    setDisplayToast(true);
   };
 
   const handleInputChange = (index, event) => {
@@ -152,16 +154,27 @@ export default function NewQestionnaire() {
           </div>
         ))}
         <div>
-          <Button variant="info" type="submit" onSubmit={handleSubmit} disabled={isInvalidForm()}>
+          <Button
+            variant="info"
+            type="submit"
+            onSubmit={handleSubmit}
+            disabled={isInvalidForm()}
+          >
             Save list
           </Button>
         </div>
       </form>
-      <ConfirmDialog 
+      <ConfirmDialog
         show={replacementNeedsConfirm}
         prompt={confirmDialogPrompt}
         onOk={handleReplacementConfirm}
-        onCancel={handleReplacementCancel} 
+        onCancel={handleReplacementCancel}
+      />
+      <MyToast
+        show={displayToast}
+        delay={2000}
+        autohide={true}
+        onClose={() => setDisplayToast(false)}
       />
     </Container>
   );

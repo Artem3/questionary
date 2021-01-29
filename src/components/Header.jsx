@@ -11,7 +11,7 @@ const renderTooltip = (props) => (
   <Tooltip
     id="badge-tooltip"
     {...props}>
-    7 quiestions is in this list
+    You have {localStorage.length} lists with questions
   </Tooltip>
 );
 
@@ -38,10 +38,10 @@ const Header = () => {
             <LinkContainer to="/new">
               <Nav.Link>Create New</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/about">
+            <LinkContainer to="/lists">
               <Nav.Link>
                 <span>
-                  About
+                  Lists
                 </span>
                 <OverlayTrigger
                   placement="bottom"
