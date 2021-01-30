@@ -1,26 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import testDataJsonArray from "../data/test-data.json";
 import CurrentQuestionForm from "../components/CurrentQuestionForm";
 import AnswerTable from "../components/AnswerTable";
-import constructor from "../components/Constructor";
+import {shuffle} from "../utils/arrayUtils";
 
 export default function Exam() {
-  const [qList, setQList] = useState("");
-
-  // shuffl array once at the begining
-  constructor(() => {
-    const shuffle = (list) => list.sort(() => 0.5 - Math.random());
-    setQList(shuffle(testDataJsonArray));
-  });
+  const [qList, setQList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const isListCompleted = currentIndex <= qList.length - 1 ? false : true;
   const [displayTable, setDisplayTable] = useState(false);
+  
+  useEffect(() => {
+    setQList(shuffle(testDataJsonArray));
+  }, []);
+  const isListCompleted = currentIndex <= qList.length - 1 ? false : true;
 
   // update current question with an answer
   const setNextQuestion = (givenAnswer) => {
     qList[currentIndex].givenAnswer = givenAnswer;
 
-    if (qList[currentIndex].expectedAnswer == givenAnswer) {
+    if (qList[currentIndex].expectedAnswer === givenAnswer) {
       qList[currentIndex].isCorrect = true;
     }
     const unsweredQuestion = qList[currentIndex];
