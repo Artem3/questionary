@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import ConfirmDialog from "../components/ConfirmDialog";
-import MyToast from "../components/MyToast";
+
+import ConfirmDialog from "components/ConfirmDialog";
+import MyToast from "components/MyToast";
 
 export default function NewQestionnaire() {
   const defaultInputFields = [{ question: "", expectedAnswer: "" }];

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import testDataJsonArray from "../data/test-data.json";
-import CurrentQuestionForm from "../components/CurrentQuestionForm";
-import AnswerTable from "../components/AnswerTable";
-import {shuffle} from "../utils/arrayUtils";
+import testDataJsonArray from "data/test-data.json";
+
+import AnswerTable from "components/AnswerTable";
+import CurrentQuestionForm from "components/CurrentQuestionForm";
+import {shuffle} from "utils/arrayUtils";
 
 export default function Exam() {
   const [qList, setQList] = useState([]);
