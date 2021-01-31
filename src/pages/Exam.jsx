@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import testDataJsonArray from "data/test-data.json";
+import React, { useState, useEffect } from 'react';
+import testDataJsonArray from 'data/test-data.json';
 
-import AnswerTable from "components/AnswerTable";
-import CurrentQuestionForm from "components/CurrentQuestionForm";
-import {shuffle} from "utils/arrayUtils";
+import AnswerTable from 'components/AnswerTable';
+import CurrentQuestionForm from 'components/CurrentQuestionForm';
+import { shuffle } from 'utils/arrayUtils';
 
 export default function Exam() {
   const [qList, setQList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayTable, setDisplayTable] = useState(false);
-  
+
   useEffect(() => {
     setQList(shuffle(testDataJsonArray));
   }, []);
@@ -36,7 +36,7 @@ export default function Exam() {
       .length;
 
     if (incorrectAnswers + totalCorrectAnswered !== totalCount) {
-      console.log("Incorrect result calculation!");
+      console.log('Incorrect result calculation!');
     }
 
     return {

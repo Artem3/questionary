@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Table from "react-bootstrap/Table";
-import ListGroup from "react-bootstrap/ListGroup";
-import ProgressBar from "react-bootstrap/ProgressBar";
-import Fade from "react-bootstrap/Fade";
-import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+import React, { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+import ListGroup from 'react-bootstrap/ListGroup';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import Fade from 'react-bootstrap/Fade';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 
 export default function AnswerTable(props) {
   const [open, setOpen] = useState(false);
@@ -15,7 +15,8 @@ export default function AnswerTable(props) {
 
   const renderTable = (qList) => (
     <Fade in={open} appear timeout={600} mountOnEnter>
-      <Table disabled
+      <Table
+        disabled
         id="fade-tbl"
         striped
         hover
@@ -33,10 +34,9 @@ export default function AnswerTable(props) {
           </tr>
         </thead>
         <tbody>
-          
           {qList.map((q, index) => {
-            const variant = q.isCorrect ? "success" : "danger";
-            const tickMark = q.isCorrect ? <span>&#10003;</span> : "";
+            const variant = q.isCorrect ? 'success' : 'danger';
+            const tickMark = q.isCorrect ? <span>&#10003;</span> : '';
             return (
               <tr key={q.id}>
                 <td>{index + 1}</td>
@@ -72,7 +72,7 @@ export default function AnswerTable(props) {
       <div
         style={{
           width: 300,
-          margin: "auto",
+          margin: 'auto',
         }}
       >
         <ListGroup variant="flush">
@@ -101,24 +101,24 @@ export default function AnswerTable(props) {
       <div
         style={{
           width: 600,
-          marginTop: "1.2rem",
-          marginLeft: "auto",
-          marginRight: "auto",
+          marginTop: '1.2rem',
+          marginLeft: 'auto',
+          marginRight: 'auto',
         }}
       >
         <ProgressBar
-          style={{ borderRadius: "2rem", height: "1.3rem", fontSize: "1.1rem" }}
+          style={{ borderRadius: '2rem', height: '1.3rem', fontSize: '1.1rem' }}
         >
           <ProgressBar
             variant="success"
             now={countRight()}
-            label={countRight() + "%"}
+            label={countRight() + '%'}
             key={1}
           />
           <ProgressBar
             variant="danger"
             now={countWrong()}
-            label={countWrong() + "%"}
+            label={countWrong() + '%'}
             key={2}
           />
         </ProgressBar>
@@ -135,7 +135,7 @@ export default function AnswerTable(props) {
           aria-controls="fade-tbl"
           aria-expanded={open}
         >
-          {open ? "Close" : "Open"} detailed results
+          {open ? 'Close' : 'Open'} detailed results
         </Button>
       </ButtonToolbar>
 

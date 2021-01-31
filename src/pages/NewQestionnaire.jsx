@@ -1,31 +1,31 @@
-import React, { useState } from "react";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
+import React, { useState } from 'react';
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 
-import ConfirmDialog from "components/ConfirmDialog";
-import MyToast from "components/MyToast";
+import ConfirmDialog from 'components/ConfirmDialog';
+import MyToast from 'components/MyToast';
 
 export default function NewQestionnaire() {
-  const defaultInputFields = [{ question: "", expectedAnswer: "" }];
+  const defaultInputFields = [{ question: '', expectedAnswer: '' }];
   //array with all entred questions
   const [inputFields, setInputFields] = useState(defaultInputFields);
   const [listName, setListName] = useState(`List Name #${localStorage.length}`);
   const [replacementNeedsConfirm, setReplacementNeedsConfirm] = useState(false);
-  const [confirmDialogPrompt, setConfirmDialogPrompt] = useState("");
+  const [confirmDialogPrompt, setConfirmDialogPrompt] = useState('');
   const [displayToast, setDisplayToast] = useState(false);
 
   const addNewOrReplace = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
   };
-  
+
   const isQuestionAndAnswerFilled = (row) =>
-      row.question !== "" && row.expectedAnswer !== "";
-    //TODO: regarding the row below - needs to add red borders around invalid inputs
+    row.question !== '' && row.expectedAnswer !== '';
+  //TODO: regarding the row below - needs to add red borders around invalid inputs
 
   const isInvalidForm = () =>
-      !listName ||
-      (inputFields.length === 1 && !isQuestionAndAnswerFilled(inputFields[0]));
+    !listName ||
+    (inputFields.length === 1 && !isQuestionAndAnswerFilled(inputFields[0]));
 
   const isRemoveDisabled = () => inputFields.length === 1;
 
@@ -42,7 +42,6 @@ export default function NewQestionnaire() {
     values.splice(index, 1);
     setInputFields(values);
   };
-
 
   const handleReplacementConfirm = () => {
     addNewOrReplace(listName, inputFields);
@@ -79,7 +78,7 @@ export default function NewQestionnaire() {
 
   const handleInputChange = (index, event) => {
     const values = [...inputFields];
-    if (event.target.name === "question") {
+    if (event.target.name === 'question') {
       values[index].question = event.target.value;
     } else {
       values[index].expectedAnswer = event.target.value;
@@ -88,18 +87,18 @@ export default function NewQestionnaire() {
   };
 
   return (
-    <Container style={{ minHeight: "100vh", color: "white" }}>
+    <Container style={{ minHeight: '100vh', color: 'white' }}>
       <h4 className="text-center py-3">Create a qestionnaire here</h4>
       {/* List name */}
       <Col className="text-center">
         <input
           style={{
-            backgroundColor: "lightGrey",
-            borderRadius: ".3rem",
-            width: "50%",
-            margin: "30px",
-            textAlign: "center",
-            fontWeight: "bold",
+            backgroundColor: 'lightGrey',
+            borderRadius: '.3rem',
+            width: '50%',
+            margin: '30px',
+            textAlign: 'center',
+            fontWeight: 'bold',
           }}
           id="listName"
           value={listName}

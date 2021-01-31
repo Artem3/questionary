@@ -1,4 +1,4 @@
-import Toast from "react-bootstrap/Toast";
+import Toast from 'react-bootstrap/Toast';
 
 function MyToast(props) {
   return (
