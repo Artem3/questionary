@@ -8,37 +8,41 @@ import MyToast from "components/MyToast";
 
 export default function NewQestionnaire() {
   const defaultInputFields = [{ question: "", expectedAnswer: "" }];
-  //enable/disable Remove button at single input field
-  const [singleField, setSingleField] = useState(true);
   //array with all entred questions
   const [inputFields, setInputFields] = useState(defaultInputFields);
   const [listName, setListName] = useState(`List Name #${localStorage.length}`);
   const [replacementNeedsConfirm, setReplacementNeedsConfirm] = useState(false);
   const [confirmDialogPrompt, setConfirmDialogPrompt] = useState("");
   const [displayToast, setDisplayToast] = useState(false);
+
+  const addNewOrReplace = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+  };
+  
+  const isQuestionAndAnswerFilled = (row) =>
+      row.question !== "" && row.expectedAnswer !== "";
+    //TODO: regarding the row below - needs to add red borders around invalid inputs
+
+  const isInvalidForm = () =>
+      !listName ||
+      (inputFields.length === 1 && !isQuestionAndAnswerFilled(inputFields[0]));
+
+  const isRemoveDisabled = () => inputFields.length === 1;
+
   const handleInputNameChange = (event) => {
     setListName(event.target.value);
   };
 
   const handleAddFields = (index) => {
-    inputFields.splice(index + 1, 0, { question: "", expectedAnswer: "" });
-    const values = [...inputFields];
-    setInputFields(values);
-    inputFields.length > 1 && setSingleField(false);
+    setInputFields([...inputFields, ...defaultInputFields]);
   };
 
   const handleRemoveFields = (index) => {
     const values = [...inputFields];
     values.splice(index, 1);
     setInputFields(values);
-    if (inputFields.length === 2) {
-      setSingleField(true);
-    }
   };
 
-  const addNewOrReplace = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
-  };
 
   const handleReplacementConfirm = () => {
     addNewOrReplace(listName, inputFields);
@@ -50,13 +54,6 @@ export default function NewQestionnaire() {
   const handleReplacementCancel = () => {
     setReplacementNeedsConfirm(false);
   };
-
-  const isQuestionAndAnswerFilled = (row) =>
-    row.question !== "" && row.expectedAnswer !== "";
-  //TODO: regarding the row below - needs to add red borders around invalid inputs
-  const isInvalidForm = () =>
-    !listName ||
-    (inputFields.length === 1 && !isQuestionAndAnswerFilled(inputFields[0]));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -143,7 +140,7 @@ export default function NewQestionnaire() {
             <div className="form-group col-sm-2">
               <Button
                 variant="link"
-                disabled={singleField}
+                disabled={isRemoveDisabled()}
                 onClick={() => handleRemoveFields(index)}
               >
                 Remove
