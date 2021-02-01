@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import Table from "react-bootstrap/Table";
-import Container from "react-bootstrap/Container";
+import React, { useState } from 'react';
+import Table from 'react-bootstrap/Table';
+import Container from 'react-bootstrap/Container';
 
 export default function List() {
   // const [lists, setLists] = useState(localStorage);
 
   return (
     <>
-      <Container style={{ minHeight: "100vh", color: "white" }}>
+      <Container style={{ minHeight: '100vh', color: 'white' }}>
         <h4>The list of saved questionaries </h4>
         <Table bordered hover size="sm" variant="light">
           <thead>

@@ -1,8 +1,8 @@
-import React from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
-function  ConfirmDialog(props) {
+function ConfirmDialog(props) {
   return (
     <>
       <Modal show={props.show} onHide={props.onCancel}>
@@ -21,6 +21,6 @@ function  ConfirmDialog(props) {
       </Modal>
     </>
   );
-};
+}
 
 export default ConfirmDialog;

@@ -3,12 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from './logo.svg';
 import './App.css';
 
-import Exam from './pages/Exam'
+import Exam from './pages/Exam';
 import NewQestionnaire from './pages/NewQestionnaire';
 import List from './pages/List';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
-
 
 function App() {
   return (

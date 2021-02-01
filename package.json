@@ -42,5 +42,18 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "http://Artem3.github.io/questionnaire"
+  "homepage": "http://Artem3.github.io/questionnaire",
+  "devDependencies": {
+    "husky": ">=4",
+    "lint-staged": ">=10",
+    "prettier": "2.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
+  }
 }

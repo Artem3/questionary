@@ -1,16 +1,14 @@
-import React from "react";
-import logo from "../logo.svg";
-import Badge from "react-bootstrap/Badge";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import React from 'react';
+import logo from '../logo.svg';
+import Badge from 'react-bootstrap/Badge';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import { LinkContainer } from "react-router-bootstrap";
+import { LinkContainer } from 'react-router-bootstrap';
 
 const renderTooltip = (props) => (
-  <Tooltip
-    id="badge-tooltip"
-    {...props}>
+  <Tooltip id="badge-tooltip" {...props}>
     You have {localStorage.length} lists with questions
   </Tooltip>
 );
@@ -40,15 +38,15 @@ const Header = () => {
             </LinkContainer>
             <LinkContainer to="/lists">
               <Nav.Link>
-                <span>
-                  Lists
-                </span>
+                <span>Lists</span>
                 <OverlayTrigger
                   placement="bottom"
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip}
                 >
-                  <Badge className="counter-badge" variant="warning">{localStorage.length}</Badge>
+                  <Badge className="counter-badge" variant="warning">
+                    {localStorage.length}
+                  </Badge>
                 </OverlayTrigger>
               </Nav.Link>
             </LinkContainer>
