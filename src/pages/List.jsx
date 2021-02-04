@@ -3,7 +3,19 @@ import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 
 export default function List() {
-  // const [lists, setLists] = useState(localStorage);
+  
+  const [content, setContent] = useState(fillContentFromStorage());
+  const i = 0;
+
+  function fillContentFromStorage() {
+    const content = new Map();
+    for (var i = 0, len = localStorage.length; i < len; ++i) {
+      let title = localStorage.key(i);
+      let qLength = JSON.parse(localStorage.getItem(title)).length;
+      content.set(title, qLength);
+    }
+    return content;
+  }
 
   return (
     <>
@@ -21,18 +33,19 @@ export default function List() {
             </tr>
           </thead>
           <tbody>
-            {/* {for (let [key, value] of Object.entries(localStorage))  {
-          console.log(`${key}: ${value}`)
-        } }
-            {/* <tr key={i.id}> */}
-            <tr>
-              <td>{1}</td>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
+            {content.forEach((title, size) => {
+
+              return (
+                <tr>
+                  <td>{i}</td>
+                  <td>{title}</td>
+                  <td>{size}</td>
+                  <td>Del</td>
+                  <td>@mdo</td>
+                  <td>@mdo</td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
       </Container>
