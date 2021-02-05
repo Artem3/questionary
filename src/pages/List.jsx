@@ -23,9 +23,9 @@ export default function List() {
   const handleEdit = () => {
     console.log('Edit btn clicked');
   };
-  const handleDelete = (event) => {
-    console.log(event);
-    console.log('Delete btn clicked');
+  const handleDelete = (title) => {
+    localStorage.removeItem(title);
+    setContent(fillContentFromStorage());
   };
 
   return (
@@ -65,7 +65,7 @@ export default function List() {
                     <td>
                       <Button
                         variant="link"
-                        onClick={(event) => handleDelete(event)}
+                        onClick={() => handleDelete(elem[0])}
                       >
                         &#x2716;
                       </Button>
