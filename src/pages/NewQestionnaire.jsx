@@ -33,7 +33,8 @@ export default function NewQestionnaire() {
     setListName(event.target.value);
   };
 
-  const handleAddFields = (index) => {
+  const handleAddFields = (index) => {    
+    //TODO: insert a new item next after 'Add' btn was clicked 
     setInputFields([...inputFields, ...defaultInputFields]);
   };
 

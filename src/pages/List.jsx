@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
 
 export default function List() {
-  
   const [content, setContent] = useState(fillContentFromStorage());
   const i = 0;
 
@@ -16,6 +16,17 @@ export default function List() {
     }
     return content;
   }
+
+  const handleRun = () => {
+    console.log('Run btn clicked');
+  };
+  const handleEdit = () => {
+    console.log('Edit btn clicked');
+  };
+  const handleDelete = (event) => {
+    console.log(event);
+    console.log('Delete btn clicked');
+  };
 
   return (
     <>
@@ -33,19 +44,35 @@ export default function List() {
             </tr>
           </thead>
           <tbody>
-            {content.forEach((title, size) => {
-
-              return (
-                <tr>
-                  <td>{i}</td>
-                  <td>{title}</td>
-                  <td>{size}</td>
-                  <td>Del</td>
-                  <td>@mdo</td>
-                  <td>@mdo</td>
-                </tr>
-              );
-            })}
+            {Array.from(content)
+              .sort()
+              .map((elem, index) => {
+                return (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{elem[0]}</td>
+                    <td>{elem[1]}</td>
+                    <td>
+                      <Button variant="link" onClick={() => handleRun()}>
+                        &#9655;
+                      </Button>
+                    </td>
+                    <td>
+                      <Button variant="link" onClick={() => handleEdit()}>
+                        &#x270E;
+                      </Button>
+                    </td>
+                    <td>
+                      <Button
+                        variant="link"
+                        onClick={(event) => handleDelete(event)}
+                      >
+                        &#x2716;
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </Table>
       </Container>
