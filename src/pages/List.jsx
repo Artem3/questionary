@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import EditForm from './EditForm';
 
 export default function List() {
   const [content, setContent] = useState(fillContentFromStorage());
-  const i = 0;
 
   function fillContentFromStorage() {
     const content = new Map();
@@ -20,9 +21,7 @@ export default function List() {
   const handleRun = () => {
     console.log('Run btn clicked');
   };
-  const handleEdit = () => {
-    console.log('Edit btn clicked');
-  };
+
   const handleDelete = (title) => {
     localStorage.removeItem(title);
     setContent(fillContentFromStorage());
@@ -58,8 +57,8 @@ export default function List() {
                       </Button>
                     </td>
                     <td>
-                      <Button variant="link" onClick={() => handleEdit()}>
-                        &#x270E;
+                      <Button variant="link">
+                        <Link to={'/' + elem[0]}>&#x270E;</Link>
                       </Button>
                     </td>
                     <td>

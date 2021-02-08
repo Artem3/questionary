@@ -47,7 +47,6 @@ export default function Exam() {
   }
 
   const calculateDatailedResult = () => {
-    console.log(88);
     setDisplayTable(true);
   };
 
