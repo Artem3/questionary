@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import ConfirmDialog from 'components/ConfirmDialog';
 import MyToast from 'components/MyToast';
 
-export default function NewQestionnaire() {
+export default function Qestionnaire() {
   const defaultInputFields = [{ question: '', expectedAnswer: '' }];
   //array with all entered questions
   const [inputFields, setInputFields] = useState(defaultInputFields);

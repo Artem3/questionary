@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import Exam from './pages/Exam';
-import NewQestionnaire from './pages/NewQestionnaire';
+import NewList from './pages/NewList';
 import EditForm from './pages/EditForm';
 import List from './pages/List';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -24,7 +24,7 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/questionnaire" component={Exam} />
-          <Route path="/new" component={NewQestionnaire} />
+          <Route path="/new" component={NewList} />
           <Route path="/lists" component={List} />
           <Route path="/:id" component={EditForm} />
         </Switch>
