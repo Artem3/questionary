@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import EditForm from './EditForm';
+
 
 export default function List() {
   const [content, setContent] = useState(fillContentFromStorage());
@@ -47,7 +47,7 @@ export default function List() {
               .sort()
               .map((elem, index) => {
                 return (
-                  <tr>
+                  <tr key = {index}>
                     <td>{index + 1}</td>
                     <td>{elem[0]}</td>
                     <td>{elem[1]}</td>

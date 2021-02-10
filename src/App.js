@@ -9,10 +9,17 @@ import EditForm from './pages/EditForm';
 import List from './pages/List';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
+import { saveToStorage } from 'utils/defaultLists';
 
 function App() {
+  //initialize default questionaries and save them to local storage
+  function intitDefaultLists() {
+    localStorage.length == 0 && saveToStorage();
+  }
+
   return (
     <div className="main-wrapper">
+      {intitDefaultLists()}
       <Router>
         <Header />
         <Switch>

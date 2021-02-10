@@ -8,9 +8,9 @@ import MyToast from 'components/MyToast';
 
 export default function NewQestionnaire() {
   const defaultInputFields = [{ question: '', expectedAnswer: '' }];
-  //array with all entred questions
+  //array with all entered questions
   const [inputFields, setInputFields] = useState(defaultInputFields);
-  const [listName, setListName] = useState(`List Name #${localStorage.length}`);
+  const [listName, setListName] = useState(`List Name - ${localStorage.length}`);
   const [replacementNeedsConfirm, setReplacementNeedsConfirm] = useState(false);
   const [confirmDialogPrompt, setConfirmDialogPrompt] = useState('');
   const [displayToast, setDisplayToast] = useState(false);
@@ -47,7 +47,7 @@ export default function NewQestionnaire() {
 
   const handleReplacementConfirm = () => {
     addNewOrReplace(listName, inputFields);
-    setListName(`List Name #${localStorage.length}`);
+    setListName(`List Name - ${localStorage.length}`);
     setInputFields(defaultInputFields);
     setReplacementNeedsConfirm(false);
   };
@@ -73,7 +73,7 @@ export default function NewQestionnaire() {
     }
 
     addNewOrReplace(listName, inputFields);
-    setListName(`List Name #${localStorage.length}`);
+    setListName(`List Name - ${localStorage.length}`);
     setInputFields(defaultInputFields);
     setDisplayToast(true);
   };
