@@ -15,7 +15,7 @@ function ConfirmDialog(props) {
             Cancel
           </Button>
           <Button variant="primary" onClick={props.onOk}>
-            Override
+            Yes, override
           </Button>
         </Modal.Footer>
       </Modal>

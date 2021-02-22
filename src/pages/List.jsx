@@ -51,16 +51,19 @@ export default function List() {
                     <td>{elem[0]}</td>
                     <td>{elem[1]}</td>
                     <td>
+                      {/* --Run button--- */}
                       <Button variant="link" onClick={() => handleRun()}>
                         &#9655;
                       </Button>
                     </td>
                     <td>
+                      {/* --Edit button--- */}
                       <Button variant="link">
                         <Link to={'/' + elem[0]}>&#x270E;</Link>
                       </Button>
                     </td>
                     <td>
+                      {/* --Delete button--- */}
                       <Button
                         variant="link"
                         onClick={() => handleDelete(elem[0])}

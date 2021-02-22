@@ -6,10 +6,10 @@ import Col from 'react-bootstrap/Col';
 import ConfirmDialog from 'components/ConfirmDialog';
 import MyToast from 'components/MyToast';
 
-export default function Qestionnaire() {
+export default function Qestionnaire(props) {
   const defaultInputFields = [{ question: '', expectedAnswer: '' }];
   //array with all entered questions
-  const [inputFields, setInputFields] = useState(defaultInputFields);
+  const [inputFields, setInputFields] = useState(props.inputFields);
   const [listName, setListName] = useState(`List Name - ${localStorage.length}`);
   const [replacementNeedsConfirm, setReplacementNeedsConfirm] = useState(false);
   const [confirmDialogPrompt, setConfirmDialogPrompt] = useState('');
@@ -49,7 +49,7 @@ export default function Qestionnaire() {
     addNewOrReplace(listName, inputFields);
     setListName(`List Name - ${localStorage.length}`);
     setInputFields(defaultInputFields);
-    setReplacementNeedsConfirm(false);
+    setReplacementNeedsConfirm(false);//<-true?!
   };
 
   const handleReplacementCancel = () => {
@@ -59,7 +59,7 @@ export default function Qestionnaire() {
   const handleSubmit = (e) => {
     e.preventDefault();
     //filter out all empty inputs
-    let cleanQuestions = inputFields.filter(isQuestionAndAnswerFilled);
+    let cleanQuestions = props.inputFields.filter(isQuestionAndAnswerFilled);
     setInputFields(cleanQuestions);
 
     //prepare and save to the local storage
@@ -72,14 +72,14 @@ export default function Qestionnaire() {
       return;
     }
 
-    addNewOrReplace(listName, inputFields);
+    addNewOrReplace(listName, props.inputFields);
     setListName(`List Name - ${localStorage.length}`);
     setInputFields(defaultInputFields);
     setDisplayToast(true);
   };
 
   const handleInputChange = (index, event) => {
-    const values = [...inputFields];
+    const values = [...props.inputFields];
     if (event.target.name === 'question') {
       values[index].question = event.target.value;
     } else {
@@ -108,7 +108,7 @@ export default function Qestionnaire() {
         />
       </Col>
       <form onSubmit={handleSubmit}>
-        {inputFields.map((inputField, index) => (
+        {props.inputFields.map((inputField, index) => (
           <div className="form-row" key={index}>
             {/* Line  number */}
             <div className="fc">{index + 1}</div>
