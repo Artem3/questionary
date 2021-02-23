@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import { useHistory } from 'react-router-dom';
 
 import ConfirmDialog from 'components/ConfirmDialog';
 import MyToast from 'components/MyToast';
 
-export default function Qestionnaire(props) {
+export default function Qestionnaire() {
   const defaultInputFields = [{ question: '', expectedAnswer: '' }];
   //array with all entered questions
-  const [inputFields, setInputFields] = useState(props.inputFields);
-  const [listName, setListName] = useState(`List Name - ${localStorage.length}`);
+  const [inputFields, setInputFields] = useState(defaultInputFields);
+  const [listName, setListName] = useState(
+    `List Name - ${localStorage.length}`
+  );
   const [replacementNeedsConfirm, setReplacementNeedsConfirm] = useState(false);
   const [confirmDialogPrompt, setConfirmDialogPrompt] = useState('');
   const [displayToast, setDisplayToast] = useState(false);
+
+  let history = useHistory();
 
   const addNewOrReplace = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
@@ -47,9 +52,10 @@ export default function Qestionnaire(props) {
 
   const handleReplacementConfirm = () => {
     addNewOrReplace(listName, inputFields);
-    setListName(`List Name - ${localStorage.length}`);
-    setInputFields(defaultInputFields);
-    setReplacementNeedsConfirm(false);//<-true?!
+    history.push('/lists');
+    // setListName(`List Name - ${localStorage.length}`);
+    // setInputFields(defaultInputFields);
+    // setReplacementNeedsConfirm(false);//<-true?!
   };
 
   const handleReplacementCancel = () => {
@@ -59,7 +65,7 @@ export default function Qestionnaire(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     //filter out all empty inputs
-    let cleanQuestions = props.inputFields.filter(isQuestionAndAnswerFilled);
+    let cleanQuestions = inputFields.filter(isQuestionAndAnswerFilled);
     setInputFields(cleanQuestions);
 
     //prepare and save to the local storage
@@ -68,18 +74,23 @@ export default function Qestionnaire(props) {
       setConfirmDialogPrompt(
         `Name '${listName}' already exists. Do you want to replace existing ?`
       );
+      if (replacementNeedsConfirm) {
+        addNewOrReplace(listName, inputFields);
+        history.push('/lists');
+      }
       setReplacementNeedsConfirm(true);
       return;
     }
 
-    addNewOrReplace(listName, props.inputFields);
-    setListName(`List Name - ${localStorage.length}`);
-    setInputFields(defaultInputFields);
-    setDisplayToast(true);
+    addNewOrReplace(listName, inputFields);
+    history.push('/lists');
+    // setListName(`List Name - ${localStorage.length}`);
+    // setInputFields(defaultInputFields);
+    // setDisplayToast(true);
   };
 
   const handleInputChange = (index, event) => {
-    const values = [...props.inputFields];
+    const values = [...inputFields];
     if (event.target.name === 'question') {
       values[index].question = event.target.value;
     } else {
@@ -108,7 +119,7 @@ export default function Qestionnaire(props) {
         />
       </Col>
       <form onSubmit={handleSubmit}>
-        {props.inputFields.map((inputField, index) => (
+        {inputFields.map((inputField, index) => (
           <div className="form-row" key={index}>
             {/* Line  number */}
             <div className="fc">{index + 1}</div>

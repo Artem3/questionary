@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../logo.svg';
 import Badge from 'react-bootstrap/Badge';
 import Nav from 'react-bootstrap/Nav';

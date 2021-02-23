@@ -29,7 +29,7 @@ export default function List() {
   return (
     <>
       <Container style={{ minHeight: '100vh', color: 'white' }}>
-        <h4>The list of saved questionaries </h4>
+        <h4 className="text-center py-3">The list of saved questionaries </h4>
         <Table bordered hover size="sm" variant="light">
           <thead>
             <tr>

@@ -59,7 +59,6 @@ export default function EditForm() {
     // setReplacementNeedsConfirm(true);
     addNewOrReplace(listName, inputFields);
     history.push('/lists');
-
   };
 
   const handleReplacementCancel = () => {
@@ -108,8 +107,9 @@ export default function EditForm() {
   return (
     <>
       <Container style={{ minHeight: '100vh', color: 'white' }}>
-        <h2>Edit this list</h2>
-        {inputFields.length}
+        <h4 className="text-center py-3">
+          Edit this list ({inputFields.length} questions)
+        </h4>
 
         {/* <h4 className="text-center py-3">Create a qestionnaire here</h4> */}
         {/* List name */}
