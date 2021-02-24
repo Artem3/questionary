@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
-export default function List() {
+export default function List(props) {
   const [content, setContent] = useState(fillContentFromStorage());
 
   function fillContentFromStorage() {
@@ -24,6 +24,7 @@ export default function List() {
   const handleDelete = (title) => {
     localStorage.removeItem(title);
     setContent(fillContentFromStorage());
+    props.setSize(localStorage.length);
   };
 
   return (

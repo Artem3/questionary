@@ -10,8 +10,11 @@ import List from './pages/List';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import { saveToStorage } from 'utils/defaultLists';
+import React, { useState } from 'react';
 
 function App() {
+  const [size, setSize] = useState(0);
+
   //initialize default questionaries and save them to local storage
   function intitDefaultLists() {
     localStorage.length == 0 && saveToStorage();
@@ -21,11 +24,11 @@ function App() {
     <div className="main-wrapper">
       {intitDefaultLists()}
       <Router>
-        <Header />
+        <Header size={size} />
         <Switch>
           <Route exact path="/questionnaire" component={Exam} />
           <Route path="/new" component={NewList} />
-          <Route path="/lists" component={List} />
+          <Route path="/lists" component={() => <List setSize={setSize} />} />
           <Route path="/:id" component={EditForm} />
         </Switch>
       </Router>

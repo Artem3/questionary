@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import logo from '../logo.svg';
 import Badge from 'react-bootstrap/Badge';
 import Nav from 'react-bootstrap/Nav';
@@ -7,13 +6,13 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { LinkContainer } from 'react-router-bootstrap';
 
-const renderTooltip = (props) => (
-  <Tooltip id="badge-tooltip" {...props}>
-    You have {localStorage.length} lists with questions
-  </Tooltip>
-);
+export default function Header(props) {
+  const renderTooltip = (props) => (
+    <Tooltip id="badge-tooltip" {...props}>
+      You have {localStorage.length} lists with questions
+    </Tooltip>
+  );
 
-const Header = () => {
   return (
     <Navbar bg="info" expand="lg" className="py-0 full-width" sticky="top">
       <LinkContainer to="/questionnaire">
@@ -45,7 +44,7 @@ const Header = () => {
                   overlay={renderTooltip}
                 >
                   <Badge className="counter-badge" variant="warning">
-                    {localStorage.length}
+                    {props.size}
                   </Badge>
                 </OverlayTrigger>
               </Nav.Link>
@@ -55,6 +54,4 @@ const Header = () => {
       </Navbar.Collapse>
     </Navbar>
   );
-};
-
-export default Header;
+}
