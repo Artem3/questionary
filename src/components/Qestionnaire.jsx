@@ -5,23 +5,28 @@ import Col from 'react-bootstrap/Col';
 import { useHistory } from 'react-router-dom';
 
 import ConfirmDialog from 'components/ConfirmDialog';
-import MyToast from 'components/MyToast';
 
 export default function Qestionnaire(props) {
   const defaultInputFields = [{ question: '', expectedAnswer: '' }];
   //array with all entered questions
   const [inputFields, setInputFields] = useState(defaultInputFields);
   const [listName, setListName] = useState(
-    `List Name - ${localStorage.length}`
+    `List Name - ${localStorage.length + 1}`
   );
   const [replacementNeedsConfirm, setReplacementNeedsConfirm] = useState(false);
   const [confirmDialogPrompt, setConfirmDialogPrompt] = useState('');
-  const [displayToast, setDisplayToast] = useState(false);
 
   let history = useHistory();
 
+  // --------------------------
   const addNewOrReplace = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
+    const clean = value.filter(isQuestionAndAnswerFilled); 
+    if (clean.length === 0) {
+      setInputFields(defaultInputFields);
+      setReplacementNeedsConfirm(false);
+      return;
+    }
+    localStorage.setItem(key, JSON.stringify(clean));
     props.setSize(localStorage.length);
   };
 
@@ -40,15 +45,15 @@ export default function Qestionnaire(props) {
   };
 
   const handleAddFields = (index) => {
-    let updatedInputFields = [...inputFields];
+    const updatedInputFields = [...inputFields];
     updatedInputFields.splice(index + 1, 0, ...defaultInputFields);
     setInputFields(updatedInputFields);
   };
 
   const handleRemoveFields = (index) => {
-    const values = [...inputFields];
-    values.splice(index, 1);
-    setInputFields(values);
+    const updatedInputFields = [...inputFields];
+    updatedInputFields.splice(index, 1);
+    setInputFields(updatedInputFields);
   };
 
   const handleReplacementConfirm = () => {
@@ -72,6 +77,7 @@ export default function Qestionnaire(props) {
       setConfirmDialogPrompt(
         `Name '${listName}' already exists. Do you want to replace existing ?`
       );
+
       if (replacementNeedsConfirm) {
         addNewOrReplace(listName, inputFields);
         history.push('/lists');
@@ -93,10 +99,10 @@ export default function Qestionnaire(props) {
     }
     setInputFields(values);
   };
-
+  // --------------------------
   return (
     <Container style={{ minHeight: '100vh', color: 'white' }}>
-      <h4 className="text-center py-3">Create a qestionnaire here</h4>
+      <h4 className="text-center py-3">Create new qestionnaire here</h4>
       {/* List name */}
       <Col className="text-center">
         <input
@@ -114,12 +120,13 @@ export default function Qestionnaire(props) {
         />
       </Col>
       <form onSubmit={handleSubmit}>
+        {/* Render table with questions and answers rows */}
         {inputFields.map((inputField, index) => (
           <div className="form-row" key={index}>
-            {/* Line  number */}
+            {/* Line number */}
             <div className="fc">{index + 1}</div>
 
-            {/* Questionn */}
+            {/* Question */}
             <div className="form-group col-sm-7">
               <input
                 type="text"
@@ -131,6 +138,7 @@ export default function Qestionnaire(props) {
                 onChange={(event) => handleInputChange(index, event)}
               />
             </div>
+
             {/* Answer */}
             <div className="form-group col-sm-2">
               <input
@@ -143,6 +151,7 @@ export default function Qestionnaire(props) {
                 onChange={(event) => handleInputChange(index, event)}
               />
             </div>
+
             {/* Add / Remove buttons */}
             <div className="form-group col-sm-2">
               <Button
@@ -174,12 +183,6 @@ export default function Qestionnaire(props) {
         prompt={confirmDialogPrompt}
         onOk={handleReplacementConfirm}
         onCancel={handleReplacementCancel}
-      />
-      <MyToast
-        show={displayToast}
-        delay={2000}
-        autohide={true}
-        onClose={() => setDisplayToast(false)}
       />
     </Container>
   );

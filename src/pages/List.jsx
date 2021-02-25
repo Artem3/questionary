@@ -32,7 +32,7 @@ export default function List(props) {
       <Container style={{ minHeight: '100vh', color: 'white' }}>
         <h4 className="text-center py-3">The list of saved questionaries </h4>
         <Table bordered hover size="sm" variant="light">
-          <thead>
+          <thead class="bg-warning">
             <tr>
               <th>#</th>
               <th>List title</th>

@@ -3,8 +3,8 @@ import Container from 'react-bootstrap/Container';
 import { useParams, useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+
 import ConfirmDialog from 'components/ConfirmDialog';
-import MyToast from 'components/MyToast';
 
 export default function EditForm(props) {
   let { id } = useParams();
@@ -17,13 +17,18 @@ export default function EditForm(props) {
   );
   const [replacementNeedsConfirm, setReplacementNeedsConfirm] = useState(false);
   const [confirmDialogPrompt, setConfirmDialogPrompt] = useState('');
-  const [displayToast, setDisplayToast] = useState(false);
 
   let history = useHistory();
 
   // --------------------------
   const addNewOrReplace = (key, value) => {
-    localStorage.setItem(key, JSON.stringify(value));
+    const clean = value.filter(isQuestionAndAnswerFilled); 
+    if (clean.length === 0) {
+      setInputFields(defaultInputFields);
+      setReplacementNeedsConfirm(false);
+      return;
+    }
+    localStorage.setItem(key, JSON.stringify(clean));
     props.setSize(localStorage.length);
   };
 
@@ -43,21 +48,18 @@ export default function EditForm(props) {
   };
 
   const handleAddFields = (index) => {
-    let updatedInputFields = [...inputFields];
+    const updatedInputFields = [...inputFields];
     updatedInputFields.splice(index + 1, 0, ...defaultInputFields);
     setInputFields(updatedInputFields);
   };
 
   const handleRemoveFields = (index) => {
-    const values = [...inputFields];
-    values.splice(index, 1);
-    setInputFields(values);
+    const updatedInputFields = [...inputFields];
+    updatedInputFields.splice(index, 1);
+    setInputFields(updatedInputFields);
   };
 
   const handleReplacementConfirm = () => {
-    // setListName(`List Name - ${localStorage.length}`);
-    // setInputFields(defaultInputFields);
-    // setReplacementNeedsConfirm(true);
     addNewOrReplace(listName, inputFields);
     history.push('/lists');
   };
@@ -85,14 +87,10 @@ export default function EditForm(props) {
       }
       setReplacementNeedsConfirm(true);
       return;
-      // history.push('/lists');
     }
 
     addNewOrReplace(listName, inputFields);
     history.push('/lists');
-    // setListName(`List Name - ${localStorage.length}`);
-    // setInputFields(defaultInputFields);
-    // setDisplayToast(true);
   };
 
   const handleInputChange = (index, event) => {
@@ -111,8 +109,6 @@ export default function EditForm(props) {
         <h4 className="text-center py-3">
           Edit this list ({inputFields.length} questions)
         </h4>
-
-        {/* <h4 className="text-center py-3">Create a qestionnaire here</h4> */}
         {/* List name */}
         <Col className="text-center">
           <input
@@ -133,10 +129,10 @@ export default function EditForm(props) {
           {/* Render table with questions and answers rows */}
           {inputFields.map((inputField, index) => (
             <div className="form-row" key={index}>
-              {/* Line  number */}
+              {/* Line number */}
               <div className="fc">{index + 1}</div>
 
-              {/* Questionn */}
+              {/* Question */}
               <div className="form-group col-sm-7">
                 <input
                   type="text"
@@ -148,6 +144,7 @@ export default function EditForm(props) {
                   onChange={(event) => handleInputChange(index, event)}
                 />
               </div>
+
               {/* Answer */}
               <div className="form-group col-sm-2">
                 <input
@@ -160,6 +157,7 @@ export default function EditForm(props) {
                   onChange={(event) => handleInputChange(index, event)}
                 />
               </div>
+
               {/* Add / Remove buttons */}
               <div className="form-group col-sm-2">
                 <Button
@@ -191,12 +189,6 @@ export default function EditForm(props) {
           prompt={confirmDialogPrompt}
           onOk={handleReplacementConfirm}
           onCancel={handleReplacementCancel}
-        />
-        <MyToast
-          show={displayToast}
-          delay={2000}
-          autohide={true}
-          onClose={() => setDisplayToast(false)}
         />
       </Container>
     </>

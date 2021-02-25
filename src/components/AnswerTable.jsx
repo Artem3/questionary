@@ -17,6 +17,7 @@ export default function AnswerTable(props) {
     <Fade in={open} appear timeout={600} mountOnEnter>
       <Table
         disabled
+        bordered
         id="fade-tbl"
         striped
         hover
@@ -24,7 +25,7 @@ export default function AnswerTable(props) {
         variant="light"
         className="mt-3"
       >
-        <thead>
+        <thead class="bg-warning">
           <tr>
             <th>#</th>
             <th>Question</th>
