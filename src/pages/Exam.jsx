@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import testDataJsonArray from 'data/test-data.json';
 
 import AnswerTable from 'components/AnswerTable';
@@ -6,12 +7,14 @@ import CurrentQuestionForm from 'components/CurrentQuestionForm';
 import { shuffle } from 'utils/arrayUtils';
 
 export default function Exam() {
+  let { id } = useParams();
   const [qList, setQList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayTable, setDisplayTable] = useState(false);
 
   useEffect(() => {
     setQList(shuffle(testDataJsonArray));
+    console.log(id);
   }, []);
   const isListCompleted = currentIndex <= qList.length - 1 ? false : true;
 

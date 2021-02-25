@@ -25,7 +25,7 @@ export default function AnswerTable(props) {
         variant="light"
         className="mt-3"
       >
-        <thead class="bg-warning">
+        <thead className="bg-warning">
           <tr>
             <th>#</th>
             <th>Question</th>

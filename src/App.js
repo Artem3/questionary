@@ -27,7 +27,7 @@ function App() {
       <HashRouter>
         <Header size={size} />
         <Switch>
-          <Route exact path="/questionnaire" component={Exam} />
+          <Route exact path="/questionnaire/:id" component={Exam} />
           <Route path="/new" component={() => <NewList setSize={setSize} />} />
           <Route path="/lists" component={() => <List setSize={setSize} />} />
           <Route path="/:id" component={() => <EditForm setSize={setSize} />} />

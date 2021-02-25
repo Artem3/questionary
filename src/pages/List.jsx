@@ -17,10 +17,6 @@ export default function List(props) {
     return content;
   }
 
-  const handleRun = () => {
-    console.log('Run btn clicked');
-  };
-
   const handleDelete = (title) => {
     localStorage.removeItem(title);
     setContent(fillContentFromStorage());
@@ -53,8 +49,8 @@ export default function List(props) {
                     <td>{elem[1]}</td>
                     <td>
                       {/* --Run button--- */}
-                      <Button variant="link" onClick={() => handleRun()}>
-                        &#9655;
+                      <Button variant="link">
+                        <Link to={'/questionnaire/' + elem[0]}>&#9655;</Link>
                       </Button>
                     </td>
                     <td>
