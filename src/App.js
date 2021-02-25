@@ -7,13 +7,14 @@ import Exam from './pages/Exam';
 import NewList from './pages/NewList';
 import EditForm from './pages/EditForm';
 import List from './pages/List';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as HashRouter, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import { saveToStorage } from 'utils/defaultLists';
 import React, { useState } from 'react';
 
 function App() {
-  const [size, setSize] = useState(0);
+  // Number of saved lists with questions in local storage
+  const [size, setSize] = useState(localStorage.length);
 
   //initialize default questionaries and save them to local storage
   function intitDefaultLists() {
@@ -23,15 +24,15 @@ function App() {
   return (
     <div className="main-wrapper">
       {intitDefaultLists()}
-      <Router>
+      <HashRouter>
         <Header size={size} />
         <Switch>
           <Route exact path="/questionnaire" component={Exam} />
-          <Route path="/new" component={NewList} />
+          <Route path="/new" component={() => <NewList setSize={setSize} />} />
           <Route path="/lists" component={() => <List setSize={setSize} />} />
-          <Route path="/:id" component={EditForm} />
+          <Route path="/:id" component={() => <EditForm setSize={setSize} />} />
         </Switch>
-      </Router>
+      </HashRouter>
       <img src={logo} className="App-logo" alt="logo" />
     </div>
   );

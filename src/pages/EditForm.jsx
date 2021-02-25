@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import ConfirmDialog from 'components/ConfirmDialog';
 import MyToast from 'components/MyToast';
 
-export default function EditForm() {
+export default function EditForm(props) {
   let { id } = useParams();
   const [listName, setListName] = useState(id);
   const defaultInputFields = [{ question: '', expectedAnswer: '' }];
@@ -24,6 +24,7 @@ export default function EditForm() {
   // --------------------------
   const addNewOrReplace = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
+    props.setSize(localStorage.length);
   };
 
   const isQuestionAndAnswerFilled = (row) =>

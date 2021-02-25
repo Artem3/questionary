@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import ConfirmDialog from 'components/ConfirmDialog';
 import MyToast from 'components/MyToast';
 
-export default function Qestionnaire() {
+export default function Qestionnaire(props) {
   const defaultInputFields = [{ question: '', expectedAnswer: '' }];
   //array with all entered questions
   const [inputFields, setInputFields] = useState(defaultInputFields);
@@ -22,6 +22,7 @@ export default function Qestionnaire() {
 
   const addNewOrReplace = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
+    props.setSize(localStorage.length);
   };
 
   const isQuestionAndAnswerFilled = (row) =>
@@ -53,9 +54,6 @@ export default function Qestionnaire() {
   const handleReplacementConfirm = () => {
     addNewOrReplace(listName, inputFields);
     history.push('/lists');
-    // setListName(`List Name - ${localStorage.length}`);
-    // setInputFields(defaultInputFields);
-    // setReplacementNeedsConfirm(false);//<-true?!
   };
 
   const handleReplacementCancel = () => {
@@ -84,9 +82,6 @@ export default function Qestionnaire() {
 
     addNewOrReplace(listName, inputFields);
     history.push('/lists');
-    // setListName(`List Name - ${localStorage.length}`);
-    // setInputFields(defaultInputFields);
-    // setDisplayToast(true);
   };
 
   const handleInputChange = (index, event) => {
