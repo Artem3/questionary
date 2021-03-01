@@ -25,7 +25,7 @@ export default function CurrentQuestionForm(props) {
   return (
     <Card bg="light" text="dark" style={cardStyle}>
       <Card.Title style={{ width: '30rem' }}>
-        {props.currentQuestion.qText}
+        {props.currentQuestion.question}
       </Card.Title>
       <input
         type="text"

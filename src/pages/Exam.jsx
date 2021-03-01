@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import testDataJsonArray from 'data/test-data.json';
 
 import AnswerTable from 'components/AnswerTable';
 import CurrentQuestionForm from 'components/CurrentQuestionForm';
 import { shuffle } from 'utils/arrayUtils';
 
 export default function Exam() {
-  let { id } = useParams();
+  const { id } = useParams();
   const [qList, setQList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayTable, setDisplayTable] = useState(false);
 
   useEffect(() => {
-    setQList(shuffle(testDataJsonArray));
-    console.log(id);
-  }, []);
+    setQList(shuffle(JSON.parse(localStorage.getItem(id))));
+  }, [id]);
+
   const isListCompleted = currentIndex <= qList.length - 1 ? false : true;
 
   // update current question with an answer
@@ -57,7 +56,7 @@ export default function Exam() {
     <div>
       {isListCompleted ? (
         <div>
-          <h2>Test completed!</h2>
+          <h3>Test completed!</h3>
           <AnswerTable
             results={calculateCompactResult()}
             onClick={calculateDatailedResult}

@@ -39,9 +39,9 @@ export default function AnswerTable(props) {
             const variant = q.isCorrect ? 'success' : 'danger';
             const tickMark = q.isCorrect ? <span>&#10003;</span> : '';
             return (
-              <tr key={q.id}>
+              <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{q.qText}</td>
+                <td>{q.question}</td>
                 <td>{q.expectedAnswer}</td>
                 <td>{q.givenAnswer}</td>
                 <td>
