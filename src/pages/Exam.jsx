@@ -10,6 +10,7 @@ export default function Exam() {
   const [qList, setQList] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayTable, setDisplayTable] = useState(false);
+  const [progress, setProgress] = useState(1);
 
   useEffect(() => {
     setQList(shuffle(JSON.parse(localStorage.getItem(id))));
@@ -28,6 +29,7 @@ export default function Exam() {
     qList.splice(currentIndex, 1, unsweredQuestion);
     setQList(qList);
     setCurrentIndex(currentIndex + 1);
+    setProgress(calculateProgress());
   };
 
   function calculateCompactResult() {
@@ -56,6 +58,11 @@ export default function Exam() {
     setDisplayTable(false);
     setCurrentIndex(0);
     setQList(shuffle(JSON.parse(localStorage.getItem(id))));
+    setProgress(1);
+  };
+
+  function calculateProgress() {
+    return Math.round(((currentIndex + 1) / qList.length) * 100 * 100) / 100;
   }
 
   return (
@@ -75,6 +82,8 @@ export default function Exam() {
         <CurrentQuestionForm
           onClick={setNextQuestion}
           currentQuestion={qList[currentIndex]}
+          listTitle={id}
+          currentProgress={progress}
         />
       )}
     </div>
