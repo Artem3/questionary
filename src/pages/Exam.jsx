@@ -52,6 +52,12 @@ export default function Exam() {
     setDisplayTable(true);
   };
 
+  const runAgain = () => {
+    setDisplayTable(false);
+    setCurrentIndex(0);
+    setQList(shuffle(JSON.parse(localStorage.getItem(id))));
+  }
+
   return (
     <div>
       {isListCompleted ? (
@@ -62,6 +68,7 @@ export default function Exam() {
             onClick={calculateDatailedResult}
             detailedResults={qList}
             displayTable={displayTable}
+            runAgain={runAgain}
           />
         </div>
       ) : (

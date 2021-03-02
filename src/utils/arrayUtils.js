@@ -4,6 +4,17 @@ export const shuffle = (list) => {
 };
 
 function makeValidModel(list) {
+  if (list == null) {
+    return [
+      {
+        question: '',
+        expectedAnswer: '',
+        givenAnswer: '',
+        isCorrect: false,
+      },
+    ];
+  }
+
   list.forEach((elem) => {
     elem.givenAnswer = '';
     elem.isCorrect = false;

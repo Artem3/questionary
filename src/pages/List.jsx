@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 export default function List(props) {
   const [content, setContent] = useState(fillContentFromStorage());
@@ -36,6 +37,7 @@ export default function List(props) {
               <th>Run</th>
               <th>Edit</th>
               <th>Remove</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -67,6 +69,30 @@ export default function List(props) {
                       >
                         &#x2716;
                       </Button>
+                    </td>
+                    <td>
+                      {/* --Action button--- */}
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          variant="withe"
+                          id="dropdown-basic"
+                          size="sm"
+                        >
+                          {index > 2 ? (
+                            <span>&#9776;</span>
+                          ) : (
+                            <span>&#128279;</span>
+                          )}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item href="#/action-1">
+                            Menu item 1
+                          </Dropdown.Item>
+                          <Dropdown.Item href="#/action-2">Item2</Dropdown.Item>
+                          <Dropdown.Divider />
+                          <Dropdown.Item href="#/action-2">Item3</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
                     </td>
                   </tr>
                 );

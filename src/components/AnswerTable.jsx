@@ -56,12 +56,15 @@ export default function AnswerTable(props) {
   );
 
   function countRight() {
-    return (
-      (props.results.totalCorrectAnswered * 100) / props.results.totalCount
-    );
+    const valR =
+      (props.results.totalCorrectAnswered * 100) / props.results.totalCount;
+    return Math.round(valR * 100) / 100;
   }
+
   function countWrong() {
-    return (props.results.incorrectAnswers * 100) / props.results.totalCount;
+    const valW =
+      (props.results.incorrectAnswers * 100) / props.results.totalCount;
+    return Math.round(valW * 100) / 100;
   }
 
   return (
@@ -126,9 +129,11 @@ export default function AnswerTable(props) {
       </div>
 
       <ButtonToolbar className="justify-content-between">
-        <Button variant="secondary" disabled className="mt-5">
-          Run test again
+        {/* Run again button */}
+        <Button variant="warning" className="mt-5" onClick={props.runAgain}>
+          Run again
         </Button>
+
         <Button
           variant="info"
           className="mt-5"
