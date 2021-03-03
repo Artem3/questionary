@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+
+import Salute from 'components/Salute';
+
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -55,12 +58,21 @@ export default function AnswerTable(props) {
     </Fade>
   );
 
+  // Display salut or not
+  const isSuccess = () => {
+    const valR =
+      (props.results.totalCorrectAnswered * 100) / props.results.totalCount;
+    return Math.round(valR * 100) / 100 > 99;
+  };
+
+  // Calculate amount of correct answers
   function countRight() {
     const valR =
       (props.results.totalCorrectAnswered * 100) / props.results.totalCount;
     return Math.round(valR * 100) / 100;
   }
 
+  // Calculate amount of wrong answers
   function countWrong() {
     const valW =
       (props.results.incorrectAnswers * 100) / props.results.totalCount;
@@ -126,6 +138,7 @@ export default function AnswerTable(props) {
             key={2}
           />
         </ProgressBar>
+        {isSuccess() && <Salute />}
       </div>
 
       <ButtonToolbar className="justify-content-between">
@@ -134,6 +147,7 @@ export default function AnswerTable(props) {
           Run again
         </Button>
 
+        {/* Open table with results button */}
         <Button
           variant="info"
           className="mt-5"
