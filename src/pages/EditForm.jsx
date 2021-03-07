@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useParams, useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import ConfirmDialog from 'components/ConfirmDialog';
 import MyToast from 'components/MyToast';
+
+import { db } from '../services/firebase.js';
 
 export default function EditForm() {
   let { id } = useParams();
@@ -20,6 +22,18 @@ export default function EditForm() {
   const [displayToast, setDisplayToast] = useState(false);
 
   let history = useHistory();
+
+  useEffect(() => {
+    console.log('id: ', id);
+    db.ref(`questions-lists/${id}`).on('value', (snapshot) => {
+      let questionsAnswersList = [];
+      snapshot.forEach((snap) => {
+        questionsAnswersList.push(snap.val());
+        console.log(snap);
+      });
+      setInputFields(questionsAnswersList);
+    });
+  }, []);
 
   // --------------------------
   const addNewOrReplace = (key, value) => {
@@ -147,6 +161,10 @@ export default function EditForm() {
                   onChange={(event) => handleInputChange(index, event)}
                 />
               </div>
+              <div></div>
+              <p></p>
+              <h6></h6>
+              <MyToast></MyToast>
               {/* Answer */}
               <div className="form-group col-sm-2">
                 <input

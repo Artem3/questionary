@@ -7,6 +7,7 @@ import Exam from './pages/Exam';
 import NewList from './pages/NewList';
 import EditForm from './pages/EditForm';
 import List from './pages/List';
+import FbTest from './pages/FbTest';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import { saveToStorage } from 'utils/defaultLists';
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/questionnaire" component={Exam} />
           <Route path="/new" component={NewList} />
           <Route path="/lists" component={() => <List setSize={setSize} />} />
+          <Route path="/fbtest" component={FbTest} />
           <Route path="/:id" component={EditForm} />
         </Switch>
       </Router>
