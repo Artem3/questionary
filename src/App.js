@@ -7,8 +7,10 @@ import Exam from './pages/Exam';
 import NewList from './pages/NewList';
 import EditForm from './pages/EditForm';
 import List from './pages/List';
-import { BrowserRouter as HashRouter, Switch, Route } from 'react-router-dom';
+import Share from './pages/Share';
 import Header from './components/Header';
+
+import { BrowserRouter as HashRouter, Switch, Route } from 'react-router-dom';
 import { saveToStorage } from 'utils/defaultLists';
 import React, { useState } from 'react';
 
@@ -30,6 +32,7 @@ function App() {
           <Route exact path="/questionnaire/:id" component={Exam} />
           <Route path="/new" component={() => <NewList setSize={setSize} />} />
           <Route path="/lists" component={() => <List setSize={setSize} />} />
+          <Route path="/share" component={Share} />
           <Route path="/:id" component={() => <EditForm setSize={setSize} />} />
         </Switch>
       </HashRouter>
