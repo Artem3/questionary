@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 import firebase from './../firebase';
 import { v4 as uuid } from 'uuid';
 
 function Share() {
-  const [lists, setLists] = useState([]);
-
   const axios = require('axios').default;
-  const ref = firebase.firestore().collection('userId-9');// ownerId
+  const ref = firebase.firestore().collection('userId-9'); // ownerId
 
   const getAllLists = () => {
     const url =
@@ -48,28 +48,46 @@ function Share() {
       });
     console.log('createList-after');
   };
+  // ----------------------------------------------------
+  const cardStyle = {
+    justifyContent: 'space-between',
+    height: '14rem',
+    alignItems: 'center',
+    padding: '2rem',
+  };
+
+  const inputStyle = {
+    textAlign: 'center',
+    borderRadius: '5px',
+    borderWidth: '1px',
+  };
+
+  const handleImportClick = () => {
+    console.log('btn Import clicked');
+  };
 
   return (
     <Container style={{ minHeight: '100vh', color: 'white' }}>
-      <h3>Firebase Share test page </h3>
-
-      <button onClick={getAllLists}>Get All questionnaires from DB</button>
-      <br />
-      <br />
-      <button onClick={createList}>Create new questionnaires</button>
-
-      <div>
-        <h3>All:</h3>
-        {lists.map((qList) => (
-          <div key={qList.list_id_1}>
-            {console.log(qList.list_id_1)}
-            <h6>Name: {qList.listName}</h6>
-            <h6>Owner: {qList.ownerId}</h6>
-            <h6>Questions: {qList.questions.length}</h6>
-            <br />
-          </div>
-        ))}
-      </div>
+      <h4 className="text-center py-3">Import share questionneries </h4>
+      <Card bg="light" text="dark" style={cardStyle}>
+        <Card.Title style={{ width: '30rem' }}>
+          Enter a code to the field:
+        </Card.Title>
+        
+        <input type="number" 
+        placeholder="351" 
+        style={inputStyle} 
+        onChange={(e) => console.log(e.target.value)} />
+        
+        {/* Import button */}
+        <Button 
+        variant="warning" 
+        style={{ width: '8rem' }} 
+        className="mt-2 mb-2" 
+        onClick={handleImportClick}>
+          Import &#8630;
+        </Button>
+      </Card>
     </Container>
   );
 }

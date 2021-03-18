@@ -27,8 +27,15 @@ export default function Header(props) {
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         <Navbar.Text>
           <Nav className="mr-auto">
-            <LinkContainer to="/share">
-              <Nav.Link>Share</Nav.Link>
+            <LinkContainer to="/lists">
+              <Nav.Link>
+                <span>Lists</span>
+                <OverlayTrigger placement="bottom" delay={{ show: 250, hide: 400 }} overlay={renderTooltip}>
+                  <Badge className="counter-badge" variant="warning">
+                    {props.size}
+                  </Badge>
+                </OverlayTrigger>
+              </Nav.Link>
             </LinkContainer>
 
             {/* vertial separator */}
@@ -45,15 +52,8 @@ export default function Header(props) {
               <li>&#124;</li>
             </Nav.Link>
 
-            <LinkContainer to="/lists">
-              <Nav.Link>
-                <span>Lists</span>
-                <OverlayTrigger placement="bottom" delay={{ show: 250, hide: 400 }} overlay={renderTooltip}>
-                  <Badge className="counter-badge" variant="warning">
-                    {props.size}
-                  </Badge>
-                </OverlayTrigger>
-              </Nav.Link>
+            <LinkContainer to="/share">
+              <Nav.Link>Import</Nav.Link>
             </LinkContainer>
           </Nav>
         </Navbar.Text>
