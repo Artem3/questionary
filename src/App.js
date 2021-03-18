@@ -11,21 +11,26 @@ import Share from './pages/Share';
 import Header from './components/Header';
 
 import { BrowserRouter as HashRouter, Switch, Route } from 'react-router-dom';
-import { saveToStorage } from 'utils/defaultLists';
+import { saveToStorage, generateId } from 'utils/defaultLists';
 import React, { useState } from 'react';
 
 function App() {
   // Number of saved lists with questions in local storage
-  const [size, setSize] = useState(localStorage.length);
+  const [size, setSize] = useState(localStorage.length - 1); // - 1 is userId
 
   //initialize default questionaries and save them to local storage
   function intitDefaultLists() {
-    localStorage.length == 0 && saveToStorage();
+    localStorage.length === 0 && saveToStorage();
+  }
+  //generate user Id if not exist in local storage
+  function generateUserId() {
+    localStorage.getItem('userId') === null && generateId();
   }
 
   return (
     <div className="main-wrapper">
       {intitDefaultLists()}
+      {generateUserId()}
       <HashRouter>
         <Header size={size} />
         <Switch>

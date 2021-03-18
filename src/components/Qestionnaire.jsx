@@ -10,9 +10,7 @@ export default function Qestionnaire(props) {
   const defaultInputFields = [{ question: '', expectedAnswer: '' }];
   //array with all entered questions
   const [inputFields, setInputFields] = useState(defaultInputFields);
-  const [listName, setListName] = useState(
-    `List Name - ${localStorage.length + 1}`
-  );
+  const [listName, setListName] = useState(`List Name - ${localStorage.length}`);
   const [replacementNeedsConfirm, setReplacementNeedsConfirm] = useState(false);
   const [confirmDialogPrompt, setConfirmDialogPrompt] = useState('');
 
@@ -20,23 +18,20 @@ export default function Qestionnaire(props) {
 
   // --------------------------
   const addNewOrReplace = (key, value) => {
-    const clean = value.filter(isQuestionAndAnswerFilled); 
+    const clean = value.filter(isQuestionAndAnswerFilled);
     if (clean.length === 0) {
       setInputFields(defaultInputFields);
       setReplacementNeedsConfirm(false);
       return;
     }
     localStorage.setItem(key, JSON.stringify(clean));
-    props.setSize(localStorage.length);
+    props.setSize(localStorage.length - 1);
   };
 
-  const isQuestionAndAnswerFilled = (row) =>
-    row.question !== '' && row.expectedAnswer !== '';
+  const isQuestionAndAnswerFilled = (row) => row.question !== '' && row.expectedAnswer !== '';
   //TODO: regarding the row below - needs to add red borders around invalid inputs
 
-  const isInvalidForm = () =>
-    !listName ||
-    (inputFields.length === 1 && !isQuestionAndAnswerFilled(inputFields[0]));
+  const isInvalidForm = () => !listName || (inputFields.length === 1 && !isQuestionAndAnswerFilled(inputFields[0]));
 
   const isRemoveDisabled = () => inputFields.length === 1;
 
@@ -74,9 +69,7 @@ export default function Qestionnaire(props) {
     //prepare and save to the local storage
     const listExist = localStorage.getItem(listName);
     if (listExist) {
-      setConfirmDialogPrompt(
-        `Name '${listName}' already exists. Do you want to replace existing ?`
-      );
+      setConfirmDialogPrompt(`Name '${listName}' already exists. Do you want to replace existing ?`);
 
       if (replacementNeedsConfirm) {
         addNewOrReplace(listName, inputFields);
@@ -154,11 +147,7 @@ export default function Qestionnaire(props) {
 
             {/* Add / Remove buttons */}
             <div className="form-group col-sm-2">
-              <Button
-                variant="link"
-                disabled={isRemoveDisabled()}
-                onClick={() => handleRemoveFields(index)}
-              >
+              <Button variant="link" disabled={isRemoveDisabled()} onClick={() => handleRemoveFields(index)}>
                 Remove
               </Button>
               <Button variant="link" onClick={() => handleAddFields(index)}>
@@ -168,12 +157,7 @@ export default function Qestionnaire(props) {
           </div>
         ))}
         <div>
-          <Button
-            variant="info"
-            type="submit"
-            onSubmit={handleSubmit}
-            disabled={isInvalidForm()}
-          >
+          <Button variant="info" type="submit" onSubmit={handleSubmit} disabled={isInvalidForm()}>
             Save list
           </Button>
         </div>

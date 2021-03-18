@@ -1,5 +1,7 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 
+// default questionnaires
 export const saveToStorage = () => {
   const title1 = 'Квадараты чисел от 1 до 10';
   const title2 = 'Кубы чисел от 1 до 10';
@@ -34,4 +36,8 @@ export const saveToStorage = () => {
       {localStorage.setItem(title2, JSON.stringify(set2))}
     </>
   );
+};
+
+export const generateId = () => {
+  localStorage.setItem('userId', 'user:' + uuid());
 };

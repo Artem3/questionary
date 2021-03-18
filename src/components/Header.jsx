@@ -9,14 +9,13 @@ import { LinkContainer } from 'react-router-bootstrap';
 export default function Header(props) {
   const renderTooltip = (props) => (
     <Tooltip id="badge-tooltip" {...props}>
-      You have {localStorage.length} lists with questions
+      You have {localStorage.length - 1} lists with questions
     </Tooltip>
   );
 
   return (
     <Navbar bg="info" expand="lg" className="py-0 full-width" sticky="top">
       <LinkContainer to="/questionnaire">
-        
         {/* logo */}
         <Navbar.Brand className="text-white">
           <img src={logo} width="60" height="60" className="d-inline-block" alt="questionnaire logo" />

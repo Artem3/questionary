@@ -12,9 +12,7 @@ export default function EditForm(props) {
   const defaultInputFields = [{ question: '', expectedAnswer: '' }];
 
   const list = localStorage.getItem(id);
-  const [inputFields, setInputFields] = useState(
-    list !== null ? JSON.parse(list) : defaultInputFields
-  );
+  const [inputFields, setInputFields] = useState(list !== null ? JSON.parse(list) : defaultInputFields);
   const [replacementNeedsConfirm, setReplacementNeedsConfirm] = useState(false);
   const [confirmDialogPrompt, setConfirmDialogPrompt] = useState('');
 
@@ -22,23 +20,20 @@ export default function EditForm(props) {
 
   // --------------------------
   const addNewOrReplace = (key, value) => {
-    const clean = value.filter(isQuestionAndAnswerFilled); 
+    const clean = value.filter(isQuestionAndAnswerFilled);
     if (clean.length === 0) {
       setInputFields(defaultInputFields);
       setReplacementNeedsConfirm(false);
       return;
     }
     localStorage.setItem(key, JSON.stringify(clean));
-    props.setSize(localStorage.length);
+    props.setSize(localStorage.length - 1);
   };
 
-  const isQuestionAndAnswerFilled = (row) =>
-    row.question !== '' && row.expectedAnswer !== '';
+  const isQuestionAndAnswerFilled = (row) => row.question !== '' && row.expectedAnswer !== '';
   //TODO: regarding the row below - needs to add red borders around invalid inputs
 
-  const isInvalidForm = () =>
-    !listName ||
-    (inputFields.length === 1 && !isQuestionAndAnswerFilled(inputFields[0]));
+  const isInvalidForm = () => !listName || (inputFields.length === 1 && !isQuestionAndAnswerFilled(inputFields[0]));
 
   const isRemoveDisabled = () => inputFields.length === 1;
 
@@ -77,9 +72,7 @@ export default function EditForm(props) {
     //prepare and save to the local storage
     const listExist = localStorage.getItem(listName);
     if (listExist) {
-      setConfirmDialogPrompt(
-        `Name '${listName}' already exists. Do you want to replace existing ?`
-      );
+      setConfirmDialogPrompt(`Name '${listName}' already exists. Do you want to replace existing ?`);
 
       if (replacementNeedsConfirm) {
         addNewOrReplace(listName, inputFields);
@@ -106,9 +99,7 @@ export default function EditForm(props) {
   return (
     <>
       <Container style={{ minHeight: '100vh', color: 'white' }}>
-        <h4 className="text-center py-3">
-          Edit this list ({inputFields.length} questions)
-        </h4>
+        <h4 className="text-center py-3">Edit this list ({inputFields.length} questions)</h4>
         {/* List name */}
         <Col className="text-center">
           <input
@@ -160,11 +151,7 @@ export default function EditForm(props) {
 
               {/* Add / Remove buttons */}
               <div className="form-group col-sm-2">
-                <Button
-                  variant="link"
-                  disabled={isRemoveDisabled()}
-                  onClick={() => handleRemoveFields(index)}
-                >
+                <Button variant="link" disabled={isRemoveDisabled()} onClick={() => handleRemoveFields(index)}>
                   Remove
                 </Button>
                 <Button variant="link" onClick={() => handleAddFields(index)}>
@@ -174,12 +161,7 @@ export default function EditForm(props) {
             </div>
           ))}
           <div>
-            <Button
-              variant="info"
-              type="submit"
-              onSubmit={handleSubmit}
-              disabled={isInvalidForm()}
-            >
+            <Button variant="info" type="submit" onSubmit={handleSubmit} disabled={isInvalidForm()}>
               Save list
             </Button>
           </div>

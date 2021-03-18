@@ -12,6 +12,9 @@ export default function List(props) {
     const content = new Map();
     for (var i = 0, len = localStorage.length; i < len; ++i) {
       let title = localStorage.key(i);
+      if (title === 'userId') {
+        continue;
+      }
       let qLength = JSON.parse(localStorage.getItem(title)).length;
       content.set(title, qLength);
     }
@@ -21,7 +24,7 @@ export default function List(props) {
   const handleDelete = (title) => {
     localStorage.removeItem(title);
     setContent(fillContentFromStorage());
-    props.setSize(localStorage.length);
+    props.setSize(localStorage.length - 1);
   };
 
   return (
@@ -63,31 +66,18 @@ export default function List(props) {
                     </td>
                     <td>
                       {/* --Delete button--- */}
-                      <Button
-                        variant="link"
-                        onClick={() => handleDelete(elem[0])}
-                      >
+                      <Button variant="link" onClick={() => handleDelete(elem[0])}>
                         &#x2716;
                       </Button>
                     </td>
                     <td>
                       {/* --Action button--- */}
                       <Dropdown>
-                        <Dropdown.Toggle
-                          variant="withe"
-                          id="dropdown-basic"
-                          size="sm"
-                        >
-                          {index > 2 ? (
-                            <span>&#9776;</span>
-                          ) : (
-                            <span>&#128279;</span>
-                          )}
+                        <Dropdown.Toggle variant="withe" id="dropdown-basic" size="sm">
+                          {index > 2 ? <span>&#9776;</span> : <span>&#128279;</span>}
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                          <Dropdown.Item href="#/action-1">
-                            Share this pool
-                          </Dropdown.Item>
+                          <Dropdown.Item href="#/action-1">Share this pool</Dropdown.Item>
                           <Dropdown.Item href="#/action-2">Item2</Dropdown.Item>
                           <Dropdown.Divider />
                           <Dropdown.Item href="#/action-2">Item3</Dropdown.Item>
