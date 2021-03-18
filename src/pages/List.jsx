@@ -32,8 +32,8 @@ export default function List(props) {
           <thead className="bg-warning">
             <tr>
               <th>#</th>
-              <th>List title</th>
-              <th>Question number</th>
+              <th>Questionnaire title</th>
+              <th>Number of questions</th>
               <th>Run</th>
               <th>Edit</th>
               <th>Remove</th>
@@ -86,7 +86,7 @@ export default function List(props) {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                           <Dropdown.Item href="#/action-1">
-                            Menu item 1
+                            Share this pool
                           </Dropdown.Item>
                           <Dropdown.Item href="#/action-2">Item2</Dropdown.Item>
                           <Dropdown.Divider />
