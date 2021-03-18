@@ -73,7 +73,7 @@ function Share() {
         <Card.Title style={{ width: '30rem' }}>
           Enter a code to the field:
         </Card.Title>
-        
+
         <input type="number" 
         placeholder="351" 
         style={inputStyle} 
