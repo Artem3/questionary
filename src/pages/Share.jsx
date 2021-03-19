@@ -6,8 +6,8 @@ import firebase from './../firebase';
 import { v4 as uuid } from 'uuid';
 
 function Share() {
-  const axios = require('axios').default;
-  const ref = firebase.firestore().collection('userId-9'); // ownerId
+  // const axios = require('axios').default;
+  // const ref = firebase.firestore().collection('userId-9'); // ownerId
 
   const getAllLists = () => {
     const url =
@@ -19,9 +19,7 @@ function Share() {
         response.data.documents.map((elem) => console.log(elem.name));
         console.log('---------');
         response.data.documents.map((elem) => console.log(elem.fields));
-        // response.data.documents.map((elem) =>
-        //   console.log(elem.fields.questions.arrayValue.values.map((val) => console.log(val.mapValue.fields)))
-        // );
+      
       })
       .catch(function (error) {
         console.log(error);
@@ -40,13 +38,13 @@ function Share() {
     const testString = JSON.stringify(test);
     const toDbObj = { doc: testString };
 
-    ref
-      .doc('listId-' + uuid()) //listId
-      .set(toDbObj)
-      .catch((err) => {
-        console.error(err);
-      });
-    console.log('createList-after');
+    // ref
+    //   .doc('listId-' + uuid()) //listId
+    //   .set(toDbObj)
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
+    // console.log('createList-after');
   };
   // ----------------------------------------------------
   const cardStyle = {

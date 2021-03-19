@@ -1,5 +1,5 @@
 import React from 'react';
-import { v4 as uuid } from 'uuid';
+import { nanoid } from 'nanoid';
 
 // default questionnaires
 export const saveToStorage = () => {
@@ -39,5 +39,5 @@ export const saveToStorage = () => {
 };
 
 export const generateId = () => {
-  localStorage.setItem('userId', 'user:' + uuid());
+  localStorage.setItem('userId', 'user:' + nanoid(7));
 };
