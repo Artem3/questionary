@@ -6,7 +6,7 @@ import firebase from './../firebase';
 import { v4 as uuid } from 'uuid';
 
 function Share() {
-  // const axios = require('axios').default;
+  const axios = require('axios').default;
   // const ref = firebase.firestore().collection('userId-9'); // ownerId
 
   const getAllLists = () => {
