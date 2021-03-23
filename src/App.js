@@ -7,7 +7,7 @@ import Exam from './pages/Exam';
 import NewList from './pages/NewList';
 import EditForm from './pages/EditForm';
 import List from './pages/List';
-import Share from './pages/Share';
+import Share from './pages/SharePage';
 import Header from './components/Header';
 
 import { BrowserRouter as HashRouter, Switch, Route } from 'react-router-dom';

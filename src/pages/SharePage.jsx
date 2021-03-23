@@ -2,28 +2,28 @@ import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import firebase from './../firebase';
+import firebase from '../firebase';
 import { v4 as uuid } from 'uuid';
 
-function Share() {
-  const axios = require('axios').default;
+function SharePage() {
+  // const axios = require('axios').default;
   // const ref = firebase.firestore().collection('userId-9'); // ownerId
 
   const getAllLists = () => {
     const url =
       'https://firestore.googleapis.com/v1/projects/questionnaire-4f52b/databases/(default)/documents/userId-9/';
-    axios
-      .get(url)
-      .then(function (response) {
-        console.log(response.data.documents);
-        response.data.documents.map((elem) => console.log(elem.name));
-        console.log('---------');
-        response.data.documents.map((elem) => console.log(elem.fields));
+    // axios
+    //   .get(url)
+    //   .then(function (response) {
+    //     console.log(response.data.documents);
+    //     response.data.documents.map((elem) => console.log(elem.name));
+    //     console.log('---------');
+    //     response.data.documents.map((elem) => console.log(elem.fields));
       
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
 
   const createList = () => {
@@ -82,12 +82,12 @@ function Share() {
         variant="warning" 
         style={{ width: '8rem' }} 
         className="mt-2 mb-2" 
-        onClick={handleImportClick}>
-          Import &#8630;
+        onClick={handleImportClick}> 
+          Import {' '} &#8630;
         </Button>
       </Card>
     </Container>
   );
 }
 
-export default Share;
+export default SharePage;

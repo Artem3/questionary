@@ -1,76 +1,84 @@
 import { nanoid } from 'nanoid';
 import firebase from './../firebase';
 
-const counterCollection = 'counter';
 const counterId = 'counterId';
+const counterCollection = 'counter';
 const user = localStorage.getItem('userId');
-const axios = require('axios').default;
-const currentIndex; // atomic
+const userRepo = firebase.firestore().collection(user);
+const counterRepo = firebase.firestore().collection(counterCollection);
+let currentIndex = 0;
 const counterUrl =
   'https://firestore.googleapis.com/v1/projects/questionnaire-4f52b/databases/(default)/documents/' + counterCollection;
 
-export const doSharing = (title, pool) => {
+export const doSharing = async (title, pool) => {
   if (!validateData(title, pool)) {
     return;
   }
-
-  const userRootRepo = firebase.firestore().collection(user);
-  const listId = 'listId:' + nanoid(10);
-  const doc = prepareDataToSave(title, pool);
-
-  //save questioneir to db
-  userRootRepo
-    .doc(listId)
-    .set(doc)
-    .catch((err) => {
-      console.error(err);
-    });
-  console.log(listId + ' saved--.');
-
-  getCurrentSharedCounter();
-  increaseSharedCounter();
-  prepareToSaveSharedCode(user, listId);
+  console.log('-Start sharing process--');
+  await saveQuestionnairyToDb(title, pool);
+  await getSharedCounter();
+  await increaseSharedCounter();
+  prepareToSaveSharedCode(user);
+  console.log('-Finish sharing--');
 };
 
-function getCurrentSharedCounter() {
-  axios
-    .get(counterUrl)
-    .then(function (response) {
-      const counter = Number(response.data.documents[0].fields.index.integerValue);
-      console.log('1- counter: ' + counter);
-      currentIndex = counter;
-      console.log('2- current index is ' + currentIndex);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+function saveQuestionnairyToDb(title, pool) {
+  return new Promise((resolve, reject) => {
+    const listId = 'listId:' + nanoid(10);
+    const doc = prepareDataToSave(title, pool);
+    userRepo
+      .doc(listId)
+      .set(doc)
+      .catch((err) => {
+        reject(err);
+      })
+      .then(resolve);
+    console.log('0. Questionnairy saved: ', listId);
+  });
+}
+
+function getSharedCounter() {
+  return new Promise((resolve, reject) => {
+    (async () => {
+      try {
+        const response = await fetch(counterUrl);
+        const json = await response.json();
+        let counter = Number(json.documents[0].fields.index.integerValue);
+        currentIndex = counter;
+        console.log('1. Current conter:', counter);
+        resolve(counter);
+      } catch (err) {
+        console.error('Error in getSharedCounter(): ', err);
+        reject(err);
+      }
+    })();
+  });
 }
 
 function increaseSharedCounter() {
-  const counterRepo = firebase.firestore().collection(counterCollection);
-  const updatedIndex = currentIndex + 1;
-  console.log('3- updatedIndex: ', updatedIndex);
-
-  const counterObj = { index: updatedIndex };
-  console.log('4-counterObj: ');
-  console.log(counterObj);
-  counterRepo
-    .doc(counterId)
-    .set(counterObj)
-    .catch((err) => {
-      console.error(err);
-    });
-  console.log('5- increase has been done--');
+  return new Promise((resolve, reject) => {
+    const updatedIndex = currentIndex + 1;
+    console.log('3: Updated counter: ', updatedIndex);
+    counterRepo
+      .doc(counterId)
+      .set({ index: updatedIndex })
+      .catch((err) => {
+        console.error('Error in increaseSharedCounter(): ', err);
+        reject(err);
+      })
+      .then(resolve);
+    console.log('4: Updated counter saved OK');
+  });
 }
 
 function validateData(title, pool) {
   let valid = true;
   if (user == null) {
-    console.error('userId is null');
+    console.error('Validation error: userId is null');
     return false;
   }
   if (title === '' || pool === '') {
-    console.error('title or pool is empty');
+    console.error('Validation error: title or pool is empty');
     return false;
   }
   return valid;
@@ -83,4 +91,6 @@ function prepareDataToSave(title, pool) {
   return toDb;
 }
 
-function prepareToSaveSharedCode(user, listId) {}
+function prepareToSaveSharedCode(user) {
+  console.log('--FINISH--');
+}
