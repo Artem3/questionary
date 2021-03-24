@@ -26,7 +26,8 @@ export default function EditForm(props) {
       setReplacementNeedsConfirm(false);
       return;
     }
-    localStorage.setItem(key, JSON.stringify(clean));
+    const toStorage = { questions: clean };
+    localStorage.setItem(key, JSON.stringify(toStorage));
     props.setSize(localStorage.length - 1);
   };
 

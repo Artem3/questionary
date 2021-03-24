@@ -14,6 +14,7 @@ export default function Exam() {
 
   useEffect(() => {
     setQList(shuffle(JSON.parse(localStorage.getItem(id))));
+    //setQList(shuffle(JSON.parse(localStorage.getItem(id).questions))); check this
   }, [id]);
 
   const isListCompleted = currentIndex <= qList.length - 1 ? false : true;
@@ -58,6 +59,7 @@ export default function Exam() {
     setDisplayTable(false);
     setCurrentIndex(0);
     setQList(shuffle(JSON.parse(localStorage.getItem(id))));
+    // setQList(shuffle(JSON.parse(localStorage.getItem(id).questions))); // check this also
     setProgress(1);
   };
 
