@@ -20,7 +20,7 @@ function App() {
 
   //initialize default questionaries and save them to local storage
   function intitDefaultLists() {
-    localStorage.length < 1 && saveToStorage();
+    localStorage.length < 2 && saveToStorage();
   }
   //generate user Id if not exist in local storage
   function generateUserId() {

@@ -47,5 +47,5 @@ export const saveToStorage = () => {
 
 export const generateId = () => {
   localStorage.setItem('userId', 'user:' + nanoid(7));
-  console.log("New UserId generated");
+  console.log('New UserId generated');
 };
