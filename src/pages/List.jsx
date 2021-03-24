@@ -30,6 +30,14 @@ export default function List(props) {
   const handleShare = (title) => {
     const pool = localStorage.getItem(title);
     const shareCode = doSharing(title, pool);
+    console.log('SHARED CODE: ', shareCode); // fix order of excecution !!!
+    //save updated pool
+    const updatedList = {
+      // fix structure in localStorage to avoid nested !!!
+      questions: JSON.parse(pool),
+      sharedCode: shareCode,
+    };
+    localStorage.setItem(title, JSON.stringify(updatedList));
   };
 
   return (

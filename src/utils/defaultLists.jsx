@@ -29,15 +29,23 @@ export const saveToStorage = () => {
     { question: '9^3', expectedAnswer: '729' },
     { question: '10^3', expectedAnswer: '1000' },
   ];
+  const defaultQuestioneir1 = {
+    questions: set1,
+  };
+
+  const defaultQuestioneir2 = {
+    questions: set2,
+  };
 
   return (
     <>
-      {localStorage.setItem(title1, JSON.stringify(set1))}
-      {localStorage.setItem(title2, JSON.stringify(set2))}
+      {localStorage.setItem(title1, JSON.stringify(defaultQuestioneir1))}
+      {localStorage.setItem(title2, JSON.stringify(defaultQuestioneir2))}
     </>
   );
 };
 
 export const generateId = () => {
   localStorage.setItem('userId', 'user:' + nanoid(7));
+  console.log("New UserId generated");
 };

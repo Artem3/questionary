@@ -20,17 +20,17 @@ function App() {
 
   //initialize default questionaries and save them to local storage
   function intitDefaultLists() {
-    localStorage.length === 0 && saveToStorage();
+    localStorage.length < 1 && saveToStorage();
   }
   //generate user Id if not exist in local storage
   function generateUserId() {
-    localStorage.getItem('userId') === null && generateId();
+    localStorage.getItem('userId') == null && generateId();
   }
 
   return (
     <div className="main-wrapper">
-      {intitDefaultLists()}
       {generateUserId()}
+      {intitDefaultLists()}
       <HashRouter>
         <Header size={size} />
         <Switch>

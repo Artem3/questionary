@@ -1,30 +1,40 @@
 import { nanoid } from 'nanoid';
 import firebase from './../firebase';
+import { generateId } from 'utils/defaultLists';
 
-const counterId = 'counterId';
-const counterCollection = 'counter';
-const user = localStorage.getItem('userId');
-const userRepo = firebase.firestore().collection(user);
-const counterRepo = firebase.firestore().collection(counterCollection);
 let currentIndex = 0;
+let listId = 'default';
+const counterId = 'counterId';
+const sharedCollection = 'shared';
+const counterCollection = 'counter';
+// const user = localStorage.getItem('userId'); // remove userId and reopen http://localhost:3000/
+const user = localStorage.getItem('userId') == null ? generateId : localStorage.getItem('userId');
+const userRepo = firebase.firestore().collection(user);
+const sharedRepo = firebase.firestore().collection(sharedCollection);
+const counterRepo = firebase.firestore().collection(counterCollection);
+
 const counterUrl =
   'https://firestore.googleapis.com/v1/projects/questionnaire-4f52b/databases/(default)/documents/' + counterCollection;
+const shareCollectionUrl =
+  'https://firestore.googleapis.com/v1/projects/questionnaire-4f52b/databases/(default)/documents/' + sharedCollection;
 
 export const doSharing = async (title, pool) => {
   if (!validateData(title, pool)) {
     return;
   }
-  console.log('-Start sharing process--');
+  console.log('-Start sharing--');
   await saveQuestionnairyToDb(title, pool);
   await getSharedCounter();
   await increaseSharedCounter();
-  prepareToSaveSharedCode(user);
+  await saveSharedCode();
   console.log('-Finish sharing--');
+
+  return currentIndex;
 };
 
 function saveQuestionnairyToDb(title, pool) {
   return new Promise((resolve, reject) => {
-    const listId = 'listId:' + nanoid(10);
+    listId = 'listId:' + nanoid(10);
     const doc = prepareDataToSave(title, pool);
     userRepo
       .doc(listId)
@@ -91,6 +101,15 @@ function prepareDataToSave(title, pool) {
   return toDb;
 }
 
-function prepareToSaveSharedCode(user) {
-  console.log('--FINISH--');
+function saveSharedCode() {
+  return new Promise((resolve, reject) => {
+    sharedRepo
+      .doc(currentIndex.toString())
+      .set({ userId: user, listId: listId })
+      .catch((err) => {
+        reject(err);
+      })
+      .then(resolve);
+    console.log('5. Shared code saved OK');
+  });
 }
