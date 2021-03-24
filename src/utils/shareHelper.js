@@ -1,14 +1,12 @@
 import { nanoid } from 'nanoid';
 import firebase from './../firebase';
-import { generateId } from 'utils/defaultLists';
 
 let currentIndex = 0;
 let listId = 'default';
 const counterId = 'counterId';
 const sharedCollection = 'shared';
 const counterCollection = 'counter';
-// const user = localStorage.getItem('userId'); // remove userId and reopen http://localhost:3000/
-const user = localStorage.getItem('userId') == null ? generateId : localStorage.getItem('userId');
+const user = getOrCreateUserId();
 const userRepo = firebase.firestore().collection(user);
 const sharedRepo = firebase.firestore().collection(sharedCollection);
 const counterRepo = firebase.firestore().collection(counterCollection);
@@ -81,6 +79,19 @@ function increaseSharedCounter() {
   });
 }
 
+function saveSharedCode() {
+  return new Promise((resolve, reject) => {
+    sharedRepo
+      .doc(currentIndex.toString())
+      .set({ userId: user, listId: listId })
+      .catch((err) => {
+        reject(err);
+      })
+      .then(resolve);
+    console.log('5. Shared code saved OK');
+  });
+}
+
 function validateData(title, pool) {
   let valid = true;
   if (user == null) {
@@ -97,19 +108,15 @@ function validateData(title, pool) {
 function prepareDataToSave(title, pool) {
   const strToSave = JSON.stringify({ listTitle: title, questions: pool });
   const toDb = { doc: strToSave };
-
   return toDb;
 }
 
-function saveSharedCode() {
-  return new Promise((resolve, reject) => {
-    sharedRepo
-      .doc(currentIndex.toString())
-      .set({ userId: user, listId: listId })
-      .catch((err) => {
-        reject(err);
-      })
-      .then(resolve);
-    console.log('5. Shared code saved OK');
-  });
+function getOrCreateUserId() {
+  if (localStorage.getItem('userId') == null) {
+    const userId = 'user:' + nanoid(7);
+    localStorage.setItem('userId', userId);
+    return userId;
+  } else {
+    return localStorage.getItem('userId');
+  }
 }
