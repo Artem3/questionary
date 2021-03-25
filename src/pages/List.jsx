@@ -15,7 +15,8 @@ export default function List(props) {
       if (title === 'userId') {
         continue;
       }
-      let qLength = JSON.parse(localStorage.getItem(title)).length;
+      const savedPool = JSON.parse(localStorage.getItem(title));
+      let qLength = savedPool.questions.length;
       content.set(title, qLength);
     }
     return content;

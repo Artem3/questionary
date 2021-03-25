@@ -13,8 +13,8 @@ export default function Exam() {
   const [progress, setProgress] = useState(1);
 
   useEffect(() => {
-    setQList(shuffle(JSON.parse(localStorage.getItem(id))));
-    //setQList(shuffle(JSON.parse(localStorage.getItem(id).questions))); check this
+    const savedPool = JSON.parse(localStorage.getItem(id));
+    setQList(shuffle(savedPool.questions));
   }, [id]);
 
   const isListCompleted = currentIndex <= qList.length - 1 ? false : true;
@@ -37,8 +37,7 @@ export default function Exam() {
     const totalCount = qList.length;
     const list = Object.values(qList);
     const incorrectAnswers = list.filter((i) => i.isCorrect === false).length;
-    const totalCorrectAnswered = list.filter((i) => i.isCorrect === true)
-      .length;
+    const totalCorrectAnswered = list.filter((i) => i.isCorrect === true).length;
 
     if (incorrectAnswers + totalCorrectAnswered !== totalCount) {
       console.log('Incorrect result calculation!');
@@ -58,8 +57,8 @@ export default function Exam() {
   const runAgain = () => {
     setDisplayTable(false);
     setCurrentIndex(0);
-    setQList(shuffle(JSON.parse(localStorage.getItem(id))));
-    // setQList(shuffle(JSON.parse(localStorage.getItem(id).questions))); // check this also
+    const thisPool = JSON.parse(localStorage.getItem(id));
+    setQList(shuffle(thisPool.questions));
     setProgress(1);
   };
 

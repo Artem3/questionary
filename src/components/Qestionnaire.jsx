@@ -24,7 +24,8 @@ export default function Qestionnaire(props) {
       setReplacementNeedsConfirm(false);
       return;
     }
-    localStorage.setItem(key, JSON.stringify(clean));
+    const poolToSave = { questions: clean };
+    localStorage.setItem(key, JSON.stringify(poolToSave));
     props.setSize(localStorage.length - 1);
   };
 

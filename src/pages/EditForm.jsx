@@ -12,7 +12,7 @@ export default function EditForm(props) {
   const defaultInputFields = [{ question: '', expectedAnswer: '' }];
 
   const list = localStorage.getItem(id);
-  const [inputFields, setInputFields] = useState(list !== null ? JSON.parse(list) : defaultInputFields);
+  const [inputFields, setInputFields] = useState(list !== null ? JSON.parse(list).questions : defaultInputFields);
   const [replacementNeedsConfirm, setReplacementNeedsConfirm] = useState(false);
   const [confirmDialogPrompt, setConfirmDialogPrompt] = useState('');
 
