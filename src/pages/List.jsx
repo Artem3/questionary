@@ -7,7 +7,6 @@ import { doSharing } from 'utils/shareHelper';
 
 export default function List(props) {
   const [content, setContent] = useState(fillContentFromStorage());
-  const [code, setCode] = useState(0);
 
   function fillContentFromStorage() {
     const content = new Map();
@@ -17,7 +16,6 @@ export default function List(props) {
         continue;
       }
       const savedPool = JSON.parse(localStorage.getItem(title));
-      // let qLength = savedPool.questions.length;
       content.set(title, savedPool);
     }
     return content;
@@ -37,8 +35,12 @@ export default function List(props) {
         sharedCode: result,
       };
       localStorage.setItem(title, JSON.stringify(updatedPool));
-      setCode(result); // -?
+      setContent(fillContentFromStorage());
     });
+  };
+
+  const handleCopyToClipboard = (code) => {
+    navigator.clipboard.writeText(code);
   };
 
   return (
@@ -62,8 +64,7 @@ export default function List(props) {
             let map = new Map().set('a', 1).set('b', 2),
             array = Array.from(map, ([name, value]) => ({ name, value }));
             console.log(array); */}
-            {Array.from(content, ([title, poolAndCode]) => ({ title, poolAndCode }))
-            .map((elem, index) => {
+            {Array.from(content, ([title, poolAndCode]) => ({ title, poolAndCode })).map((elem, index) => {
               return (
                 <tr key={index}>
                   <td>{index + 1}</td>
@@ -89,9 +90,15 @@ export default function List(props) {
                   </td>
                   <td>
                     {/* --Action button--- */}
-                    <Button variant="success" onClick={() => handleShare(elem.title)}>
-                      Share this pool &#9741;
-                    </Button>
+                    {elem.poolAndCode.sharedCode ? (
+                      <Button variant="outline-info" onClick={() => handleCopyToClipboard(elem.poolAndCode.sharedCode)}>
+                        Copy code &#9993;
+                      </Button>
+                    ) : (
+                      <Button variant="dark" onClick={() => handleShare(elem.title)}>
+                        Share this pool &#9741;
+                      </Button>
+                    )}
                     <span>{elem.poolAndCode.sharedCode}</span>
                   </td>
                 </tr>
