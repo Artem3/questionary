@@ -17,8 +17,8 @@ export default function List(props) {
         continue;
       }
       const savedPool = JSON.parse(localStorage.getItem(title));
-      let qLength = savedPool.questions.length;
-      content.set(title, qLength);
+      // let qLength = savedPool.questions.length;
+      content.set(title, savedPool);
     }
     return content;
   }
@@ -37,6 +37,7 @@ export default function List(props) {
         sharedCode: result,
       };
       localStorage.setItem(title, JSON.stringify(updatedPool));
+      setCode(result); // -?
     });
   };
 
@@ -57,42 +58,45 @@ export default function List(props) {
             </tr>
           </thead>
           <tbody>
-            {Array.from(content)
-              .sort()
-              .map((elem, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>{elem[0]}</td>
-                    <td>{elem[1]}</td>
-                    <td>
-                      {/* --Run button--- */}
-                      <Button variant="link">
-                        <Link to={'/questionnaire/' + elem[0]}>&#9655;</Link>
-                      </Button>
-                    </td>
-                    <td>
-                      {/* --Edit button--- */}
-                      <Button variant="link">
-                        <Link to={'/' + elem[0]}>&#x270E;</Link>
-                      </Button>
-                    </td>
-                    <td>
-                      {/* --Delete button--- */}
-                      <Button variant="link" onClick={() => handleDelete(elem[0])}>
-                        &#x2716;
-                      </Button>
-                    </td>
-                    <td>
-                      {/* --Action button--- */}
-                      <Button variant="success" onClick={() => handleShare(elem[0])}>
-                        Share this pool &#9741;
-                      </Button>
-                      code: 258
-                    </td>
-                  </tr>
-                );
-              })}
+            {/* 
+            let map = new Map().set('a', 1).set('b', 2),
+            array = Array.from(map, ([name, value]) => ({ name, value }));
+            console.log(array); */}
+            {Array.from(content, ([title, poolAndCode]) => ({ title, poolAndCode }))
+            .map((elem, index) => {
+              return (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{elem.title}</td>
+                  <td>{elem.poolAndCode.questions.length}</td>
+                  <td>
+                    {/* --Run button--- */}
+                    <Button variant="link">
+                      <Link to={'/questionnaire/' + elem.title}>&#9655;</Link>
+                    </Button>
+                  </td>
+                  <td>
+                    {/* --Edit button--- */}
+                    <Button variant="link">
+                      <Link to={'/' + elem.title}>&#x270E;</Link>
+                    </Button>
+                  </td>
+                  <td>
+                    {/* --Delete button--- */}
+                    <Button variant="link" onClick={() => handleDelete(elem.title)}>
+                      &#x2716;
+                    </Button>
+                  </td>
+                  <td>
+                    {/* --Action button--- */}
+                    <Button variant="success" onClick={() => handleShare(elem.title)}>
+                      Share this pool &#9741;
+                    </Button>
+                    <span>{elem.poolAndCode.sharedCode}</span>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
       </Container>
