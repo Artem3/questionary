@@ -7,6 +7,7 @@ import { doSharing } from 'utils/shareHelper';
 
 export default function List(props) {
   const [content, setContent] = useState(fillContentFromStorage());
+  const [code, setCode] = useState(0);
 
   function fillContentFromStorage() {
     const content = new Map();
@@ -30,15 +31,13 @@ export default function List(props) {
 
   const handleShare = (title) => {
     const pool = localStorage.getItem(title);
-    const shareCode = doSharing(title, pool);
-    console.log('SHARED CODE: ', shareCode); // fix order of excecution !!!
-    //save updated pool
-    const updatedList = {
-      // fix structure in localStorage to avoid nested !!!
-      questions: JSON.parse(pool),
-      sharedCode: shareCode,
-    };
-    localStorage.setItem(title, JSON.stringify(updatedList));
+    doSharing(title, pool).then((result) => {
+      const updatedPool = {
+        questions: JSON.parse(pool).questions,
+        sharedCode: result,
+      };
+      localStorage.setItem(title, JSON.stringify(updatedPool));
+    });
   };
 
   return (
