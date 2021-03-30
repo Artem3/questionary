@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown';
 import { doSharing } from 'utils/shareHelper';
 
 export default function List(props) {
@@ -43,6 +44,10 @@ export default function List(props) {
     navigator.clipboard.writeText(code);
   };
 
+  const handleStopSharing = (code) => {
+    //remove record from SharedCode table
+  };
+
   return (
     <>
       <Container style={{ minHeight: '100vh', color: 'white' }}>
@@ -60,50 +65,59 @@ export default function List(props) {
             </tr>
           </thead>
           <tbody>
-            {/* 
-            let map = new Map().set('a', 1).set('b', 2),
-            array = Array.from(map, ([name, value]) => ({ name, value }));
-            console.log(array); */}
-            {Array.from(content, ([title, poolAndCode]) => ({ title, poolAndCode })).map((elem, index) => {
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{elem.title}</td>
-                  <td>{elem.poolAndCode.questions.length}</td>
-                  <td>
-                    {/* --Run button--- */}
-                    <Button variant="link">
-                      <Link to={'/questionnaire/' + elem.title}>&#9655;</Link>
-                    </Button>
-                  </td>
-                  <td>
-                    {/* --Edit button--- */}
-                    <Button variant="link">
-                      <Link to={'/' + elem.title}>&#x270E;</Link>
-                    </Button>
-                  </td>
-                  <td>
-                    {/* --Delete button--- */}
-                    <Button variant="link" onClick={() => handleDelete(elem.title)}>
-                      &#x2716;
-                    </Button>
-                  </td>
-                  <td>
-                    {/* --Action button--- */}
-                    {elem.poolAndCode.sharedCode ? (
-                      <Button variant="outline-info" onClick={() => handleCopyToClipboard(elem.poolAndCode.sharedCode)}>
-                        Copy code &#9993;
+            {Array.from(content, ([title, poolAndCode]) => ({ title, poolAndCode }))
+              .sort()
+              .map((elem, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{elem.title}</td>
+                    <td>{elem.poolAndCode.questions.length}</td>
+                    <td>
+                      {/* --Run button--- */}
+                      <Button variant="link">
+                        <Link to={'/questionnaire/' + elem.title}>&#9655;</Link>
                       </Button>
-                    ) : (
-                      <Button variant="dark" onClick={() => handleShare(elem.title)}>
-                        Share this pool &#9741;
+                    </td>
+                    <td>
+                      {/* --Edit button--- */}
+                      <Button variant="link">
+                        <Link to={'/' + elem.title}>&#x270E;</Link>
                       </Button>
-                    )}
-                    <span>{elem.poolAndCode.sharedCode}</span>
-                  </td>
-                </tr>
-              );
-            })}
+                    </td>
+                    <td>
+                      {/* --Delete button--- */}
+                      <Button variant="link" onClick={() => handleDelete(elem.title)}>
+                        &#x2716;
+                      </Button>
+                    </td>
+                    <td>
+                      {/* --Action button--- */}
+                      {elem.poolAndCode.sharedCode ? (
+                        <>
+                          {elem.poolAndCode.sharedCode}
+                          <Dropdown>
+                            <Dropdown.Toggle variant="outline-info">&#9881;</Dropdown.Toggle>
+                            <Dropdown.Menu>
+                              <Dropdown.Item onClick={() => handleCopyToClipboard(elem.poolAndCode.sharedCode)}>
+                                Copy code &#9993;
+                              </Dropdown.Item>
+                              <Dropdown.Divider />
+                              <Dropdown.Item onClick={() => handleStopSharing(elem.poolAndCode.sharedCode)}>
+                                Stop sharing
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </>
+                      ) : (
+                        <Button variant="dark" onClick={() => handleShare(elem.title)}>
+                          Share this pool &#9741;
+                        </Button>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </Table>
       </Container>
