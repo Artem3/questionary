@@ -1,33 +1,31 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+name: Deploy to GitHub Pages
+    on:
+      push:
+        branches:
+          - gh-pages
+    jobs:
+      build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout
+          uses: actions/checkout@v1
 
-name: My CI
+        - name: Build
+          run: |
+            npm install
+            npm run-script build
+          env:
+            REACT_APP_FIREBASE_KEY: ${{ secrets.REACT_APP_FIREBASE_KEY }}
+            REACT_APP_FIREBASE_DOMAIN: ${{ secrets.REACT_APP_FIREBASE_DOMAIN }}
+            REACT_APP_FIREBASE_DATABASE: ${{ secrets.REACT_APP_FIREBASE_DATABASE }}
+            REACT_APP_FIREBASE_PROJECT_ID: ${{ secrets.REACT_APP_FIREBASE_PROJECT_ID }}
+            REACT_APP_FIREBASE_STORAGE_BUCKET: ${{ secrets.REACT_APP_FIREBASE_STORAGE_BUCKET }}
+            REACT_APP_FIREBASE_SENDER_ID: ${{ secrets.REACT_APP_FIREBASE_SENDER_ID }}
+            REACT_APP_MESSAGING_APP_ID: ${{ secrets.REACT_APP_MESSAGING_APP_ID }}
 
-on:
-  push:
-    branches: [ gh-pages ]
-
-jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 15.x]
-
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build
-    
-    - name: Deploy 🚀
-      uses: JamesIves/github-pages-deploy-action@4.1.1
-      with:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        branch: gh-pages # The branch the action should deploy to.
-        folder: build # The folder the action should deploy.
+        - name: Deploy
+          uses: JamesIves/github-pages-deploy-action@releases/v4.0.0
+          with:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_KEY }}
+            BRANCH: gh-pages
+            FOLDER: build
