@@ -2,7 +2,7 @@
     on:
         push:
             branches:
-            - gh-pages
+            - master
     jobs:
       build-and-deploy:
         runs-on: ubuntu-latest
@@ -22,10 +22,3 @@
             REACT_APP_FIREBASE_STORAGE_BUCKET: ${{ secrets.REACT_APP_FIREBASE_STORAGE_BUCKET }}
             REACT_APP_FIREBASE_SENDER_ID: ${{ secrets.REACT_APP_FIREBASE_SENDER_ID }}
             REACT_APP_MESSAGING_APP_ID: ${{ secrets.REACT_APP_MESSAGING_APP_ID }}
-
-        - name: Deploy
-          uses: JamesIves/github-pages-deploy-action@releases/v4.0.0
-          with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_KEY }}
-            BRANCH: gh-pages
-            FOLDER: build
