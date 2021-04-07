@@ -76,13 +76,13 @@ export default function List(props) {
                     <td>
                       {/* --Run button--- */}
                       <Button variant="link">
-                        <Link to={'/questionnaire/' + elem.title}>&#9655;</Link>
+                        <Link to={`/${elem.title}/exam`}>&#9655;</Link>
                       </Button>
                     </td>
                     <td>
                       {/* --Edit button--- */}
                       <Button variant="link">
-                        <Link to={'/' + elem.title}>&#x270E;</Link>
+                        <Link to={`/${elem.title}/edit`}>&#x270E;</Link>
                       </Button>
                     </td>
                     <td>
