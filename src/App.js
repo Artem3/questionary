@@ -11,7 +11,7 @@ import Share from './pages/SharePage';
 import Home from './pages/Home';
 import Header from './components/Header';
 
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as HashRouter, Switch, Route } from 'react-router-dom';
 import { saveToStorage, generateId } from 'utils/defaultLists';
 import React, { useState } from 'react';
 
@@ -32,21 +32,18 @@ function App() {
     <div className="main-wrapper">
       {generateUserId()}
       {intitDefaultLists()}
-      <Router basename={process.env.PUBLIC_URL}>
+      <HashRouter basename={process.env.PUBLIC_URL}>
         {console.log(process.env.PUBLIC_URL)}
         <Header size={size} />
         <Switch>
-          <Route exact path="/questionnaire" component={Home} />
+          <Route exact path="/" component={Home} />
           <Route path="/new" component={() => <NewList setSize={setSize} />} />
           <Route path="/lists" component={() => <List setSize={setSize} />} />
           <Route path="/share" component={Share} />
           <Route path="/:id/edit" component={() => <EditForm setSize={setSize} />} />
           <Route path="/:id/exam" component={Exam} />
-          {/* <Route exact path="/">
-            <Redirect to="/questionnaire" />
-          </Route> */}
         </Switch>
-      </Router>
+      </HashRouter>
       <img src={logo} className="App-logo" alt="logo" />
     </div>
   );

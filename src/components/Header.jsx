@@ -15,7 +15,7 @@ export default function Header(props) {
 
   return (
     <Navbar bg="info" expand="lg" className="py-0 full-width" sticky="top">
-      <LinkContainer to="/questionnaire">
+      <LinkContainer to="/">
         {/* logo */}
         <Navbar.Brand className="text-white">
           <img src={logo} width="60" height="60" className="d-inline-block" alt="questionnaire logo" />
