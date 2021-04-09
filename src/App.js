@@ -11,7 +11,7 @@ import Share from './pages/SharePage';
 import Home from './pages/Home';
 import Header from './components/Header';
 
-import { BrowserRouter as HashRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { saveToStorage, generateId } from 'utils/defaultLists';
 import React, { useState } from 'react';
 
@@ -32,7 +32,7 @@ function App() {
     <div className="main-wrapper">
       {generateUserId()}
       {intitDefaultLists()}
-      <HashRouter>
+      <Router basename={process.env.PUBLIC_URL}>
         <Header size={size} />
         <Switch>
           <Route exact path="/questionnaire" component={Home} />
@@ -45,7 +45,7 @@ function App() {
             <Redirect to="/questionnaire" />
           </Route>
         </Switch>
-      </HashRouter>
+      </Router>
       <img src={logo} className="App-logo" alt="logo" />
     </div>
   );
