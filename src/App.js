@@ -33,6 +33,7 @@ function App() {
       {generateUserId()}
       {intitDefaultLists()}
       <Router basename={process.env.PUBLIC_URL}>
+        {console.log(process.env.PUBLIC_URL)}
         <Header size={size} />
         <Switch>
           <Route exact path="/questionnaire" component={Home} />
@@ -41,9 +42,9 @@ function App() {
           <Route path="/share" component={Share} />
           <Route path="/:id/edit" component={() => <EditForm setSize={setSize} />} />
           <Route path="/:id/exam" component={Exam} />
-          <Route exact path="/">
+          {/* <Route exact path="/">
             <Redirect to="/questionnaire" />
-          </Route>
+          </Route> */}
         </Switch>
       </Router>
       <img src={logo} className="App-logo" alt="logo" />
