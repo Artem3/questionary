@@ -32,8 +32,7 @@ function App() {
     <div className="main-wrapper">
       {generateUserId()}
       {intitDefaultLists()}
-      <HashRouter  basename={process.env.PUBLIC_URL}>
-        {console.log(process.env.PUBLIC_URL)}
+      <HashRouter>
         <Header size={size} />
         <Switch>
           <Route exact path="/" component={Home} />
@@ -43,7 +42,7 @@ function App() {
           <Route path="/:id/edit" component={() => <EditForm setSize={setSize} />} />
           <Route path="/:id/exam" component={Exam} />
         </Switch>
-      </HashRouter >
+      </HashRouter>
       <img src={logo} className="App-logo" alt="logo" />
     </div>
   );

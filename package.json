@@ -1,7 +1,7 @@
 {
   "name": "questionary",
   "version": "0.3.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "3": "^2.1.0",
     "-": "^0.0.1",
