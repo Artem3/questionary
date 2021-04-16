@@ -12,6 +12,4 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-console.log('REACT_APP_MESSAGING_APP_ID:');
-console.log(process.env.REACT_APP_MESSAGING_APP_ID);
 export default firebase;

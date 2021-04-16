@@ -11,10 +11,7 @@ const userRepo = firebase.firestore().collection(user);
 const sharedRepo = firebase.firestore().collection(sharedCollection);
 const counterRepo = firebase.firestore().collection(counterCollection);
 
-const counterUrl =
-  'https://firestore.googleapis.com/v1/projects/questionnaire-4f52b/databases/(default)/documents/' + counterCollection;
-// const shareCollectionUrl =
-//   'https://firestore.googleapis.com/v1/projects/questionnaire-4f52b/databases/(default)/documents/' + sharedCollection;
+const counterUrl = process.env.REACT_APP_BASIC_PATH_TO_DB + counterCollection;
 
 export const doSharing = async (title, pool) => {
   if (!validateData(title, pool)) {
