@@ -11,9 +11,9 @@
           uses: actions/checkout@v2
         
         - name: Set ignore warning flag
-          run: echo "Hello Actions!"
           env: 
-            CI: false
+            process.env.CI: false
+          run: echo $CI
           
         - name: Yarn install
           uses: Borales/actions-yarn@v2.3.0
