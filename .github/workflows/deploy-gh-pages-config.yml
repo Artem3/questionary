@@ -10,10 +10,9 @@
         - name: Checkout
           uses: actions/checkout@v2
         
-        - name: Set ignore warning flag
-          env: 
-            process.env.CI: false
-          run: echo $CI
+#         - name: Set ignore warning flag
+
+#           run: echo $CI
           
         - name: Yarn install
           uses: Borales/actions-yarn@v2.3.0
@@ -23,7 +22,7 @@
         - name: Yarn build    
           uses: Borales/actions-yarn@v2.3.0
           with:
-            cmd: build
+            cmd: CI=false build
             
 #         - name: Build
 #           run: |
