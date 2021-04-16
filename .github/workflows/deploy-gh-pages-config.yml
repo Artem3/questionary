@@ -28,7 +28,7 @@
             REACT_APP_FIREBASE_STORAGE_BUCKET: ${{ secrets.REACT_APP_FIREBASE_STORAGE_BUCKET }}
             REACT_APP_FIREBASE_SENDER_ID: ${{ secrets.REACT_APP_FIREBASE_SENDER_ID }}
             REACT_APP_MESSAGING_APP_ID: ${{ secrets.REACT_APP_MESSAGING_APP_ID }}
-            REACT_APP_BASIC_PATH_TO_DB: ${{ secret.REACT_APP_BASIC_PATH_TO_DB }}
+            REACT_APP_BASIC_PATH_TO_DB: ${{ secrets.REACT_APP_BASIC_PATH_TO_DB }}
 
         - name: Deploy to gh-pages
           uses: peaceiris/actions-gh-pages@v3
