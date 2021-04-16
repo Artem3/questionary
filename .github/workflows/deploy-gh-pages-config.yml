@@ -15,13 +15,13 @@
           with:
             cmd: install
         
-        - name: Set CI=FALSE
-          run: CI='' npm --version
+#         - name: Set CI=FALSE
+#           run: CI='' npm --version
 
         - name: Yarn build    
           uses: Borales/actions-yarn@v2.3.0
           with:
-            cmd: build
+            cmd: CI= build
             
           env:
             REACT_APP_FIREBASE_KEY: ${{ secrets.REACT_APP_FIREBASE_KEY }}
