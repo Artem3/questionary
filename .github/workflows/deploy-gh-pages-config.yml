@@ -11,7 +11,8 @@
           uses: actions/checkout@v2
         
         - name: Set ignore warning flag
-          run: CI=''
+          env: 
+            CI: false
           
         - name: Yarn install
           uses: Borales/actions-yarn@v2.3.0
