@@ -13,11 +13,12 @@
         - uses: Borales/actions-yarn@v2.3.0
           with:
             cmd: install
+            
         - uses: Borales/actions-yarn@v2.3.0
           with:
             cmd: build
             
-        - name: Build
+#         - name: Build
 #           run: |
 #             npm install
 #             CI='' npm run build
