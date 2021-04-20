@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "private": false,
   "license": "MIT",
-  "author" : "Artem Goncharenko",
+  "author": "Artem Goncharenko",
   "email": "artem.goncharenko@gmail.com",
   "dependencies": {
     "3": "^2.1.0",
@@ -28,6 +28,7 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "CI=false react-scripts build",
+    "build-local": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "yarn run build",

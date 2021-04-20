@@ -27,6 +27,12 @@ export const doSharing = async (title, pool) => {
   return currentIndex;
 };
 
+export const downloadSharedPool = (code) => {
+  console.log('-Start downloading--');
+  console.log('code is ', code);
+  console.log('-Finish sharing--');
+};
+// ------------------------------------------------
 function saveQuestionnairyToDb(title, pool) {
   return new Promise((resolve, reject) => {
     listId = 'listId:' + nanoid(10);

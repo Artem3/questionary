@@ -46,7 +46,7 @@ export default function List(props) {
 
   const handleStopSharing = (code) => {
     //remove record from SharedCode table
-    alert("Not implemented yet");
+    alert('Not implemented yet');
   };
 
   return (
@@ -95,7 +95,7 @@ export default function List(props) {
                     <td>
                       {/* --Action button--- */}
                       {elem.poolAndCode.sharedCode ? (
-                        <>
+                        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                           {elem.poolAndCode.sharedCode}
                           <Dropdown>
                             <Dropdown.Toggle variant="outline-info">&#9881;</Dropdown.Toggle>
@@ -109,7 +109,7 @@ export default function List(props) {
                               </Dropdown.Item>
                             </Dropdown.Menu>
                           </Dropdown>
-                        </>
+                        </div>
                       ) : (
                         <Button variant="dark" onClick={() => handleShare(elem.title)}>
                           Share this pool &#9741;
