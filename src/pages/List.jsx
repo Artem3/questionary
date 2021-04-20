@@ -46,6 +46,7 @@ export default function List(props) {
 
   const handleStopSharing = (code) => {
     //remove record from SharedCode table
+    alert("Not implemented yet");
   };
 
   return (

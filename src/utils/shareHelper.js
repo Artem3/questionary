@@ -20,7 +20,7 @@ export const doSharing = async (title, pool) => {
   console.log('-Start sharing--');
   await saveQuestionnairyToDb(title, pool);
   await getSharedCounter();
-  await increaseSharedCounter();
+  await increaseAndSaveSharedCounter();
   await saveSharedCode();
   console.log('-Finish sharing--');
 
@@ -60,7 +60,7 @@ function getSharedCounter() {
   });
 }
 
-function increaseSharedCounter() {
+function increaseAndSaveSharedCounter() {
   return new Promise((resolve, reject) => {
     const updatedIndex = currentIndex + 1;
     console.log('3: Updated counter: ', updatedIndex);
