@@ -19,7 +19,7 @@ export default function Header(props) {
         {/* logo */}
         <Navbar.Brand className="text-white">
           <img src={logo} width="60" height="60" className="d-inline-block" alt="questionnaire logo" />
-          The Qestionnaire
+          The Questionnaire
         </Navbar.Brand>
       </LinkContainer>
 
