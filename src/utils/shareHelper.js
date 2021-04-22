@@ -5,6 +5,7 @@ let userId = '';
 let poolTitle = '';
 let currentIndex = 0;
 let listId = 'default';
+let targetQuestionnaire = '';
 
 const counterId = 'counterId';
 const sharedCollection = 'shared';
@@ -35,13 +36,17 @@ export const doSharing = async (title, pool) => {
 
 // Import. Get shared questionnaire into your local storage
 export const downloadSharedPool = async (code) => {
-  console.log('code is ', code);
   console.log('-Start downloading--');
+  console.log('Shared code is ' + code);
   await getUserAndTitleByCode(code);
+  await getQuestionnaireFromDb();
+  console.log(targetQuestionnaire);
   console.log('-Finish a pool downloading--');
+
+  return targetQuestionnaire;
 };
 
-// ------------------------------------------------
+//---------export questionnaire flow----------------
 function saveQuestionnairyToDb(title, pool) {
   return new Promise((resolve, reject) => {
     listId = 'listId:' + nanoid(10);
@@ -53,7 +58,7 @@ function saveQuestionnairyToDb(title, pool) {
         reject(err);
       })
       .then(resolve);
-    console.log('1 Imprt: Questionnairy saved: ', listId);
+    console.log('1 Exprt: Questionnairy saved: ', listId);
   });
 }
 
@@ -65,10 +70,10 @@ function getSharedCounter() {
         const json = await response.json();
         let counter = Number(json.documents[0].fields.index.integerValue);
         currentIndex = counter;
-        console.log('2 Imprt: Current conter:', counter);
+        console.log('2 Exprt: Current conter:', counter);
         resolve(counter);
       } catch (err) {
-        console.error('Imprt.Error in getSharedCounter(): ', err);
+        console.error('Exprt.Error in getSharedCounter(): ', err);
         reject(err);
       }
     })();
@@ -78,16 +83,16 @@ function getSharedCounter() {
 function increaseAndSaveSharedCounter() {
   return new Promise((resolve, reject) => {
     const updatedIndex = currentIndex + 1;
-    console.log('3 Imprt: Updated counter: ', updatedIndex);
+    console.log('3 Exprt: Updated counter: ', updatedIndex);
     counterRepo
       .doc(counterId)
       .set({ index: updatedIndex })
       .catch((err) => {
-        console.error('Imprt. Error in increaseSharedCounter(): ', err);
+        console.error('Exprt. Error in increaseSharedCounter(): ', err);
         reject(err);
       })
       .then(resolve);
-    console.log('4 Imprt: Updated counter saved OK');
+    console.log('4 Exprt: Updated counter saved OK');
   });
 }
 
@@ -100,21 +105,67 @@ function saveSharedCode() {
         reject(err);
       })
       .then(resolve);
-    console.log('5 Imprt: Shared code saved OK');
+    console.log('5 Exprt: Shared code saved OK');
   });
 }
 
+//------import flow--------
 function getUserAndTitleByCode(sharedCode) {
+  try {
+    return new Promise((resolve, reject) => {
+      (async () => {
+        try {
+          const response = await fetch(sharedCollectionUrl + '/' + sharedCode);
+          if (response.status === 404) throw 'Shared code is not found in db.';
+          const json = await response.json();
+          userId = json.fields.userId.stringValue;
+          poolTitle = json.fields.listId.stringValue;
+          resolve(console.log(`1 Imprt. UserId: ${userId}. Questionneir id: ${poolTitle}`));
+        } catch (err) {
+          console.log('Error getting userId and listId by code ' + sharedCode, err);
+          // reject();
+        }
+      })();
+    });
+  } catch (e) {
+    console.log('--', e);
+  }
+
+  // return new Promise((resolve, reject) => {
+  //   (async () => {
+  //     await fetch(sharedCollectionUrl + '/' + sharedCode)
+  //       .then(resp => {
+  //         if (resp.ok) {
+  //           const json =  resp.json();
+  //           userId = json.fields.userId.stringValue;
+  //           poolTitle = json.fields.listId.stringValue;
+  //           console.log(`1 Imprt. UserId: ${userId}. Questionneir id: ${poolTitle}`);
+  //         }
+  //         if (resp.status === 404) {
+  //           return Promise.reject('error 404')
+  //         }
+  //       })
+  //       .catch(error => console.log('ERROR-is:', error));
+  //   })();
+  // });
+}
+
+function getQuestionnaireFromDb() {
+  if (userId === '' || poolTitle === '') {
+    console.log('Empty user or poolTitle');
+    return;
+  }
   return new Promise((resolve, reject) => {
     (async () => {
+      const questionnaireUrl = process.env.REACT_APP_BASIC_PATH_TO_DB + userId + '/' + poolTitle;
       try {
-        const response = await fetch(sharedCollectionUrl + '/' + sharedCode);
+        const response = await fetch(questionnaireUrl);
+        if (response.status === 404) throw Error('The questionnaire is not found.');
         const json = await response.json();
-        userId = json.fields.userId.stringValue;
-        poolTitle = json.fields.listId.stringValue;
-        resolve(console.log(`1 Exprt. UserId: ${userId}. Questionneir title: ${poolTitle}`));
+        targetQuestionnaire = json.fields.doc.stringValue;
+        resolve(console.log('2 Imprt. Questionnaire downloaded OK'));
       } catch (err) {
-        console.error('Error getting userId and listId by code: ', sharedCode, err);
+        console.error('Error downloading questionnaire.', err);
         reject(err);
       }
     })();

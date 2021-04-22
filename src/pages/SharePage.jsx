@@ -23,7 +23,8 @@ function SharePage() {
     const inputWithCode = document.getElementById('theCode');
     const theCode = inputWithCode.value;
     if (!isCodeValide(inputWithCode)) return;
-    downloadSharedPool(theCode);
+    const pool = downloadSharedPool(theCode);
+    console.log("-->" + pool);
   };
 
   function isCodeValide(input) {
