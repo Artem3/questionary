@@ -36,11 +36,10 @@ export const doSharing = async (title, pool) => {
 
 // Import. Get shared questionnaire into your local storage
 export const downloadSharedPool = async (code) => {
-  console.log('-Start downloading--');
-  console.log('Shared code is ' + code);
+  resetStateBeforeFetch();
+  console.log('-Start downloading by code ' + code);
   await getUserAndTitleByCode(code);
   await getQuestionnaireFromDb();
-  console.log(targetQuestionnaire);
   console.log('-Finish a pool downloading--');
 
   return targetQuestionnaire;
@@ -111,43 +110,22 @@ function saveSharedCode() {
 
 //------import flow--------
 function getUserAndTitleByCode(sharedCode) {
-  try {
-    return new Promise((resolve, reject) => {
-      (async () => {
-        try {
-          const response = await fetch(sharedCollectionUrl + '/' + sharedCode);
-          if (response.status === 404) throw 'Shared code is not found in db.';
-          const json = await response.json();
-          userId = json.fields.userId.stringValue;
-          poolTitle = json.fields.listId.stringValue;
-          resolve(console.log(`1 Imprt. UserId: ${userId}. Questionneir id: ${poolTitle}`));
-        } catch (err) {
-          console.log('Error getting userId and listId by code ' + sharedCode, err);
-          // reject();
-        }
-      })();
-    });
-  } catch (e) {
-    console.log('--', e);
-  }
-
-  // return new Promise((resolve, reject) => {
-  //   (async () => {
-  //     await fetch(sharedCollectionUrl + '/' + sharedCode)
-  //       .then(resp => {
-  //         if (resp.ok) {
-  //           const json =  resp.json();
-  //           userId = json.fields.userId.stringValue;
-  //           poolTitle = json.fields.listId.stringValue;
-  //           console.log(`1 Imprt. UserId: ${userId}. Questionneir id: ${poolTitle}`);
-  //         }
-  //         if (resp.status === 404) {
-  //           return Promise.reject('error 404')
-  //         }
-  //       })
-  //       .catch(error => console.log('ERROR-is:', error));
-  //   })();
-  // });
+  return new Promise((resolve) => {
+    (async () => {
+      try {
+        const response = await fetch(sharedCollectionUrl + '/' + sharedCode);
+        if (response.status === 404) throw new Error('Shared code is not found in db.');
+        const json = await response.json();
+        userId = json.fields.userId.stringValue;
+        poolTitle = json.fields.listId.stringValue;
+        console.log(`1 Imprt. UserId: ${userId}. Questionneir id: ${poolTitle}`);
+        resolve();
+      } catch (err) {
+        console.log('Error getting userId and listId by code ' + sharedCode);
+        resolve();
+      }
+    })();
+  });
 }
 
 function getQuestionnaireFromDb() {
@@ -163,14 +141,16 @@ function getQuestionnaireFromDb() {
         if (response.status === 404) throw Error('The questionnaire is not found.');
         const json = await response.json();
         targetQuestionnaire = json.fields.doc.stringValue;
-        resolve(console.log('2 Imprt. Questionnaire downloaded OK'));
+        console.log('2 Imprt. Questionnaire downloaded OK');
+        resolve();
       } catch (err) {
         console.error('Error downloading questionnaire.', err);
-        reject(err);
+        resolve();
       }
     })();
   });
 }
+
 //----------private methods--------------
 function validateData(title, pool) {
   let valid = true;
@@ -199,4 +179,10 @@ function getOrCreateUserId() {
   } else {
     return localStorage.getItem('userId');
   }
+}
+
+function resetStateBeforeFetch() {
+  userId = '';
+  poolTitle = '';
+  targetQuestionnaire = '';
 }
