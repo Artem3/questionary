@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import ConfirmDialog from 'components/ConfirmDialog';
 
-export default function Qestionnaire(props) {
+export default function Questionnaire(props) {
   const defaultInputFields = [{ question: '', expectedAnswer: '' }];
   //array with all entered questions
   const [inputFields, setInputFields] = useState(defaultInputFields);
@@ -96,7 +96,7 @@ export default function Qestionnaire(props) {
   // --------------------------
   return (
     <Container style={{ minHeight: '100vh', color: 'white' }}>
-      <h4 className="text-center py-3">Create new qestionnaire here</h4>
+      <h4 className="text-center py-3">Create new questionnaire here</h4>
       {/* List name */}
       <Col className="text-center">
         <input

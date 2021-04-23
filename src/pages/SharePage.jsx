@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { downloadSharedPool } from 'utils/shareHelper';
+import QuestionnaireReadOnly from 'components/QuestionnaireReadOnly';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 
 function SharePage() {
+  const [showPool, setShowPool] = useState(false);
+  const [importedPool, setImportedPool] = useState([]);
+  const [importedTitle, setImportedTitle] = useState('');
+
   //--- styles ---
   const cardStyle = {
     justifyContent: 'space-between',
-    height: '14rem',
     alignItems: 'center',
     padding: '2rem',
   };
@@ -30,7 +35,9 @@ function SharePage() {
         const title = pool.listTitle;
         const qArray = pool.questions;
         console.log(title);
-        console.log(qArray);
+        setImportedTitle(title);
+        setImportedPool(qArray);
+        setShowPool(true);
       } else {
         alert('Questionneir is not found or removed by owner');
       }
@@ -58,9 +65,8 @@ function SharePage() {
   return (
     <Container style={{ minHeight: '100vh', color: 'white' }}>
       <h4 className="text-center py-3">Import share questionneries </h4>
-
       <Card bg="light" text="dark" style={cardStyle}>
-        <Card.Title style={{ width: '30rem' }}>Enter a code to the field:</Card.Title>
+        <Card.Title style={{ width: '30rem' }}>Enter a code here:</Card.Title>
 
         {/* Input field */}
         <input
@@ -78,6 +84,25 @@ function SharePage() {
         <Button variant="warning" style={{ width: '8rem' }} className="mt-2 mb-2" onClick={handleImportClick}>
           Import &#8630;
         </Button>
+
+        {/* Imported questionnair */}
+        {showPool && (
+          <>
+            <h3 className="text-center mt-2">{importedTitle}</h3>
+            <ButtonToolbar className="justify-content-between" style={{ width: '100%' }}>
+              {/* Cancel button */}
+              <Button variant="danger" className="mt-3 mb-1">
+                Cancel
+              </Button>
+
+              {/* Save locally button */}
+              <Button variant="info" className="mt-3 mb-1">
+                Save locally
+              </Button>
+            </ButtonToolbar>
+            <QuestionnaireReadOnly pool={importedPool} />
+          </>
+        )}
       </Card>
     </Container>
   );
