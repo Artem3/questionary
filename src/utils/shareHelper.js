@@ -166,7 +166,8 @@ function validateData(title, pool) {
 }
 
 function prepareDataToSave(title, pool) {
-  const strToSave = JSON.stringify({ listTitle: title, questions: pool });
+  const qArray = JSON.parse(pool).questions;
+  const strToSave = JSON.stringify({ listTitle: title, questions: qArray });
   const toDb = { doc: strToSave };
   return toDb;
 }

@@ -23,13 +23,18 @@ function SharePage() {
     const inputWithCode = document.getElementById('theCode');
     const theCode = inputWithCode.value;
     if (!isCodeValide(inputWithCode)) return;
-    try{
-    downloadSharedPool(theCode).then( result => {console.log("--" + result)});
-  }
-    catch(er){
-      console.log("error123" , er);
-    }
-    
+    downloadSharedPool(theCode).then((result) => {
+      console.log('--' + result);
+      if (result !== '') {
+        const pool = JSON.parse(result);
+        const title = pool.listTitle;
+        const qArray = pool.questions;
+        console.log(title);
+        console.log(qArray);
+      } else {
+        alert('Questionneir is not found or removed by owner');
+      }
+    });
   };
 
   function isCodeValide(input) {
@@ -58,7 +63,16 @@ function SharePage() {
         <Card.Title style={{ width: '30rem' }}>Enter a code to the field:</Card.Title>
 
         {/* Input field */}
-        <input id="theCode" type="number" placeholder="351" style={inputStyle} onKeyDown={(e) => handleEnterKey(e)} />
+        <input
+          id="theCode"
+          type="number"
+          placeholder="351"
+          onFocus={(e) => {
+            e.target.placeholder = '';
+          }}
+          style={inputStyle}
+          onKeyDown={(e) => handleEnterKey(e)}
+        />
 
         {/* Import button */}
         <Button variant="warning" style={{ width: '8rem' }} className="mt-2 mb-2" onClick={handleImportClick}>
