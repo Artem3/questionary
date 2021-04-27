@@ -94,7 +94,7 @@ function SharePage() {
 
         {/* Import button */}
         {spinner ? (
-          <MySpinner className="mt-2" text=" Uploading..." />
+          <MySpinner myStyle="mt-2 mb-2" text=" Uploading..." />
         ) : (
           <Button variant="warning" style={{ width: '8rem' }} className="mt-2 mb-2" onClick={handleImportClick}>
             Import &#8630;
