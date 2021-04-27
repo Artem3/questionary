@@ -5,9 +5,11 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { doSharing } from 'utils/shareHelper';
+import MySpinner from 'components/MySpinner';
 
 export default function List(props) {
   const [content, setContent] = useState(fillContentFromStorage());
+  const [spinnerForButton, setSpinnerForButton] = useState('');
 
   function fillContentFromStorage() {
     const content = new Map();
@@ -29,6 +31,7 @@ export default function List(props) {
   };
 
   const handleShare = (title) => {
+    enableSpinner(title);
     const pool = localStorage.getItem(title);
     doSharing(title, pool).then((result) => {
       const updatedPool = {
@@ -37,6 +40,7 @@ export default function List(props) {
       };
       localStorage.setItem(title, JSON.stringify(updatedPool));
       setContent(fillContentFromStorage());
+      disableSpinner();
     });
   };
 
@@ -46,7 +50,15 @@ export default function List(props) {
 
   const handleStopSharing = (code) => {
     //remove record from SharedCode table
-    alert('Not implemented yet');
+    alert('Not implemented yet' + code);
+  };
+
+  const enableSpinner = (listTitle) => {
+    setSpinnerForButton(listTitle);
+  };
+
+  const disableSpinner = () => {
+    setSpinnerForButton('');
   };
 
   return (
@@ -111,9 +123,15 @@ export default function List(props) {
                           </Dropdown>
                         </div>
                       ) : (
-                        <Button variant="dark" onClick={() => handleShare(elem.title)}>
-                          Share this pool &#9741;
-                        </Button>
+                        <>
+                          {spinnerForButton === elem.title ? (
+                            <MySpinner text=" Sharing..." />
+                          ) : (
+                            <Button variant="dark" onClick={() => handleShare(elem.title)}>
+                              Share this pool &#9741;
+                            </Button>
+                          )}
+                        </>
                       )}
                     </td>
                   </tr>

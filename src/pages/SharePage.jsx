@@ -5,11 +5,13 @@ import Card from 'react-bootstrap/Card';
 import { downloadSharedPool } from 'utils/shareHelper';
 import QuestionnaireReadOnly from 'components/QuestionnaireReadOnly';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import MySpinner from 'components/MySpinner';
 
 function SharePage() {
   const [showPool, setShowPool] = useState(false);
   const [importedPool, setImportedPool] = useState([]);
   const [importedTitle, setImportedTitle] = useState('');
+  const [spinner, setSpinner] = useState(false);
 
   //--- styles ---
   const cardStyle = {
@@ -28,6 +30,7 @@ function SharePage() {
     const inputWithCode = document.getElementById('theCode');
     const theCode = inputWithCode.value;
     if (!isCodeValide(inputWithCode)) return;
+    enableSpinner();
     downloadSharedPool(theCode).then((result) => {
       console.log('--' + result);
       if (result !== '') {
@@ -41,6 +44,7 @@ function SharePage() {
       } else {
         alert('Questionneir is not found or removed by owner');
       }
+      disableSpinner();
     });
   };
 
@@ -62,6 +66,14 @@ function SharePage() {
     }
   }
 
+  const enableSpinner = () => {
+    setSpinner(true);
+  };
+
+  const disableSpinner = () => {
+    setSpinner(false);
+  };
+
   return (
     <Container style={{ minHeight: '100vh', color: 'white' }}>
       <h4 className="text-center py-3">Import share questionneries </h4>
@@ -81,14 +93,20 @@ function SharePage() {
         />
 
         {/* Import button */}
-        <Button variant="warning" style={{ width: '8rem' }} className="mt-2 mb-2" onClick={handleImportClick}>
-          Import &#8630;
-        </Button>
+        {spinner ? (
+          <MySpinner className="mt-2" text=" Uploading..." />
+        ) : (
+          <Button variant="warning" style={{ width: '8rem' }} className="mt-2 mb-2" onClick={handleImportClick}>
+            Import &#8630;
+          </Button>
+        )}
 
         {/* Imported questionnair */}
         {showPool && (
           <>
-            <h3 className="text-center mt-2">{importedTitle}</h3>
+            <h3 className="text-center mt-2">
+              <b>{importedTitle}</b>
+            </h3>
             <ButtonToolbar className="justify-content-between" style={{ width: '100%' }}>
               {/* Cancel button */}
               <Button variant="danger" className="mt-3 mb-1">
