@@ -7,6 +7,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { doSharing } from 'utils/shareHelper';
 import MySpinner from 'components/MySpinner';
 
+import copyImg from '../res/copy.svg';
+import stopImg from '../res/stop.svg';
+
 export default function List(props) {
   const [content, setContent] = useState(fillContentFromStorage());
   const [spinnerForButton, setSpinnerForButton] = useState('');
@@ -113,11 +116,11 @@ export default function List(props) {
                             <Dropdown.Toggle variant="outline-info">&#9881;</Dropdown.Toggle>
                             <Dropdown.Menu>
                               <Dropdown.Item onClick={() => handleCopyToClipboard(elem.poolAndCode.sharedCode)}>
-                                Copy code &#9993;
+                                Copy code <img src={copyImg} alt="Copy" />
                               </Dropdown.Item>
                               <Dropdown.Divider />
                               <Dropdown.Item onClick={() => handleStopSharing(elem.poolAndCode.sharedCode)}>
-                                Stop sharing
+                                Stop sharing <img src={stopImg} alt="Stop" />
                               </Dropdown.Item>
                             </Dropdown.Menu>
                           </Dropdown>
@@ -125,10 +128,10 @@ export default function List(props) {
                       ) : (
                         <>
                           {spinnerForButton === elem.title ? (
-                            <MySpinner text=" Sharing..." />
+                            <MySpinner text=" Getting code..." />
                           ) : (
                             <Button variant="dark" onClick={() => handleShare(elem.title)}>
-                              Share this pool &#9741;
+                              Get shared code &#9741;
                             </Button>
                           )}
                         </>

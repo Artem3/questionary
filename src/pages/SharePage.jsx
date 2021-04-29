@@ -118,6 +118,8 @@ function SharePage() {
                 Save locally
               </Button>
             </ButtonToolbar>
+
+            {/* Imported table  */}
             <QuestionnaireReadOnly pool={importedPool} />
           </>
         )}
