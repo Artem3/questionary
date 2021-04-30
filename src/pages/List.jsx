@@ -4,6 +4,9 @@ import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
+
 import { doSharing } from 'utils/shareHelper';
 import MySpinner from 'components/MySpinner';
 
@@ -52,7 +55,7 @@ export default function List(props) {
   };
 
   const handleStopSharing = (code) => {
-    //remove record from SharedCode table
+    //remove record from SharedCode table and from user's pool
     alert('Not implemented yet' + code);
   };
 
@@ -115,13 +118,23 @@ export default function List(props) {
                           <Dropdown>
                             <Dropdown.Toggle variant="outline-info">&#9881;</Dropdown.Toggle>
                             <Dropdown.Menu>
-                              <Dropdown.Item onClick={() => handleCopyToClipboard(elem.poolAndCode.sharedCode)}>
-                                Copy code <img src={copyImg} alt="Copy" />
-                              </Dropdown.Item>
+                              {/* ---Copy code--- */}
+                              <Tippy content="Copy to buffer">
+                                <Dropdown.Item onClick={() => handleCopyToClipboard(elem.poolAndCode.sharedCode)}>
+                                  Copy code <img src={copyImg} alt="Copy" />
+                                </Dropdown.Item>
+                              </Tippy>
                               <Dropdown.Divider />
-                              <Dropdown.Item onClick={() => handleStopSharing(elem.poolAndCode.sharedCode)}>
-                                Stop sharing <img src={stopImg} alt="Stop" />
-                              </Dropdown.Item>
+                              {/* ---Stop sharing button--- */}
+                              <Tippy
+                                content="The pool won't be avaliable for download for other"
+                                placement="top-start"
+                                delay={[2000, null]}
+                              >
+                                <Dropdown.Item onClick={() => handleStopSharing(elem.poolAndCode.sharedCode)}>
+                                  Stop sharing <img src={stopImg} alt="Stop" />
+                                </Dropdown.Item>
+                              </Tippy>
                             </Dropdown.Menu>
                           </Dropdown>
                         </div>

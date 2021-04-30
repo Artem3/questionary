@@ -52,7 +52,7 @@ export default function Header(props) {
               <li>&#124;</li>
             </Nav.Link>
 
-            <LinkContainer to="/share">
+            <LinkContainer to="/import">
               <Nav.Link>Import</Nav.Link>
             </LinkContainer>
           </Nav>

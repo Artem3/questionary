@@ -7,7 +7,7 @@ import Exam from './pages/Exam';
 import NewList from './pages/NewList';
 import EditForm from './pages/EditForm';
 import List from './pages/List';
-import Share from './pages/SharePage';
+import Import from './pages/ImportPage';
 import Home from './pages/Home';
 import Header from './components/Header';
 
@@ -38,7 +38,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/new" component={() => <NewList setSize={setSize} />} />
           <Route path="/lists" component={() => <List setSize={setSize} />} />
-          <Route path="/share" component={Share} />
+          <Route path="/import" component={Import} />
           <Route path="/:id/edit" component={() => <EditForm setSize={setSize} />} />
           <Route path="/:id/exam" component={Exam} />
         </Switch>

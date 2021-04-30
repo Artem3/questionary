@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import { useParams, useHistory } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 
 import ConfirmDialog from 'components/ConfirmDialog';
 
@@ -18,6 +19,10 @@ export default function EditForm(props) {
 
   let history = useHistory();
 
+  const btnStyle = {
+    width: '400px',
+    justifyContent: 'space-between',
+  };
   // --------------------------
   const addNewOrReplace = (key, value) => {
     const clean = value.filter(isQuestionAndAnswerFilled);
@@ -161,11 +166,14 @@ export default function EditForm(props) {
               </div>
             </div>
           ))}
-          <div>
+          <ButtonToolbar className="justify-content-around mt-3">
+            <Button variant="warning" onClick={() => history.push('/lists')}>
+              Cancel
+            </Button>
             <Button variant="info" type="submit" onSubmit={handleSubmit} disabled={isInvalidForm()}>
               Save list
             </Button>
-          </div>
+          </ButtonToolbar>
         </form>
         <ConfirmDialog
           show={replacementNeedsConfirm}

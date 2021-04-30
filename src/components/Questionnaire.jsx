@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import { useHistory } from 'react-router-dom';
@@ -157,11 +158,16 @@ export default function Questionnaire(props) {
             </div>
           </div>
         ))}
-        <div>
+        <ButtonToolbar className="justify-content-around mt-3">
+          {/* ---Cancel Button--- */}
+          <Button variant="warning" onClick={() => history.push('/lists')}>
+            Cancel
+          </Button>
+          {/* ---Save list button--- */}
           <Button variant="info" type="submit" onSubmit={handleSubmit} disabled={isInvalidForm()}>
             Save list
           </Button>
-        </div>
+        </ButtonToolbar>
       </form>
       <ConfirmDialog
         show={replacementNeedsConfirm}

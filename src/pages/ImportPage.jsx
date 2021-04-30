@@ -7,7 +7,7 @@ import QuestionnaireReadOnly from 'components/QuestionnaireReadOnly';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import MySpinner from 'components/MySpinner';
 
-function SharePage() {
+function ImportPage() {
   const [showPool, setShowPool] = useState(false);
   const [importedPool, setImportedPool] = useState([]);
   const [importedTitle, setImportedTitle] = useState('');
@@ -73,6 +73,10 @@ function SharePage() {
   const disableSpinner = () => {
     setSpinner(false);
   };
+  const handleCancel = () => {
+    setShowPool(false);
+    document.getElementById('theCode').value = '';
+  };
 
   return (
     <Container style={{ minHeight: '100vh', color: 'white' }}>
@@ -109,7 +113,7 @@ function SharePage() {
             </h3>
             <ButtonToolbar className="justify-content-between" style={{ width: '100%' }}>
               {/* Cancel button */}
-              <Button variant="danger" className="mt-3 mb-1">
+              <Button variant="danger" className="mt-3 mb-1" onClick={handleCancel}>
                 Cancel
               </Button>
 
@@ -128,4 +132,4 @@ function SharePage() {
   );
 }
 
-export default SharePage;
+export default ImportPage;
