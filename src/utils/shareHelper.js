@@ -133,6 +133,7 @@ function getQuestionnaireFromDb() {
     console.log('Empty user or poolTitle');
     return;
   }
+
   return new Promise((resolve, reject) => {
     (async () => {
       const questionnaireUrl = process.env.REACT_APP_BASIC_PATH_TO_DB + userId + '/' + poolTitle;

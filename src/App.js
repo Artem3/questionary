@@ -15,7 +15,7 @@ import { HashRouter, Switch, Route } from 'react-router-dom';
 import { saveToStorage, generateId } from 'utils/defaultLists';
 import React, { useState } from 'react';
 
-function App() {
+export default function App() {
   // Number of saved lists with questions in local storage
   const [size, setSize] = useState(localStorage.length - 1); // - 1 is userId
 
@@ -47,5 +47,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

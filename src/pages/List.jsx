@@ -13,6 +13,7 @@ import MySpinner from 'components/MySpinner';
 import copyImg from '../res/copy.svg';
 import stopImg from '../res/stop.svg';
 
+
 export default function List(props) {
   const [content, setContent] = useState(fillContentFromStorage());
   const [spinnerForButton, setSpinnerForButton] = useState('');

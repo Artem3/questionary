@@ -7,7 +7,7 @@ import QuestionnaireReadOnly from 'components/QuestionnaireReadOnly';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import MySpinner from 'components/MySpinner';
 
-function ImportPage() {
+export default function ImportPage() {
   const [showPool, setShowPool] = useState(false);
   const [importedPool, setImportedPool] = useState([]);
   const [importedTitle, setImportedTitle] = useState('');
@@ -131,5 +131,3 @@ function ImportPage() {
     </Container>
   );
 }
-
-export default ImportPage;

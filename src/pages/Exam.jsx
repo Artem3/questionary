@@ -5,6 +5,7 @@ import AnswerTable from 'components/AnswerTable';
 import CurrentQuestionForm from 'components/CurrentQuestionForm';
 import { shuffle } from 'utils/arrayUtils';
 
+
 export default function Exam() {
   const { id } = useParams();
   const [qList, setQList] = useState([]);

@@ -1,6 +1,6 @@
 import Toast from 'react-bootstrap/Toast';
 
-function MyToast(props) {
+export default function MyToast(props) {
   return (
     <>
       <Toast
@@ -19,4 +19,3 @@ function MyToast(props) {
   );
 }
 
-export default MyToast;
