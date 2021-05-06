@@ -36,34 +36,27 @@ export default function CurrentQuestionForm(props) {
 
       {/* Display question card */}
       <Card bg="light" text="dark" style={cardStyle}>
-        <Card.Title style={{ width: '30rem' }}>
-          {props.currentQuestion.question}
-        </Card.Title>
+        <Card.Title style={{ width: '30rem' }}>{props.currentQuestion.question}</Card.Title>
         <input
           type="text"
           value={givenAnswer}
           style={inputStyle}
           onChange={(e) => setGivenAnswer(e.target.value)}
           ref={(ref) => ref && ref.focus()}
-          onFocus={(e) =>
-            e.currentTarget.setSelectionRange(
-              e.currentTarget.value.length,
-              e.currentTarget.value.length
-            )
-          }
+          onFocus={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
           onKeyDown={(e) => handleEnterKey(e)}
         />
         {/* Next >> button */}
-        <Button
-          variant="info"
-          style={{ width: '8rem' }}
-          className="mt-2 mb-2"
-          onClick={handleClick}
-        >
+        <Button variant="info" style={{ width: '8rem' }} className="mt-2 mb-2" onClick={handleClick}>
           Next &gt;&gt;
         </Button>
       </Card>
-      <ProgressBar variant="warning" animated now={props.currentProgress} />
+
+      {/* Running progress bar */}
+      <ProgressBar variant="warning" animated now={props.currentProgress} className="mt-1" />
+      <h5 className="text-center py-3">
+        {props.currentLabel}/{props.totalLength}
+      </h5>
     </>
   );
 }
