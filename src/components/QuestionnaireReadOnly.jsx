@@ -4,21 +4,22 @@ export default function QuestionnaireReadOnly(props) {
   return (
     <Table bordered hover size="sm">
       <thead>
-        <th>#</th>
-        <th>Question</th>
-        <th>Expected answer</th>
+        <tr>
+          <th>#</th>
+          <th>Question</th>
+          <th>Expected answer</th>
+        </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-        </tr>
+        {props.pool.map((elem, index) => {
+          return (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{elem.question}</td>
+              <td>{elem.expectedAnswer}</td>
+            </tr>
+          );
+        })}
       </tbody>
     </Table>
   );

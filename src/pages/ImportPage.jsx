@@ -74,6 +74,7 @@ export default function ImportPage() {
     setSpinner(false);
   };
   const handleCancel = () => {
+    setImportedPool([]);
     setShowPool(false);
     document.getElementById('theCode').value = '';
   };

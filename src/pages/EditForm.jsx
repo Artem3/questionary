@@ -7,7 +7,6 @@ import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 
 import ConfirmDialog from 'components/ConfirmDialog';
 
-
 export default function EditForm(props) {
   let { id } = useParams();
   const [listName, setListName] = useState(id);
@@ -20,10 +19,6 @@ export default function EditForm(props) {
 
   let history = useHistory();
 
-  const btnStyle = {
-    width: '400px',
-    justifyContent: 'space-between',
-  };
   // --------------------------
   const addNewOrReplace = (key, value) => {
     const clean = value.filter(isQuestionAndAnswerFilled);
