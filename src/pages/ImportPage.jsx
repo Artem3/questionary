@@ -6,12 +6,14 @@ import { downloadSharedPool } from 'utils/shareHelper';
 import QuestionnaireReadOnly from 'components/QuestionnaireReadOnly';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import MySpinner from 'components/MySpinner';
+import MyToast from 'components/MyToast';
 
 export default function ImportPage() {
-  const [showPool, setShowPool] = useState(false);
   const [importedPool, setImportedPool] = useState([]);
   const [importedTitle, setImportedTitle] = useState('');
   const [spinner, setSpinner] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [errors, setErrors] = useState([]);
 
   //--- styles ---
   const cardStyle = {
@@ -26,12 +28,19 @@ export default function ImportPage() {
     borderWidth: '1px',
   };
 
+  const setDefaultState = () => {
+    setImportedPool([]);
+    setImportedTitle('');
+    setSpinner(false);
+    setInputValue('');
+    setErrors([]);
+  };
+
   const handleImportClick = () => {
-    const inputWithCode = document.getElementById('theCode');
-    const theCode = inputWithCode.value;
-    if (!isCodeValide(inputWithCode)) return;
+    const sharedCode = inputValue;
+    if (!isCodeValid(inputValue)) return;
     enableSpinner();
-    downloadSharedPool(theCode).then((result) => {
+    downloadSharedPool(sharedCode).then((result) => {
       console.log('--' + result);
       if (result !== '') {
         const pool = JSON.parse(result);
@@ -40,21 +49,21 @@ export default function ImportPage() {
         console.log(title);
         setImportedTitle(title);
         setImportedPool(qArray);
-        setShowPool(true);
       } else {
-        alert('Questionneir is not found or removed by owner');
+        setDefaultState();
+        setErrors([...errors, 'A questionnaire is not found or has been removed by the owner']);
       }
       disableSpinner();
     });
   };
 
-  function isCodeValide(input) {
-    if (!input.value || input.value.trim().length === 0) {
-      alert('Empty  or invalid code.');
+  function isCodeValid(input) {
+    if (!input || input.trim().length === 0) {
+      setErrors([...errors, 'Empty or invalid code.']);
       return false;
     }
-    if (parseInt(input.value) === undefined || isNaN(parseInt(input.value))) {
-      alert('Invalid code: ' + input.value);
+    if (parseInt(input) === undefined || isNaN(parseInt(input))) {
+      setErrors([...errors, 'Invalid code: ' + input]);
       return false;
     }
     return true;
@@ -74,9 +83,7 @@ export default function ImportPage() {
     setSpinner(false);
   };
   const handleCancel = () => {
-    setImportedPool([]);
-    setShowPool(false);
-    document.getElementById('theCode').value = '';
+    setDefaultState();
   };
 
   return (
@@ -90,6 +97,8 @@ export default function ImportPage() {
           id="theCode"
           type="number"
           placeholder="351"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
           onFocus={(e) => {
             e.target.placeholder = '';
           }}
@@ -107,7 +116,7 @@ export default function ImportPage() {
         )}
 
         {/* Imported questionnair */}
-        {showPool && (
+        {importedPool.length > 0 && (
           <>
             <h3 className="text-center mt-2">
               <b>{importedTitle}</b>
@@ -129,6 +138,9 @@ export default function ImportPage() {
           </>
         )}
       </Card>
+      {errors.map((er) => (
+        <MyToast show={true} text={er} onClose={() => setErrors(errors.filter((err) => err !== er))} />
+      ))}
     </Container>
   );
 }
