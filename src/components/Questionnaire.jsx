@@ -172,6 +172,7 @@ export default function Questionnaire(props) {
       <ConfirmDialog
         show={replacementNeedsConfirm}
         prompt={confirmDialogPrompt}
+        title="&#x270E; Rename"
         onOk={handleReplacementConfirm}
         onCancel={handleReplacementCancel}
       />

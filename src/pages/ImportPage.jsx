@@ -6,14 +6,15 @@ import { downloadSharedPool } from 'utils/shareHelper';
 import QuestionnaireReadOnly from 'components/QuestionnaireReadOnly';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import MySpinner from 'components/MySpinner';
-import MyToast from 'components/MyToast';
+import ConfirmDialog from 'components/ConfirmDialog';
 
 export default function ImportPage() {
   const [importedPool, setImportedPool] = useState([]);
   const [importedTitle, setImportedTitle] = useState('');
   const [spinner, setSpinner] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [errors, setErrors] = useState([]);
+  const [showValidation, setShowValidation] = useState(false);
+  const [erorrText, setErrorText] = useState('');
 
   //--- styles ---
   const cardStyle = {
@@ -29,11 +30,10 @@ export default function ImportPage() {
   };
 
   const setDefaultState = () => {
-    setImportedPool([]);
     setImportedTitle('');
+    setImportedPool([]);
     setSpinner(false);
     setInputValue('');
-    setErrors([]);
   };
 
   const handleImportClick = () => {
@@ -50,20 +50,18 @@ export default function ImportPage() {
         setImportedTitle(title);
         setImportedPool(qArray);
       } else {
+        setErrorText('A questionnaire is not found or has been removed by the owner');
+        setShowValidation(true);
         setDefaultState();
-        setErrors([...errors, 'A questionnaire is not found or has been removed by the owner']);
       }
       disableSpinner();
     });
   };
 
   function isCodeValid(input) {
-    if (!input || input.trim().length === 0) {
-      setErrors([...errors, 'Empty or invalid code.']);
-      return false;
-    }
-    if (parseInt(input) === undefined || isNaN(parseInt(input))) {
-      setErrors([...errors, 'Invalid code: ' + input]);
+    if (!input || input.trim().length === 0 || parseInt(input) === undefined || isNaN(parseInt(input))) {
+      setErrorText('Empty or invalid code.');
+      setShowValidation(true);
       return false;
     }
     return true;
@@ -138,9 +136,15 @@ export default function ImportPage() {
           </>
         )}
       </Card>
-      {errors.map((er) => (
-        <MyToast show={true} text={er} onClose={() => setErrors(errors.filter((err) => err !== er))} />
-      ))}
+
+      {/* Validation dialog */}
+      <ConfirmDialog
+        show={showValidation}
+        title="&#9940; Validation error"
+        prompt={erorrText}
+        hideOkBtn={true}
+        onCancel={() => setShowValidation(false)}
+      />
     </Container>
   );
 }

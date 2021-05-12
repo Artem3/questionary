@@ -5,21 +5,22 @@ import Modal from 'react-bootstrap/Modal';
 export default function ConfirmDialog(props) {
   return (
     <>
-      <Modal show={props.show} onHide={props.onCancel}>
+      <Modal show={props.show} onHide={props.onCancel} size="md">
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>{props.prompt}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.onCancel}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={props.onOk}>
-            Yes, override
-          </Button>
+          {!props.hideOkBtn && (
+            <Button variant="primary" onClick={props.onOk}>
+              Yes, override
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </>
   );
 }
-
