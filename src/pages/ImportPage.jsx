@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -15,7 +16,7 @@ export default function ImportPage() {
   const [inputValue, setInputValue] = useState('');
   const [showValidation, setShowValidation] = useState(false);
   const [erorrText, setErrorText] = useState('');
-
+  let history = useHistory();
   //--- styles ---
   const cardStyle = {
     justifyContent: 'space-between',
@@ -80,9 +81,28 @@ export default function ImportPage() {
   const disableSpinner = () => {
     setSpinner(false);
   };
+
   const handleCancel = () => {
     setDefaultState();
   };
+
+  const handleSaveLocally = () => {
+    const sufix = `(${inputValue})`;
+    let fullName = importedTitle;
+
+    while (true) {
+      fullName = fullName + sufix;
+      if (localStorage.getItem(fullName) == null) {
+        saveToLocalStorage(fullName);
+        break;
+      }
+    }
+    history.push('/lists');
+  };
+
+  function saveToLocalStorage(name) {
+    localStorage.setItem(name, JSON.stringify({ questions: importedPool }));
+  }
 
   return (
     <Container style={{ minHeight: '100vh', color: 'white' }}>
@@ -126,7 +146,7 @@ export default function ImportPage() {
               </Button>
 
               {/* Save locally button */}
-              <Button variant="info" className="mt-3 mb-1">
+              <Button variant="info" className="mt-3 mb-1" onClick={handleSaveLocally}>
                 Save locally
               </Button>
             </ButtonToolbar>
