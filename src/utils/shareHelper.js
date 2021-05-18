@@ -45,6 +45,13 @@ export const downloadSharedPool = async (code) => {
   return targetQuestionnaire;
 };
 
+// Delete Or stop sharing
+export const stopSharing = async (code) => {
+  resetStateBeforeFetch();
+  await getUserAndTitleByCode(code);
+  await removeQuestionnaireFromDb();
+};
+
 //---------export questionnaire flow----------------
 function saveQuestionnairyToDb(title, pool) {
   return new Promise((resolve, reject) => {
@@ -134,7 +141,7 @@ function getQuestionnaireFromDb() {
     return;
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     (async () => {
       const questionnaireUrl = process.env.REACT_APP_BASIC_PATH_TO_DB + userId + '/' + poolTitle;
       try {
@@ -147,6 +154,22 @@ function getQuestionnaireFromDb() {
       } catch (err) {
         console.error('Error downloading questionnaire.', err);
         resolve();
+      }
+    })();
+  });
+}
+// ------stop sharing (remove) flow------
+function removeQuestionnaireFromDb() {
+  return new Promise((resolve) => {
+    const poolToDeleteUrl = process.env.REACT_APP_BASIC_PATH_TO_DB + userId + '/' + poolTitle;
+    (async () => {
+      try {
+        const response = await fetch(poolToDeleteUrl, { method: 'DELETE' });
+        //if 2XX, if 404 if other -> process each of them.
+        console.log(response);
+        resolve();
+      } catch (err) {
+        console.error('Error removing questionnaire.', err);
       }
     })();
   });

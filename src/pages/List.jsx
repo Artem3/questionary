@@ -8,11 +8,11 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 
 import { doSharing } from 'utils/shareHelper';
+import { stopSharing } from 'utils/shareHelper';
 import MySpinner from 'components/MySpinner';
 
 import copyImg from '../res/copy.svg';
 import stopImg from '../res/stop.svg';
-
 
 export default function List(props) {
   const [content, setContent] = useState(fillContentFromStorage());
@@ -28,7 +28,7 @@ export default function List(props) {
       const savedPool = JSON.parse(localStorage.getItem(title));
       content.set(title, savedPool);
     }
-    return content;
+    return new Map([...content.entries()].sort());
   }
 
   const handleDelete = (title) => {
@@ -56,8 +56,11 @@ export default function List(props) {
   };
 
   const handleStopSharing = (code) => {
-    //remove record from SharedCode table and from user's pool
-    alert('Not implemented yet' + code);
+    stopSharing(code).then(() => {
+      //add spinners while wating
+      //if ok - remove 'sharedCode' field from localStorage for the pool.
+    });
+    console.log('ok');
   };
 
   const enableSpinner = (listTitle) => {

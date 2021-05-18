@@ -107,7 +107,7 @@ export default function ImportPage() {
   // ---------------------------------------------------
   return (
     <Container style={{ minHeight: '100vh', color: 'white' }}>
-      <h4 className="text-center py-3">Import share questionneries </h4>
+      <h4 className="text-center py-3">Import shared questionnaires </h4>
       <Card bg="light" text="dark" style={cardStyle}>
         <Card.Title style={{ width: '30rem' }}>Enter a code here:</Card.Title>
 
