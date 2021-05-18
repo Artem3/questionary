@@ -16,7 +16,7 @@ export default function ConfirmDialog(props) {
           </Button>
           {!props.hideOkBtn && (
             <Button variant="primary" onClick={props.onOk}>
-              Yes, override
+              {props.okBtnText}
             </Button>
           )}
         </Modal.Footer>

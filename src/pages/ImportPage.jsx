@@ -16,6 +16,8 @@ export default function ImportPage() {
   const [inputValue, setInputValue] = useState('');
   const [showValidation, setShowValidation] = useState(false);
   const [erorrText, setErrorText] = useState('');
+  const [showOk, setShowOk] = useState(false);
+  const [finalName, setFinalName] = useState('');
   let history = useHistory();
   //--- styles ---
   const cardStyle = {
@@ -93,17 +95,16 @@ export default function ImportPage() {
     while (true) {
       fullName = fullName + sufix;
       if (localStorage.getItem(fullName) == null) {
-        saveToLocalStorage(fullName);
+        localStorage.setItem(fullName, JSON.stringify({ questions: importedPool }));
+        setFinalName(fullName);
+        setShowOk(true);
+        setDefaultState();
         break;
       }
     }
-    history.push('/lists');
   };
 
-  function saveToLocalStorage(name) {
-    localStorage.setItem(name, JSON.stringify({ questions: importedPool }));
-  }
-
+  // ---------------------------------------------------
   return (
     <Container style={{ minHeight: '100vh', color: 'white' }}>
       <h4 className="text-center py-3">Import share questionneries </h4>
@@ -164,6 +165,16 @@ export default function ImportPage() {
         prompt={erorrText}
         hideOkBtn={true}
         onCancel={() => setShowValidation(false)}
+      />
+      {/* Confirm save or override dialog */}
+      <ConfirmDialog
+        show={showOk}
+        title="&#9971; Success"
+        prompt={'A questioneire saved with name  ' + finalName}
+        hideOkBtn={false}
+        okBtnText={'Ok'}
+        onOk={() => history.push('/lists')}
+        onCancel={() => history.push('/lists')}
       />
     </Container>
   );

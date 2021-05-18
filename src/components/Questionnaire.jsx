@@ -173,6 +173,8 @@ export default function Questionnaire(props) {
         show={replacementNeedsConfirm}
         prompt={confirmDialogPrompt}
         title="&#x270E; Rename"
+        hideOkBtn={false}
+        okBtnText={'Yes, override'}
         onOk={handleReplacementConfirm}
         onCancel={handleReplacementCancel}
       />

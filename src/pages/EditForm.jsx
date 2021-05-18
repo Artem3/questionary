@@ -174,6 +174,8 @@ export default function EditForm(props) {
         <ConfirmDialog
           show={replacementNeedsConfirm}
           prompt={confirmDialogPrompt}
+          hideOkBtn={false}
+          okBtnText={'Yes, override'}
           onOk={handleReplacementConfirm}
           onCancel={handleReplacementCancel}
         />
