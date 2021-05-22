@@ -4,6 +4,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 import { LinkContainer } from 'react-router-bootstrap';
 
 export default function Header(props) {
@@ -55,6 +57,17 @@ export default function Header(props) {
             <LinkContainer to="/import">
               <Nav.Link>Import</Nav.Link>
             </LinkContainer>
+            {/* vertial separator */}
+            <Nav.Link>
+              <li>&#124;</li>
+            </Nav.Link>
+            <Form>
+              <Container style={{ padding: '0.5rem 1rem' }}>
+                <label style={{ marginRight: '0.5rem' }}>UA</label>
+                <Form.Check id="lang-toggler" type="switch" label="" onChange={props.languageHandler} />
+                <label>EN</label>
+              </Container>
+            </Form>
           </Nav>
         </Navbar.Text>
       </Navbar.Collapse>

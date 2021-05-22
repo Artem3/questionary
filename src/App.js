@@ -14,10 +14,12 @@ import Header from './components/Header';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import { saveToStorage, generateId } from 'utils/defaultLists';
 import React, { useState } from 'react';
+import { defaultLanguage, dictionary, LocalisationContext } from 'localisation';
 
 export default function App() {
   // Number of saved lists with questions in local storage
   const [size, setSize] = useState(localStorage.length - 1); // - 1 is userId
+  const [language, setLanguage] = useState(defaultLanguage); //language is en by default
 
   //initialize default questionaries and save them to local storage
   function intitDefaultLists() {
@@ -28,20 +30,25 @@ export default function App() {
     localStorage.getItem('userId') == null && generateId();
   }
 
+  //language toggler
+  const toggleLanguage = (e) => (e.target.checked ? setLanguage('ua') : setLanguage('en'));
+
   return (
     <div className="main-wrapper">
       {generateUserId()}
       {intitDefaultLists()}
       <HashRouter>
-        <Header size={size} />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/new" component={() => <NewList setSize={setSize} />} />
-          <Route path="/lists" component={() => <List setSize={setSize} />} />
-          <Route path="/import" component={Import} />
-          <Route path="/:id/edit" component={() => <EditForm setSize={setSize} />} />
-          <Route path="/:id/exam" component={Exam} />
-        </Switch>
+        <LocalisationContext.Provider value={dictionary[language]}>
+          <Header size={size} languageHandler={toggleLanguage} language={language} />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/new" component={() => <NewList setSize={setSize} />} />
+            <Route path="/lists" component={() => <List setSize={setSize} />} />
+            <Route path="/import" component={Import} />
+            <Route path="/:id/edit" component={() => <EditForm setSize={setSize} />} />
+            <Route path="/:id/exam" component={Exam} />
+          </Switch>
+        </LocalisationContext.Provider>
       </HashRouter>
       <img src={logo} className="App-logo" alt="logo" />
     </div>

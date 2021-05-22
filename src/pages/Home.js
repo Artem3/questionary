@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { LocalisationContext } from 'localisation';
 
 export default function Home() {
-  return <h1>Welcome to the questionnaire!!</h1>;
+  const page = 'Home';
+  const translation = useContext(LocalisationContext);
+  return <h1>{translation[page]['Welcome to the questionnaire!!']}</h1>;
 }
