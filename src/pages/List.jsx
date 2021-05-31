@@ -9,6 +9,8 @@ import 'tippy.js/dist/tippy.css';
 
 import { doSharing } from 'utils/shareHelper';
 import { stopSharing } from 'utils/shareHelper';
+import { removeSharedCodeLocally } from 'utils/defaultLists';
+
 import MySpinner from 'components/MySpinner';
 
 import copyImg from '../res/copy.svg';
@@ -22,9 +24,7 @@ export default function List(props) {
     const content = new Map();
     for (var i = 0, len = localStorage.length; i < len; ++i) {
       let title = localStorage.key(i);
-      if (title === 'userId') {
-        continue;
-      }
+      if (title === 'userId') continue;
       const savedPool = JSON.parse(localStorage.getItem(title));
       content.set(title, savedPool);
     }
@@ -56,11 +56,13 @@ export default function List(props) {
   };
 
   const handleStopSharing = (code) => {
-    stopSharing(code).then(() => {
-      //add spinners while wating
-      //if ok - remove 'sharedCode' field from localStorage for the pool.
+    stopSharing(code).then((result) => {
+      if (result) {
+        removeSharedCodeLocally(code);
+        setContent(fillContentFromStorage());
+        //add spinners while wating or error tooltip
+      }
     });
-    console.log('ok');
   };
 
   const enableSpinner = (listTitle) => {
@@ -131,7 +133,7 @@ export default function List(props) {
                               <Dropdown.Divider />
                               {/* ---Stop sharing button--- */}
                               <Tippy
-                                content="The pool won't be avaliable for download for other"
+                                content="The questionnaire won't be avaliable for download for other"
                                 placement="top-start"
                                 delay={[2000, null]}
                               >

@@ -4,6 +4,7 @@ import firebase from './../firebase';
 let userId = '';
 let poolTitle = '';
 let currentIndex = 0;
+let removedOk = false;
 let listId = 'default';
 let targetQuestionnaire = '';
 
@@ -24,12 +25,12 @@ export const doSharing = async (title, pool) => {
   if (!validateData(title, pool)) {
     return;
   }
-  console.log('-Start sharing--');
+  console.log('**Start sharing**');
   await saveQuestionnairyToDb(title, pool);
   await getSharedCounter();
   await increaseAndSaveSharedCounter();
   await saveSharedCode();
-  console.log('-Finish sharing--');
+  console.log('**Finish sharing**');
 
   return currentIndex;
 };
@@ -37,19 +38,24 @@ export const doSharing = async (title, pool) => {
 // Import. Get shared questionnaire into your local storage
 export const downloadSharedPool = async (code) => {
   resetStateBeforeFetch();
-  console.log('-Start downloading by code ' + code);
+  console.log('::Start downloading by code ' + code + '::');
   await getUserAndTitleByCode(code);
   await getQuestionnaireFromDb();
-  console.log('-Finish a pool downloading--');
+  console.log('::Finish downloading by code::');
 
   return targetQuestionnaire;
 };
 
-// Delete Or stop sharing
+// Delete or stop sharing
 export const stopSharing = async (code) => {
   resetStateBeforeFetch();
+  console.log('--Start removing by code ' + code + '--');
   await getUserAndTitleByCode(code);
   await removeQuestionnaireFromDb();
+  await removeSharedCodeFromDb(code);
+  console.log('--Finish removing by code ' + code + '--');
+
+  return removedOk;
 };
 
 //---------export questionnaire flow----------------
@@ -76,10 +82,10 @@ function getSharedCounter() {
         const json = await response.json();
         let counter = Number(json.documents[0].fields.index.integerValue);
         currentIndex = counter;
-        console.log('2 Exprt: Current conter:', counter);
+        console.log('*2 Exprt: Current conter:', counter);
         resolve(counter);
       } catch (err) {
-        console.error('Exprt.Error in getSharedCounter(): ', err);
+        console.error('*Exprt.Error in getSharedCounter(): ', err);
         reject(err);
       }
     })();
@@ -89,16 +95,16 @@ function getSharedCounter() {
 function increaseAndSaveSharedCounter() {
   return new Promise((resolve, reject) => {
     const updatedIndex = currentIndex + 1;
-    console.log('3 Exprt: Updated counter: ', updatedIndex);
+    console.log('*3 Exprt: Updated counter: ', updatedIndex);
     counterRepo
       .doc(counterId)
       .set({ index: updatedIndex })
       .catch((err) => {
-        console.error('Exprt. Error in increaseSharedCounter(): ', err);
+        console.error('*Exprt. Error in increaseSharedCounter(): ', err);
         reject(err);
       })
       .then(resolve);
-    console.log('4 Exprt: Updated counter saved OK');
+    console.log('*4 Exprt: Updated counter saved OK');
   });
 }
 
@@ -111,7 +117,7 @@ function saveSharedCode() {
         reject(err);
       })
       .then(resolve);
-    console.log('5 Exprt: Shared code saved OK');
+    console.log('*5 Exprt: Shared code saved OK');
   });
 }
 
@@ -125,10 +131,10 @@ function getUserAndTitleByCode(sharedCode) {
         const json = await response.json();
         userId = json.fields.userId.stringValue;
         poolTitle = json.fields.listId.stringValue;
-        console.log(`1 Imprt. UserId: ${userId}. Questionneir id: ${poolTitle}`);
+        console.log(`*::--1 Imprt. UserId: ${userId}. Questionneir id: ${poolTitle}`);
         resolve();
       } catch (err) {
-        console.log('Error getting userId and listId by code ' + sharedCode);
+        console.log('*--Error getting userId and listId by code ' + sharedCode);
         resolve();
       }
     })();
@@ -137,7 +143,7 @@ function getUserAndTitleByCode(sharedCode) {
 
 function getQuestionnaireFromDb() {
   if (userId === '' || poolTitle === '') {
-    console.log('Empty user or poolTitle');
+    console.log('::Empty user or poolTitle');
     return;
   }
 
@@ -149,10 +155,10 @@ function getQuestionnaireFromDb() {
         if (response.status === 404) throw Error('The questionnaire is not found.');
         const json = await response.json();
         targetQuestionnaire = json.fields.doc.stringValue;
-        console.log('2 Imprt. Questionnaire downloaded OK');
+        console.log('::2 Imprt. Questionnaire downloaded OK');
         resolve();
       } catch (err) {
-        console.error('Error downloading questionnaire.', err);
+        console.error('::Error downloading questionnaire.', err);
         resolve();
       }
     })();
@@ -165,11 +171,48 @@ function removeQuestionnaireFromDb() {
     (async () => {
       try {
         const response = await fetch(poolToDeleteUrl, { method: 'DELETE' });
-        //if 2XX, if 404 if other -> process each of them.
+        if (response.status === 200) {
+          const notFoundResponse = await fetch(poolToDeleteUrl);
+          if (notFoundResponse.status === 404) {
+            removedOk = true;
+            console.log('--Poll removed OK--');
+          } else {
+            console.log('--Error2 removing the a poll. Not expected status');
+          }
+        } else {
+          console.log('--Error1 removing a poll. Not expected status');
+        }
         console.log(response);
         resolve();
       } catch (err) {
-        console.error('Error removing questionnaire.', err);
+        console.error('--Error3 removing a poll.', err);
+        resolve();
+      }
+    })();
+  });
+}
+
+function removeSharedCodeFromDb(code) {
+  const codeToDeleteUrl = sharedCollectionUrl + '/' + code;
+  return new Promise((resolve) => {
+    (async () => {
+      try {
+        const response = await fetch(codeToDeleteUrl, { method: 'DELETE' });
+        if (response.status === 200) {
+          const notFoundCodeResp = await fetch(codeToDeleteUrl);
+          if (notFoundCodeResp.status === 404) {
+            removedOk = true;
+            console.log('--Shared code removed OK--');
+          } else {
+            console.log('--Error4. removing shared code. Not expected status');
+          }
+        } else {
+          console.log('--Error5. removing shared code. Not expected status');
+        }
+        resolve();
+      } catch (err) {
+        resolve();
+        console.error('--Error6. removing shared code.', err);
       }
     })();
   });
@@ -210,4 +253,5 @@ function resetStateBeforeFetch() {
   userId = '';
   poolTitle = '';
   targetQuestionnaire = '';
+  removedOk = false;
 }

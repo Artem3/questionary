@@ -39,3 +39,19 @@ export const generateId = () => {
   localStorage.setItem('userId', 'user:' + nanoid(7));
   console.log('New UserId generated');
 };
+
+//TODO: extract to separate utility class
+export const removeSharedCodeLocally = (code) => {
+  for (var i = 0, len = localStorage.length; i < len; ++i) {
+    let title = localStorage.key(i);
+    if (title === 'userId') continue;
+    const savedPool = JSON.parse(localStorage.getItem(title));
+    if (savedPool.sharedCode === code) {
+      //remove sharedCode from the questionnaire and save it back to local starage
+      const noCodePoll = (({ sharedCode, ...rest }) => rest)(savedPool);
+      console.log(noCodePoll);
+      localStorage.setItem(title, JSON.stringify(noCodePoll));
+      break;
+    }
+  }
+};
