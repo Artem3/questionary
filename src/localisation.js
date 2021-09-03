@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
+const myEmail = "artem.goncharenko@gmail.com";
+
 export const dictionary = {
   en: {
     Home: {
-      'Welcome to the questionnaire!!': 'Welcome to the questionnaire!!',
+      'Welcome': 'Welcome to the questionnaire!',
+      'Contact me': 'Any questions, ideas or suggestions are welcome at my email :  ' + myEmail
     },
   },
   ua: {
     Home: {
-      'Welcome to the questionnaire!!': 'Вітаємо у questionnaire!!',
+      'Welcome': 'Вітаємо у questionnaire!',
+      'Contact me': 'Питання, ідеї або пропозиції надсилайте на адресу : ' + myEmail
     },
   },
 };
