@@ -1,8 +1,10 @@
 # Questionnaire
 
-The main idea of this web app is a math trainer for pupils however it could be used as a Q&A site. Read questions, give answers, see the result at the end.
+The main idea of this free web app is a math trainer for pupils, however it could be used as a Q&A site. Read questions, give answers, see the result at the end.
 <br>
-The code has been deployed and runs at this link  https://artem3.github.io/questionnaire/
+The code has been deployed and runs at https://artem3.github.io/questionnaire/
+
+<p>Any questions, ideas or suggestions are welcome at my email <a href="mailto:artem.goncharenko@gmail.com"><b>artem.goncharenko@gmail.com</b></a></p>
 
 <div align="center">
     <img src="https://firebasestorage.googleapis.com/v0/b/questionnaire-4f52b.appspot.com/o/git_readme_screens%2FList_of_existing_pools.png?alt=media&token=6a8f50a3-e7f6-4a4b-8412-6b61f02dddec"</img> 
